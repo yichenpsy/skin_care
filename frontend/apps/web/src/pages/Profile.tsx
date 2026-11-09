@@ -731,13 +731,14 @@ export default function Profile() {
 
   const deleteProfilePhoto = async (photo: ProfileImageSnapshot) => {
     if (!token || !photo.id) return false
-    setDeletingPhotoId(photo.id)
+    const photoId = photo.id
+    setDeletingPhotoId(photoId)
     setSkinMsg('')
     try {
       const res = await fetch(apiUrl('/api/auth/profile-image'), {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ id: photo.id, source: photo.source }),
+        body: JSON.stringify({ id: photoId, source: photo.source }),
       })
       const data = await res.json().catch(() => ({}))
       if (!res.ok) {
@@ -747,11 +748,11 @@ export default function Profile() {
 
       setSkinProfile(prev => {
         if (!prev) return prev
-        const profileImages = (prev.profileImages || []).filter(image => image.id !== photo.id)
-        const latestProfileImage = prev.latestProfileImage?.id === photo.id
+        const profileImages = (prev.profileImages || []).filter(image => image.id !== photoId)
+        const latestProfileImage = prev.latestProfileImage?.id === photoId
           ? profileImages[0] || null
           : prev.latestProfileImage || null
-        const latestAnalysis = photo.source === 'skin_analysis' && prev.latestAnalysis?.id === Number(photo.id.replace('skin_analysis-', ''))
+        const latestAnalysis = photo.source === 'skin_analysis' && prev.latestAnalysis?.id === Number(photoId.replace('skin_analysis-', ''))
           ? { ...prev.latestAnalysis, imageData: null }
           : prev.latestAnalysis || null
         return { ...prev, latestProfileImage, latestAnalysis, profileImages }

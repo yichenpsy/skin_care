@@ -1,3 +1,4 @@
+import { ProductImage } from '@/components/ProductImage'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { ArrowLeft, MapPin, Package } from 'lucide-react'
@@ -136,7 +137,7 @@ export default function OrderDetail() {
             >
               <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-[#F5F5F5] shrink-0">
                 {item.image && (
-                  <img
+                  <ProductImage
                     src={item.image}
                     alt={item.name}
                     className="w-full h-full object-cover"

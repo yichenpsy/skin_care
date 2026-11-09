@@ -1,3 +1,4 @@
+import { ProductImage } from '@/components/ProductImage'
 import { useEffect, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import {
@@ -585,7 +586,7 @@ async function clearSkinType() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
         <div className="rounded-2xl overflow-hidden flex items-start justify-center">
-          <img
+          <ProductImage
             src={product.imageUrl || 'https://placehold.co/600x600?text=Kein+Bild'}
             alt={product.name}
             className="max-h-[320px] sm:max-h-[440px] md:max-h-[620px] w-auto object-contain"

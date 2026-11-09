@@ -67,3 +67,17 @@ npx shadcn@latest add button -c apps/web
 ```
 
 `button` is the component to add; replace it with the component you need. `-c apps/web` selects the app's shadcn configuration, which maps shared components to `packages/ui`. The command downloads/runs the generator and may modify existing files; review its changes before committing.
+
+## Local product images
+
+Product photos are served from `apps/web/public/images/products/`, so Vite includes them in both local development and production builds. The shared `ProductImage` component uses `src/lib/product-images.json` to map original catalog image URLs to local files. This also supports original image URLs already saved in carts and orders. Unknown or unavailable images use a local placeholder instead of contacting an external image server.
+
+To download images for the current CSV catalog, run from the project root:
+
+```bash
+python3 scripts/download-product-images.py
+```
+
+The script uses Python's standard library and reads `backend/db/data/final_products.csv`; no running backend or database is needed. Filenames are derived from the source URL's SHA-256 hash, so they remain independent of database product IDs. It reuses existing downloads and retries failed URLs. `WORKERS = 6`, `TIMEOUT_SECONDS = 12`, and `MAX_IMAGE_BYTES = 10 * 1024 * 1024` in the script control parallel downloads, request timeout, and the 10 MiB per-image limit. Lower `WORKERS` if requests are being throttled.
+
+Verified replacement sources are recorded in `scripts/product-image-sources.json`; each entry links the original image URL to its replacement image and product page. Review `scripts/product-image-download-report.json` for failed links and source provenance. Some external servers return errors or no longer host the image; those require a verified replacement URL in the CSV followed by another download. The script does not invent replacement product photos. Keep the downloaded files and generated manifest together when committing. Rebuild/redeploy the frontend to publish updated images; database image URLs do not need to change.

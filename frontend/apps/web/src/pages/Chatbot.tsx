@@ -1,3 +1,4 @@
+import { ProductImage } from '@/components/ProductImage'
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
@@ -870,7 +871,7 @@ useEffect(() => {
                           <div key={product.id} className="overflow-hidden rounded-lg border border-border bg-background transition-shadow hover:shadow-md">
                             <Link to={`/product/${product.id}?from=chatbot`} className="group block">
                               <div className="flex gap-2 p-2">
-                                <img src={product.imageUrl || 'https://placehold.co/120x120?text=Kein+Bild'} alt={product.name}
+                                <ProductImage src={product.imageUrl || 'https://placehold.co/120x120?text=Kein+Bild'} alt={product.name}
                                   className="h-16 w-16 shrink-0 rounded-md bg-[#F5F5F5] object-cover" />
                                 <div className="min-w-0">
                                   <p className="text-xs text-muted-foreground">{product.category}</p>

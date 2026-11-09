@@ -1,3 +1,4 @@
+import { ProductImage } from '@/components/ProductImage'
 import { useState, useEffect, useMemo  } from 'react'
 import { Link } from 'react-router-dom'
 import { Trash2, Plus, Minus, ShoppingBag, ArrowLeft, ShoppingCart  } from 'lucide-react'
@@ -314,7 +315,7 @@ className="flex flex-col sm:flex-row gap-4 p-4 bg-background border border-borde
                 to={`/product/${item.id}`}
                 className="w-24 h-24 flex-shrink-0 rounded-lg overflow-hidden bg-[#F5F5F5]"
               >
-                <img
+                <ProductImage
                   src={item.image}
                   alt={item.name}
                   className="w-full h-full object-cover"
@@ -401,7 +402,7 @@ className="flex flex-col sm:flex-row gap-4 p-4 bg-background border border-borde
                       key={product.id}
                       className="min-w-[240px] max-w-[240px] sm:min-w-[280px] sm:max-w-[280px] lg:min-w-[300px] lg:max-w-[300px] snap-start rounded-xl border border-border bg-background p-4 hover:shadow-lg hover:-translate-y-1 transition-all">
                       <Link to={`/product/${product.id}`}>
-                        <img
+                        <ProductImage
                           src={product.imageUrl || 'https://placehold.co/300x300?text=Kein+Bild'}
                           alt={product.name}
                           className="h-44 sm:h-56 lg:h-64 w-full rounded-lg object-contain mb-3 hover:scale-[1.02] transition-transform"                      />

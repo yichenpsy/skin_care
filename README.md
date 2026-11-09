@@ -147,6 +147,18 @@ npm run dev
 
 Vite may choose another port if `5173` is occupied; read its terminal output. The backend explicitly allows local frontend origins on ports `5173` and `5174`. For another origin, set `FRONTEND_URL` and restart the backend.
 
+## Local product images
+
+Product photos are bundled in `frontend/apps/web/public/images/products/`. The frontend maps original catalog image URLs to those files, including URLs in existing carts and orders. Failed or unknown images use a local placeholder. This avoids depending on merchant image servers when displaying the catalog.
+
+To refresh the image cache from the CSV, run from the project root:
+
+```bash
+python3 scripts/download-product-images.py
+```
+
+The script reuses existing downloads and writes a source manifest and failure report. See the [frontend image instructions](frontend/README.md#local-product-images) for file locations and adjustable download limits. Commit the images and manifest together, then rebuild/redeploy the frontend. Changing the database is not required.
+
 ## Environment configuration
 
 ### Backend: `backend/.env`

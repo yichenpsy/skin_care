@@ -1,3 +1,4 @@
+import { ProductImage } from '@/components/ProductImage'
 import { Link, useNavigate } from 'react-router-dom'
 import { Bot, Sparkles, SlidersHorizontal, ArrowRight } from 'lucide-react'
 import { useState, useEffect, useRef } from 'react'
@@ -220,8 +221,6 @@ const optionStyle = {
 }
 
 export default function Home() {
-  const [email, setEmail]    = useState('')
-  const [subscribed, setSub] = useState(false)
   const [recommendedProducts, setRecommendedProducts] = useState<RecommendedProduct[]>([])
   const [recommendationPage, setRecommendationPage] = useState(0)
   const [recommendationsLoading, setRecommendationsLoading] = useState(false)
@@ -501,7 +500,7 @@ export default function Home() {
                     style={{ minWidth: 0, border: '1px solid #F0DCC8', borderRadius: 12, overflow: 'hidden', background: '#fff', textDecoration: 'none', color: '#1c1209', display: 'flex', flexDirection: 'column' }}
                   >
                     <div style={{ aspectRatio: '1 / 0.72', background: '#fff', overflow: 'hidden' }}>
-                      <img
+                      <ProductImage
                         src={product.imageUrl || 'https://placehold.co/300x300?text=SelfGlow'}
                         alt={product.name}
                         style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', padding: 8 }}

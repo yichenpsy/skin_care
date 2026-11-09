@@ -1,3 +1,4 @@
+import { ProductImage } from '@/components/ProductImage'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { Link } from 'react-router-dom'
@@ -508,7 +509,7 @@ export default function FloatingChat({
                 onClick={() => setIsOpen(false)}
                 className="flex gap-2 rounded-lg border border-border bg-white p-2 transition-shadow hover:shadow-md"
               >
-                <img
+                <ProductImage
                   src={product.imageUrl || 'https://placehold.co/120x120?text=Kein+Bild'}
                   alt={product.name}
                   className="h-14 w-14 shrink-0 rounded-md bg-[#F5F5F5] object-cover"
@@ -619,7 +620,7 @@ export default function FloatingChat({
                 disabled={isLoading}
                 className="flex w-full gap-3 rounded-xl border border-[#E8D5C0] bg-white p-3 text-left shadow-sm transition hover:border-[#D4A574] hover:bg-[#FFFBF6] disabled:cursor-not-allowed disabled:opacity-60"
               >
-                <img
+                <ProductImage
                   src={currentProduct.imageUrl || 'https://placehold.co/120x120?text=Kein+Bild'}
                   alt={currentProduct.name}
                   className="h-14 w-14 shrink-0 rounded-lg bg-[#F5F5F5] object-cover"

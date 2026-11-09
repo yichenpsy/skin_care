@@ -1,3 +1,4 @@
+import { ProductImage } from '@/components/ProductImage'
 import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import {
@@ -236,7 +237,7 @@ function ProductCard({ product }: { product: Product }) {
 <div className="group flex h-full flex-col rounded-xl border border-border bg-background overflow-hidden hover:shadow-lg transition-shadow">        <div className="relative">
           <Link to={`/product/${product.id}`} className="block">
             <div className="aspect-square overflow-hidden bg-[#F5F5F5]">
-              <img
+              <ProductImage
                 src={product.imageUrl || 'https://placehold.co/300x300?text=Kein+Bild'}
                 alt={product.name}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"

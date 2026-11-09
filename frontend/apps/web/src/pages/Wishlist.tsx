@@ -1,3 +1,4 @@
+import { ProductImage } from '@/components/ProductImage'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import {
@@ -167,7 +168,7 @@ export default function Wishlist() {
             >
               <div className="relative h-32 sm:h-40 lg:h-40 w-full lg:w-40 shrink-0 rounded-2xl bg-[#F8F2EC] overflow-hidden">
                 <Link to={`/product/${item.id}`}>
-                  <img
+                  <ProductImage
                     src={item.image}
                     alt={item.name}
                     className="w-full h-full object-contain p-3 sm:p-4 group-hover:scale-105 transition"

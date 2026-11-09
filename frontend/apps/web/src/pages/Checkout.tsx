@@ -1,3 +1,4 @@
+import { ProductImage } from '@/components/ProductImage'
 import { useState, useEffect } from 'react'
 import { useCart } from '@/context/CartContext'
 import { useAuth } from '@/context/AuthContext'
@@ -579,7 +580,7 @@ const formatPrice = (value: number) =>
           <div className="space-y-4 max-h-60 overflow-y-auto pr-1">
             {items.map(item => (
               <div key={item.id} className="flex gap-3 items-center">
-                <img src={item.image} className="w-12 h-12 rounded-lg object-cover shrink-0" alt={item.name} />
+                <ProductImage src={item.image} className="w-12 h-12 rounded-lg object-cover shrink-0" alt={item.name} />
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-medium truncate">{item.name}</p>
                   <p className="text-sm text-gray-600">
