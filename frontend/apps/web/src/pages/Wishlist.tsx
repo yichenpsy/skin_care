@@ -1,3 +1,4 @@
+import { displayLabel } from '@/lib/display-labels'
 import { ProductImage } from '@/components/ProductImage'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
@@ -62,7 +63,7 @@ export default function Wishlist() {
           className="flex items-center gap-2 text-[#5F5F5F] hover:text-[#D4A574] mb-10 transition"
         >
           <ArrowLeft className="h-5 w-5" />
-          <span>Zurück</span>
+          <span>Back</span>
         </button>
 
         <div className="text-center py-16 px-4">
@@ -70,15 +71,15 @@ export default function Wishlist() {
             <Heart className="h-10 w-10 sm:h-12 sm:w-12 text-[#D4A574]" />
           </div>
 
-          <h1 className="text-2xl font-bold mb-4">Bitte einloggen</h1>
+          <h1 className="text-2xl font-bold mb-4">Please sign in</h1>
 
           <p className="text-muted-foreground mb-8">
-            Melde dich an, um deine Merkliste zu sehen und Produkte zu speichern.
+            Sign in to view your wishlist and save products.
           </p>
 
           <Link to="/login">
             <Button className="bg-[#D4A574] text-white hover:bg-[#C49464] rounded-full px-8">
-              Zur Anmeldung
+              Go to sign in
             </Button>
           </Link>
         </div>
@@ -94,7 +95,7 @@ export default function Wishlist() {
           className="flex items-center gap-2 text-[#5F5F5F] hover:text-[#D4A574] mb-10 transition"
         >
           <ArrowLeft className="h-5 w-5" />
-          <span>Zurück</span>
+          <span>Back</span>
         </button>
 
         <div className="text-center py-16 px-4">
@@ -103,16 +104,16 @@ export default function Wishlist() {
           </div>
 
           <h1 className="text-xl sm:text-2xl font-bold mb-4">
-            Deine Merkliste ist leer
+            Your wishlist is empty
           </h1>
 
           <p className="text-muted-foreground mb-8 text-sm sm:text-base">
-            Speichere deine Lieblingsprodukte, um sie später wiederzufinden.
+            Save your favorite products to find them later.
           </p>
 
           <Link to="/shop">
             <Button className="bg-[#D4A574] text-white hover:bg-[#C49464] rounded-full px-8">
-              Produkte entdecken
+              Explore products
             </Button>
           </Link>
         </div>
@@ -137,7 +138,7 @@ export default function Wishlist() {
             <Check className="h-5 w-5 shrink-0" />
 
             <span className="text-xs sm:text-sm font-medium">
-              Produkt wurde zum Warenkorb hinzugefügt
+              Product added to cart
             </span>
           </div>
         </div>
@@ -148,13 +149,13 @@ export default function Wishlist() {
         className="flex items-center gap-2 text-[#5F5F5F] hover:text-[#D4A574] mb-6 transition"
       >
         <ArrowLeft className="h-5 w-5" />
-        <span>Zurück</span>
+        <span>Back</span>
       </button>
 
-      <h1 className="text-xl sm:text-2xl font-bold mb-2">Meine Merkliste</h1>
+      <h1 className="text-xl sm:text-2xl font-bold mb-2">My wishlist</h1>
 
       <p className="text-muted-foreground mb-8 text-sm sm:text-base">
-        {items.length} Produkt{items.length !== 1 && 'e'} gespeichert
+        {items.length}  product{items.length !== 1 && 's'} saved
       </p>
 
       <div className="grid grid-cols-2 sm:grid-cols-2 lg: grid-cols-1 gap-4 sm:gap-5">
@@ -185,7 +186,7 @@ export default function Wishlist() {
 
               <div className="flex flex-1 flex-col p-1 sm:p-4 min-w-0">
                 <p className="text-xs text-muted-foreground mb-1">
-                  {item.category}
+                  {displayLabel(item.category)}
                 </p>
 
                 <Link to={`/product/${item.id}`}>
@@ -216,7 +217,7 @@ export default function Wishlist() {
 
                 <div className="mt-auto flex items-center gap-2 mb-3">
                   <span className="font-bold text-sm sm:text-base">
-                    {item.price.toFixed(2).replace('.', ',')} €
+                    {new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'EUR' }).format(item.price)}
                   </span>
                 </div>
 
@@ -226,7 +227,7 @@ export default function Wishlist() {
                 >
                   <ShoppingCart className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2 shrink-0" />
                   <span className='truncate'>
-                  In den Warenkorb
+                  Add to cart
                   </span>
                 </Button>
               </div>
@@ -239,11 +240,11 @@ export default function Wishlist() {
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4">
           <div className="bg-white rounded-2xl p-6 w-full max-w-sm text-center shadow-lg">
             <h2 className="text-xl font-bold mb-3">
-              Produkt entfernen?
+              Remove product?
             </h2>
 
             <p className="text-muted-foreground mb-6">
-              Möchtest du dieses Produkt wirklich aus deiner Merkliste entfernen?
+              Are you sure you want to remove this product from your wishlist?
             </p>
 
             <div className="flex gap-3 justify-center">
@@ -251,7 +252,7 @@ export default function Wishlist() {
                 onClick={() => setItemToDelete(null)}
                 className="bg-gray-100 text-black hover:bg-gray-200 rounded-full px-6"
               >
-                Abbrechen
+                Cancel
               </Button>
 
               <Button
@@ -261,7 +262,7 @@ export default function Wishlist() {
                 }}
                 className="bg-[#D4A574] text-white hover:bg-[#C49464] rounded-full px-6"
               >
-                Entfernen
+                Remove
               </Button>
             </div>
           </div>

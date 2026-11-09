@@ -62,7 +62,7 @@ export const initialMessages: Message[] = [
   {
     id: 'welcome',
     role: 'assistant',
-    content: 'Wobei kann ich helfen?',
+    content: "How can I help?",
   },
 ]
 
@@ -70,17 +70,17 @@ function isWelcomeMessage(message: Pick<Message, 'id' | 'content'>) {
   return (
     message.id === 'welcome' ||
     message.content === initialMessages[0].content ||
-    message.content.includes('SelfGlow KI-Beratung')
+    message.content.includes("SelfGlow AI advisor")
   )
 }
 
 export function createConversation(messages: Message[] = initialMessages): Conversation {
-  return { id: crypto.randomUUID(), title: 'Neue Beratung', updatedAt: new Date().toISOString(), messages }
+  return { id: crypto.randomUUID(), title: "New consultation", updatedAt: new Date().toISOString(), messages }
 }
 
 export function getConversationTitle(messages: Message[]) {
   const first = messages.find((m) => m.role === 'user')
-  if (!first) return 'Neue Beratung'
+  if (!first) return "New consultation"
   return first.content.length > 42 ? `${first.content.slice(0, 42)}...` : first.content
 }
 
@@ -227,7 +227,7 @@ localStorage.setItem(guestStorageKey, JSON.stringify(chatState))
       })
       .catch((err) => {
         if (err.name === 'AbortError') return
-        console.error('[Chat] DB laden fehlgeschlagen:', err)
+        console.error("[Chat] Failed to load database:", err)
         loadedForToken.current = null
       })
       .finally(() => setIsLoadingHistory(false))
@@ -285,7 +285,7 @@ localStorage.setItem(guestStorageKey, JSON.stringify(chatState))
 
     if (!res.ok) {
       const body = await res.text().catch(() => '')
-      throw new Error(`Save fehlgeschlagen: ${res.status} ${body}`)
+      throw new Error(`Save failed: ${res.status} ${body}`)
     }
   }, [])
 
@@ -305,7 +305,7 @@ localStorage.setItem(guestStorageKey, JSON.stringify(chatState))
     try {
       await execSave(conv, token)
     } catch (err) {
-      console.error('[Chat] Save fehlgeschlagen:', err)
+      console.error("[Chat] Save failed:", err)
     } finally {
       saving.current[id] = false
       const next = pending.current[id]
@@ -321,7 +321,7 @@ localStorage.setItem(guestStorageKey, JSON.stringify(chatState))
     if (!token) return
     fetch(apiUrl(`/api/chat-history/${id}`), {
       method: 'DELETE', headers: { Authorization: `Bearer ${token}` },
-    }).catch((err) => console.error('[Chat] Löschen fehlgeschlagen:', err))
+    }).catch((err) => console.error("[Chat] Failed to delete:", err))
   }, [token])
 
   function startNewConversation() {
@@ -369,6 +369,6 @@ localStorage.setItem(guestStorageKey, JSON.stringify(chatState))
 
 export function useChat() {
   const ctx = useContext(ChatContext)
-  if (!ctx) throw new Error('useChat muss innerhalb von ChatProvider verwendet werden')
+  if (!ctx) throw new Error("useChat must be used within ChatProvider")
   return ctx
 }

@@ -11,13 +11,13 @@ const MAX_FOLLOW_UP_PRODUCTS = 3;
 const MAX_PROMPT_DESCRIPTION_LENGTH = 600;
 const MAX_PROMPT_INGREDIENTS_LENGTH = 800;
 const MIN_RELEVANCE_SCORE = 2;
-const MEDICAL_DISCLAIMER = "hinweis: dies ist keine medizinische diagnose.";
+const MEDICAL_DISCLAIMER = "note: this is not a medical diagnosis.";
 const PRODUCT_RECOMMENDATION_ANSWER =
-  `Ich habe folgende passende Produkte aus unserem Sortiment für dich gefunden. ${MEDICAL_DISCLAIMER}`;
+  `I found the following matching products in our catalog. ${MEDICAL_DISCLAIMER}`;
 const GENERAL_SKINCARE_FALLBACK_ANSWER =
-  "- Ich kann dir bei Hauttyp, Hautpflege-Routine, Inhaltsstoffen und passenden SelfGlow-Produkten helfen.\n- Sag mir gern, welches Hautanliegen du hast oder ob du ein bestimmtes Produkt suchst.";
+  "- I can help with skin types, skincare routines, ingredients, and suitable SelfGlow products.\n- Tell me about your skin concern or the product you are looking for.";
 const OFF_TOPIC_ANSWER =
-  "- Ich kann dir hier nur bei Hautpflege, Hauttypen, Inhaltsstoffen und passenden SelfGlow-Produkten helfen.\n- Frag mich gern nach einer Routine, einem Hautanliegen oder Produkteigenschaften wie vegan, parfumfrei oder alkoholfrei.";
+  "- I can only help with skincare, skin types, ingredients, and suitable SelfGlow products here.\n- Ask me about a routine, a skin concern, or preferences such as vegan, fragrance-free, or alcohol-free products.";
 const CHAT_DECISION_FALLBACK = {
   intent: "skincare_general",
 };

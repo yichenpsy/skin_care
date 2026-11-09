@@ -103,7 +103,7 @@ async function createChatResponse(
 
   if (decision.intent === "product_follow_up") {
     const fallbackAnswer =
-      "Ich kann die vorherigen Produkte gerade nicht zuverlässig erklären, weil mir der Produktkontext fehlt.";
+      "I cannot reliably explain the previous products because the product context is missing.";
     const answer = await requestOpenAI(
       [
         {
@@ -192,7 +192,7 @@ async function createChatResponseStream(
 
   if (decision.intent === "product_follow_up") {
     const fallbackAnswer =
-      "Ich kann die vorherigen Produkte gerade nicht zuverlässig erklären, weil mir der Produktkontext fehlt.";
+      "I cannot reliably explain the previous products because the product context is missing.";
     const answer = await streamOpenAI(
       [
         {
@@ -314,7 +314,7 @@ async function createProductExplanation(productIds, message) {
 
   if (products.length === 0) {
     return {
-      answer: "Ich konnte die empfohlenen Produkte gerade nicht mehr finden.",
+      answer: "I could not find the recommended products right now.",
       products: [],
       usedFallback: true,
     };

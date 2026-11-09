@@ -58,19 +58,19 @@ const CSS = `
 `
 
 const values = [
-  { icon: Heart,  title: 'Mit Liebe gemacht',       desc: 'Jedes Produkt wird mit größter Sorgfalt und Leidenschaft für Hautpflege entwickelt.' },
-  { icon: Leaf,   title: 'Natürliche Inhaltsstoffe', desc: 'Wir verwenden nur die besten natürlichen und nachhaltigen Inhaltsstoffe.' },
-  { icon: Award,  title: 'Qualitätsgarantie',        desc: 'Alle unsere Produkte werden strengen Qualitätskontrollen unterzogen.' },
-  { icon: Users,  title: 'Kundenorientiert',         desc: 'Ihre Zufriedenheit steht bei uns an erster Stelle. Immer.' },
+  { icon: Heart,  title: "Made with love",       desc: "Every product is developed with great care and a passion for skincare." },
+  { icon: Leaf,   title: "Natural ingredients", desc: "We use only the finest natural and sustainable ingredients." },
+  { icon: Award,  title: "Quality guarantee",        desc: "All our products undergo strict quality checks." },
+  { icon: Users,  title: "Customer-focused",         desc: "Your satisfaction comes first. Always." },
 ]
 
 const team = [
-  { name: 'Alaa Hejazi',    role: 'Hautpflege-Spezialistin', initial: 'AH', color: '#D4A574' },
-  { name: 'Bayan Agha',     role: 'Backend-Entwicklerin',    initial: 'BA', color: '#B8967A' },
-  { name: 'Nelly Nzumegue', role: 'Marketing-Managerin',     initial: 'NN', color: '#C4925A' },
-  { name: 'Nurefsan Almas', role: 'Produktdesignerin',       initial: 'NA', color: '#B8967A' },
-  { name: 'Sevde Istanbul', role: 'Frontend-Entwicklerin',   initial: 'SI', color: '#C4925A' },
-  { name: 'Yichen Zhong',   role: 'KI-Entwicklerin',         initial: 'YZ', color: '#D4A574' },
+  { name: 'Alaa Hejazi',    role: "Skincare specialist", initial: 'AH', color: '#D4A574' },
+  { name: 'Bayan Agha',     role: "Backend developer",    initial: 'BA', color: '#B8967A' },
+  { name: 'Nelly Nzumegue', role: "Marketing manager",     initial: 'NN', color: '#C4925A' },
+  { name: 'Nurefsan Almas', role: "Product designer",       initial: 'NA', color: '#B8967A' },
+  { name: 'Sevde Istanbul', role: "Frontend developer",   initial: 'SI', color: '#C4925A' },
+  { name: 'Yichen Zhong',   role: "AI developer",         initial: 'YZ', color: '#D4A574' },
 ]
 
 export default function About() {
@@ -92,15 +92,13 @@ export default function About() {
         <div style={{ position: 'absolute', top: -100, right: -100, width: 480, height: 480, borderRadius: '50%', background: 'radial-gradient(circle, rgba(212,165,116,0.14) 0%, transparent 70%)', pointerEvents: 'none' }} />
         <div style={{ maxWidth: 1100, margin: '0 auto', textAlign: 'center' }}>
           <p style={{ fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#D4A574', fontWeight: 600, marginBottom: 20 }}>
-            Über uns
+            About us
           </p>
           <h1 style={{ fontSize: 'clamp(38px,6vw,72px)', fontWeight: 800, lineHeight: 1.08, letterSpacing: '-0.03em', color: '#fff', margin: '0 0 24px' }}>
-            Über <span style={{ color: '#D4A574' }}>SelfGlow</span>
+            About <span style={{ color: '#D4A574' }}>SelfGlow</span>
           </h1>
           <p style={{ fontSize: 17, color: 'rgba(255,255,255,0.6)', lineHeight: 1.8, maxWidth: 620, margin: '0 auto', fontWeight: 300 }}>
-            Wir glauben, dass jeder eine Hautpflege verdient, die perfekt zu ihm passt.
-            Mit modernster KI-Technologie und hochwertigen Produkten helfen wir Ihnen,
-            Ihre strahlendste Haut zu entdecken.
+            We believe everyone deserves skincare that suits them perfectly. With advanced AI technology and quality products, we help you discover your most radiant skin.
           </p>
         </div>
       </section>
@@ -112,16 +110,16 @@ export default function About() {
   style={{ maxWidth: 1100, margin: '0 auto' }}
 >          <div>
             <p style={{ fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#C4925A', marginBottom: 12, fontWeight: 600 }}>
-              Unsere Geschichte
+              Our story
             </p>
             <h2 style={{ fontSize: 'clamp(24px,3vw,38px)', fontWeight: 700, margin: '0 0 24px', letterSpacing: '-0.02em', lineHeight: 1.2, color: '#1c1209' }}>
-              Von Dermatologinnen,<br />für alle.
+              Created by dermatologists,<br />for everyone.
             </h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               {[
-                'SelfGlow wurde 2026 von Fr. Istanbul, Fr. Hejazi, Fr. Almas, Fr. Zhong, Fr. Nzumegue, und Fr. Agha gegründet, leidenschaftliche Dermatologinnen mit über 15 Jahren Erfahrung. Frustriert von der Einheitslösung der meisten Hautpflegemarken, machte sie es sich zur Mission, personalisierte Hautpflege für jeden zugänglich zu machen.',
-                'Mit Hilfe modernster KI-Technologie analysieren wir Ihren Hauttyp und Ihre spezifischen Bedürfnisse, um Ihnen die perfekten Produkte zu empfehlen. Keine Ratespiele mehr – nur Ergebnisse.',
-                'Heute ist SelfGlow eine der führenden Marken für personalisierte Hautpflege in Deutschland, mit über 100.000 zufriedenen Kunden und einer wachsenden Community von Hautpflege-Enthusiasten.',
+                "SelfGlow was founded in 2026 by Ms. Istanbul, Ms. Hejazi, Ms. Almas, Ms. Zhong, Ms. Nzumegue, and Ms. Agha, passionate dermatologists with over 15 years of experience. Frustrated by the one-size-fits-all approach of most skincare brands, they set out to make personalized skincare accessible to everyone.",
+                "Using advanced AI technology, we analyze your skin type and specific needs to recommend the right products. No more guesswork — just results.",
+                "Today, SelfGlow is one of Germany's leading personalized skincare brands, with over 100,000 satisfied customers and a growing community of skincare enthusiasts.",
               ].map((text, i) => (
                 <p key={i} style={{ fontSize: 15, color: '#7a5c42', lineHeight: 1.85, margin: 0, fontWeight: 300 }}>{text}</p>
               ))}
@@ -141,7 +139,7 @@ export default function About() {
 
   <img
     src={product}
-    alt="SelfGlow Produkt"
+    alt="SelfGlow product"
     style={{
       position: 'relative',
       zIndex: 1,
@@ -161,10 +159,10 @@ export default function About() {
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 56 }}>
             <p style={{ fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#C4925A', marginBottom: 10, fontWeight: 600 }}>
-              Was uns antreibt
+              What drives us
             </p>
             <h2 style={{ fontSize: 'clamp(24px,3vw,38px)', fontWeight: 700, margin: 0, letterSpacing: '-0.02em', color: '#1c1209' }}>
-              Unsere Werte
+              Our values
             </h2>
           </div>
 
@@ -190,13 +188,13 @@ export default function About() {
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 64 }}>
             <p style={{ fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#C4925A', marginBottom: 10, fontWeight: 600 }}>
-              Die Menschen hinter SelfGlow
+              The people behind SelfGlow
             </p>
             <h2 style={{ fontSize: 'clamp(24px,3vw,38px)', fontWeight: 700, margin: '0 0 14px', letterSpacing: '-0.02em', color: '#1c1209' }}>
-              Unser Team
+              Our team
             </h2>
             <p style={{ fontSize: 15, color: '#9a7a5a', maxWidth: 500, margin: '0 auto', lineHeight: 1.7, fontWeight: 300 }}>
-              Leidenschaftlich, engagiert und immer auf der Suche nach den besten Lösungen für Ihre Haut.
+              Passionate, dedicated, and always looking for the best solutions for your skin.
             </p>
           </div>
 
@@ -251,10 +249,10 @@ export default function About() {
     alignItems: 'center',
   }}
 >          <h2 style={{ fontSize: 'clamp(22px,3vw,36px)', fontWeight: 700, color: '#1c1209', margin: '0 0 14px', letterSpacing: '-0.02em' }}>
-            Bereit für Ihre perfekte Hautpflege?
+            Ready to find your perfect skincare?
           </h2>
           <p style={{ fontSize: 15, color: '#7a5c42', marginBottom: 36, maxWidth: 480, margin: '0 auto 36px', lineHeight: 1.7, fontWeight: 300 }}>
-            Entdecken Sie unsere Produkte und finden Sie heraus, was Ihre Haut wirklich braucht.
+            Explore our products and discover what your skin really needs.
           </p>
           <Link
             to="/shop"
@@ -278,7 +276,7 @@ style={{
 }}            onMouseEnter={e => (e.currentTarget.style.background = '#c4925a')}
             onMouseLeave={e => (e.currentTarget.style.background = '#D4A574')}
           >
-            Jetzt entdecken <ArrowRight size={15} />
+            Explore now <ArrowRight size={15} />
           </Link>
         </div>
       </section>

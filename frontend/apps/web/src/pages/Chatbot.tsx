@@ -1,3 +1,4 @@
+import { displayLabel } from '@/lib/display-labels'
 import { ProductImage } from '@/components/ProductImage'
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
@@ -56,49 +57,49 @@ function getWeatherEmoji(weatherMain?: string, temp?: number): string {
 
 function getWeatherRecommendationPrompt(weather: WeatherData): string {
   const emoji = getWeatherEmoji(weather.weatherMain, weather.temp)
-  return `${emoji} Es ist ${weather.temp !== undefined ? weather.temp + '°C' : 'aktuell'} und ${weather.weatherMain?.toLowerCase() || 'bewölkt'} bei ${weather.humidity ?? '?'}% Luftfeuchtigkeit. Welche Hautpflegeprodukte empfiehlst du mir für dieses Wetter?`
+  return `${emoji} It is ${weather.temp !== undefined ? weather.temp + '°C' : 'currently'} and ${weather.weatherMain?.toLowerCase() || "cloudy"} with ${weather.humidity ?? '?'}% humidity. Which skincare products would you recommend for this weather?`
 }
 
 const skinTypeLabels: Record<string, string> = {
-  Normal: 'normale Haut',
-  Oily: 'fettige Haut',
-  Dry: 'trockene Haut',
-  Sensitive: 'sensible Haut',
-  Combination: 'Mischhaut',
+  Normal: "normal skin",
+  Oily: "oily skin",
+  Dry: "dry skin",
+  Sensitive: "sensitive skin",
+  Combination: "Combination skin",
 }
 
 const profileFactLabels: Record<string, string> = {
-  acne: 'Unreinheiten',
-  blemishes: 'Unreinheiten',
-  redness: 'Rötungen',
-  pores: 'großen Poren',
-  dark_spots: 'Pigmentflecken',
-  balanced: 'ausgeglichener Haut',
-  oily: 'fettiger Haut',
-  oily_t_zone: 'öliger T-Zone',
-  shine: 'Glanz',
-  dryness: 'Trockenheit',
-  dehydration: 'feuchtigkeitsarmer Haut',
-  tightness: 'Spannungsgefühl',
-  flakiness: 'schuppiger Haut',
-  rough_texture: 'rauer Hauttextur',
-  refined_pores: 'feinen Poren',
-  clear_skin: 'wenigen Unreinheiten',
-  matte: 'matter Haut',
-  combination_zones: 'Mischhaut-Zonen',
-  sensitive: 'sensibler Haut',
-  tolerant: 'robuster Haut',
-  fragrance: 'Parfum',
-  alcohol: 'Alkohol',
-  fragrance_free: 'parfumfreie Pflege',
-  alcohol_free: 'alkoholfreie Pflege',
-  vegan: 'vegane Produkte',
-  non_comedogenic: 'nicht komedogene Produkte',
-  oil_free: 'ölfreie Produkte',
-  cruelty_free: 'tierversuchsfreie Produkte',
-  natural_ingredients: 'natürliche Inhaltsstoffe',
-  light_texture: 'leichte Texturen',
-  rich_texture: 'reichhaltige Texturen',
+  acne: "Blemishes",
+  blemishes: "Blemishes",
+  redness: "Redness",
+  pores: "large pores",
+  dark_spots: "Dark spots",
+  balanced: "balanced skin",
+  oily: "oily skin",
+  oily_t_zone: "an oily T-zone",
+  shine: "Shine",
+  dryness: "Dryness",
+  dehydration: "dehydrated skin",
+  tightness: "tightness",
+  flakiness: "flaky skin",
+  rough_texture: "rough skin texture",
+  refined_pores: "refined pores",
+  clear_skin: "few blemishes",
+  matte: "dull skin",
+  combination_zones: "combination skin areas",
+  sensitive: "sensitive skin",
+  tolerant: "resilient skin",
+  fragrance: "Fragrance",
+  alcohol: "Alcohol",
+  fragrance_free: "fragrance-free skincare",
+  alcohol_free: "alcohol-free skincare",
+  vegan: "vegan products",
+  non_comedogenic: "non-comedogenic products",
+  oil_free: "oil-free products",
+  cruelty_free: "cruelty-free products",
+  natural_ingredients: "natural ingredients",
+  light_texture: "lightweight textures",
+  rich_texture: "rich textures",
 }
 
 function formatProfileFact(value: string) {
@@ -129,80 +130,80 @@ function buildPersonalizedStarterQuestions(
   const avoidances = getFactValues(profileContext || null, ['ingredient_avoidance', 'allergy'])
   const cartProduct = profileContext?.cart?.[0]
   const wishlistProduct = profileContext?.wishlist?.[0]
-  const effectiveSkinLabel = profileSkinType ? skinTypeLabels[profileSkinType] || `${profileSkinType} Haut` : null
+  const effectiveSkinLabel = profileSkinType ? skinTypeLabels[profileSkinType] || `${profileSkinType} Skin` : null
 
   if (cartProduct && effectiveSkinLabel) {
     questions.push({
-      label: `Passt ${compactProductName(cartProduct.name)}?`,
-      message: `Passt ${cartProduct.name} zu ${effectiveSkinLabel}? Bitte prüfe Inhaltsstoffe, Hauttyp und Anwendung.`,
+      label: `Does ${compactProductName(cartProduct.name)} suit me?`,
+      message: `Does ${cartProduct.name} suit ${effectiveSkinLabel}? Please check ingredients, skin type, and how to use it.`,
       contextProductIds: [cartProduct.id],
     })
   } else if (cartProduct) {
     questions.push({
-      label: `${compactProductName(cartProduct.name)} anwenden`,
-      message: `Wie wende ich ${cartProduct.name} sinnvoll in meiner Routine an?`,
+      label: `${compactProductName(cartProduct.name)}: how to use`,
+      message: `How can I use ${cartProduct.name} effectively in my routine?`,
       contextProductIds: [cartProduct.id],
     })
   } else if (effectiveSkinLabel) {
     questions.push({
-      label: `Produkte für ${effectiveSkinLabel}`,
-      message: `Welche Produkte passen zu ${effectiveSkinLabel}?`,
+      label: `Products for ${effectiveSkinLabel}`,
+      message: `Which products suit ${effectiveSkinLabel}?`,
     })
   }
 
   if (concerns.length > 0) {
     questions.push({
-      label: `Routine gegen ${formatProfileFact(concerns[0])}`,
-      message: `Welche Routine hilft bei ${formatProfileFact(concerns[0])}?`,
+      label: `Routine for ${formatProfileFact(concerns[0])}`,
+      message: `What routine helps with ${formatProfileFact(concerns[0])}?`,
     })
   } else if (avoidances.length > 0) {
     questions.push({
-      label: `Produkte ohne ${formatProfileFact(avoidances[0])}`,
-      message: `Welche Produkte passen, wenn ich ${formatProfileFact(avoidances[0])} meiden möchte?`,
+      label: `Products without ${formatProfileFact(avoidances[0])}`,
+      message: `Which products suit me if I want to avoid ${formatProfileFact(avoidances[0])} ?`,
     })
   } else if (preferences.length > 0) {
     questions.push({
       label: `${formatProfileFact(preferences[0])}`,
-      message: `Welche Produkte passen zu meiner Vorliebe für ${formatProfileFact(preferences[0])}?`,
+      message: `Which products suit my preference for ${formatProfileFact(preferences[0])}?`,
     })
   } else if (wishlistProduct && effectiveSkinLabel) {
     questions.push({
-      label: `Passt ${compactProductName(wishlistProduct.name)}?`,
-      message: `Passt ${wishlistProduct.name} zu ${effectiveSkinLabel}? Bitte prüfe Inhaltsstoffe, Hauttyp und Anwendung.`,
+      label: `Does ${compactProductName(wishlistProduct.name)} suit me?`,
+      message: `Does ${wishlistProduct.name} suit ${effectiveSkinLabel}? Please check ingredients, skin type, and how to use it.`,
       contextProductIds: [wishlistProduct.id],
     })
   } else if (effectiveSkinLabel) {
     if (profileSkinType === 'Oily') {
-      questions.push({ label: 'Leichte Routine', message: 'Welche leichte Routine hilft bei fettiger Haut und Unreinheiten?' })
+      questions.push({ label: "Lightweight routine", message: "What simple routine helps with oily skin and blemishes?" })
     } else if (profileSkinType === 'Dry') {
-      questions.push({ label: 'Mehr Feuchtigkeit', message: 'Welche feuchtigkeitsspendende Routine passt zu trockener Haut?' })
+      questions.push({ label: "More hydration", message: "What hydrating routine suits dry skin?" })
     } else if (profileSkinType === 'Sensitive') {
-      questions.push({ label: 'Parfumfreie Pflege', message: 'Welche parfumfreien Produkte sind für sensible Haut geeignet?' })
+      questions.push({ label: "Fragrance-free skincare", message: "Which fragrance-free products suit sensitive skin?" })
     } else if (profileSkinType === 'Combination') {
-      questions.push({ label: 'Routine für Mischhaut', message: 'Wie kombiniere ich Pflege für ölige und trockene Hautpartien?' })
+      questions.push({ label: "Routine for combination skin", message: "How do I combine skincare for oily and dry areas?" })
     } else {
-      questions.push({ label: 'Hautbarriere stärken', message: 'Wie kann ich meine Hautbarriere mit einer einfachen Routine unterstützen?' })
+      questions.push({ label: "Support the skin barrier", message: "How can I support my skin barrier with a simple routine?" })
     }
   }
   if (questions.length === 0) {
-    questions.push({ label: 'Passende Produkte', message: 'Welche Produkte passen zu meinem aktuellen Hautprofil?' })
-    questions.push({ label: 'Einfache Routine', message: 'Hilf mir, eine einfache Hautpflegeroutine zusammenzustellen.' })
+    questions.push({ label: "Matching products", message: "Which products suit my current skin profile?" })
+    questions.push({ label: "Simple routine", message: "Help me build a simple skincare routine." })
   }
 
   if (weather?.temp !== undefined || weather?.humidity !== undefined || weather?.weatherMain) {
-    questions.push({ label: 'Wetter-Tipps', message: getWeatherRecommendationPrompt(weather) })
+    questions.push({ label: "Weather tips", message: getWeatherRecommendationPrompt(weather) })
   } else {
-    questions.push({ label: 'Morgens oder abends?', message: 'Welche Produkte sollte ich morgens und abends kombinieren?' })
+    questions.push({ label: "Morning or evening?", message: "Which products should I combine in the morning and evening?" })
   }
 
   return questions.slice(0, 3)
 }
 
-const medicalDisclaimer = 'hinweis: dies ist keine medizinische diagnose.'
+const medicalDisclaimer = "note: this is not a medical diagnosis."
 const legacyMedicalDisclaimer = 'Das ist keine medizinische Diagnose, sondern eine Produktempfehlung auf Basis deiner Anfrage.'
 
 function formatConversationDate(value: string) {
-  return new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }).format(new Date(value))
+  return new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }).format(new Date(value))
 }
 
 function renderMessageContent(message: Message) {
@@ -381,7 +382,7 @@ const handledHautwissenStartRef = useRef(false)
       const glowMsg: Message = {
         id: crypto.randomUUID(),
         role: 'assistant',
-        content: '✨ So könnte deine Haut aussehen, wenn du deine Pflegeroutine konsequent durchziehst — rein, strahlend und gesund. Du schaffst das! 💪',
+        content: "✨ This is what your skin could look like with a consistent skincare routine — clear, radiant, and healthy. You can do it! 💪",
         imageUrl: data.imageData,
       }
       const updated = applyMessages(conversationId, (msgs) => [...msgs, glowMsg])
@@ -416,8 +417,8 @@ const handledHautwissenStartRef = useRef(false)
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: trimmed, history: chatHistory, contextProductIds, weather }),
       })
-      if (!response.ok) throw new Error('Die KI-Beratung konnte gerade nicht antworten.')
-      if (!response.body) throw new Error('Streaming nicht unterstützt.')
+      if (!response.ok) throw new Error("The AI advisor could not respond right now.")
+      if (!response.body) throw new Error("Streaming is not supported.")
 
       const reader = response.body.getReader()
       const decoder = new TextDecoder()
@@ -448,7 +449,7 @@ const handledHautwissenStartRef = useRef(false)
             finalCanExplain = parsed.data.canExplainProducts ?? false
           }
 
-          if (parsed.event === 'error') throw new Error(parsed.data.message ?? 'Fehler beim Streamen.')
+          if (parsed.event === 'error') throw new Error(parsed.data.message ?? "Streaming failed.")
         }
         if (done) break
       }
@@ -467,7 +468,7 @@ const handledHautwissenStartRef = useRef(false)
       updateUiOnly(conversationId, (msgs) =>
         msgs.filter((m) => m.id !== assistantMessageId || m.content.trim().length > 0)
       )
-      setError('Die KI-Beratung ist gerade nicht erreichbar. Bitte versuche es gleich nochmal.')
+      setError("The AI advisor is currently unavailable. Please try again shortly.")
     } finally {
       setIsLoading(false)
     }
@@ -500,13 +501,13 @@ useEffect(() => {
       {
         id: crypto.randomUUID(),
         role: 'user' as const,
-        content: `Ich möchte eine KI-Beratung zu ${state.problemTitle}. ${state.problemIntro}`,
+        content: `I'd like AI advice about ${state.problemTitle}. ${state.problemIntro}`,
         imageUrl: state.problemImage ?? null,
       },
       {
         id: crypto.randomUUID(),
         role: 'assistant' as const,
-        content: `Gerne ✨ Ich helfe dir zu **${state.problemTitle}**. Du kannst mir jetzt genauer sagen, was du brauchst: passende Produkte, Routine oder Inhaltsstoffe.`,
+        content: `Of course ✨ I can help you with **${state.problemTitle}**. Tell me more about what you need: suitable products, a routine, or ingredients.`,
       },
     ],
   }
@@ -553,7 +554,7 @@ useEffect(() => {
       ])
       if (updated) saveConversationToDb(updated)
     } catch {
-      setError('Die KI-Erklärung ist gerade nicht erreichbar. Bitte versuche es gleich nochmal.')
+      setError("The AI explanation is currently unavailable. Please try again shortly.")
     } finally {
       setExplainingMessageId(null)
     }
@@ -564,17 +565,17 @@ useEffect(() => {
       {conversationToDelete && (
         <div className="fixed inset-0 z-[1100] flex items-center justify-center bg-black/40 px-4">
           <div className="w-full max-w-lg rounded-[28px] bg-white p-6 sm:p-8 shadow-2xl">
-            <h2 className="mb-4 text-xl sm:text-2xl font-bold text-foreground">Chat löschen?</h2>
-            <p className="mb-6 sm:mb-8 text-muted-foreground">Möchtest du diesen Chatverlauf wirklich löschen?</p>
+            <h2 className="mb-4 text-xl sm:text-2xl font-bold text-foreground">Delete chat?</h2>
+            <p className="mb-6 sm:mb-8 text-muted-foreground">Are you sure you want to delete this chat history?</p>
             <div className="flex gap-3 sm:gap-4">
               <Button type="button" variant="outline" onClick={() => setConversationToDelete(null)}
                 className="flex-1 rounded-full border-border py-3 text-muted-foreground hover:bg-gray-50">
-                Abbrechen
+                Cancel
               </Button>
               <Button type="button"
                 onClick={() => { deleteConversation(conversationToDelete!); setConversationToDelete(null) }}
                 className="flex-1 rounded-full bg-[#D4A574] py-3 text-white hover:bg-[#C49464]">
-                Löschen
+                Delete
               </Button>
             </div>
           </div>
@@ -591,12 +592,12 @@ useEffect(() => {
               onClose={() => setShowAnalysis(false)}
               onAnalysisComplete={(result, imageData) => {
                 const hint = (result as any).multipleFaces
-                  ? '\n\n⚠️ Im Bild wurden mehrere Gesichter erkannt. Für eine genaue Analyse empfehle ich ein einzelnes Foto von dir.'
+                  ? "\n\n⚠️ Multiple faces were detected. For an accurate analysis, please use a photo of just yourself."
                   : ''
-                const assistantContent = `Hautanalyse abgeschlossen ✨\n\n**Hauttyp:** ${result.skinType}\n\nTrockenheit: ${result.dryness}% · Rötungen: ${result.redness}% · Unreinheiten: ${result.blemishes}% · Sensibilität: ${result.sensitivity}%\n\n${result.overall}${hint}`
+                const assistantContent = `Skin analysis complete ✨\n\n**Skin type:** ${result.skinType}\n\nDryness: ${result.dryness}% · Redness: ${result.redness}% · Blemishes: ${result.blemishes}% · Sensitivity: ${result.sensitivity}%\n\n${result.overall}${hint}`
                 const assistantMsgId = crypto.randomUUID()
                 const isRealPhoto = imageData && imageData.startsWith('data:image')
-                const userMsg: Message = { id: crypto.randomUUID(), role: 'user', content: '📸 Hautanalyse gestartet', imageUrl: imageData ?? null }
+                const userMsg: Message = { id: crypto.randomUUID(), role: 'user', content: "📸 Skin analysis started", imageUrl: imageData ?? null }
                 const assistantMsg: Message = {
                   id: assistantMsgId,
                   role: 'assistant',
@@ -612,18 +613,18 @@ useEffect(() => {
                 }
                 // Automatisch Produkte basierend auf Hautanalyse suchen
                 const skinTypeMap: Record<string, string> = {
-                  Normal: 'normale Haut', Oily: 'fettige Haut', Dry: 'trockene Haut',
-                  Combination: 'Mischhaut', Sensitive: 'sensible Haut',
+                  Normal: "normal skin", Oily: "oily skin", Dry: "dry skin",
+                  Combination: "Combination skin", Sensitive: "sensitive skin",
                 }
                 const concerns: string[] = []
-                if (result.redness >= 50) concerns.push('Rötungen')
-                if (result.blemishes >= 50) concerns.push('Unreinheiten')
-                if (result.dryness >= 50) concerns.push('Trockenheit')
-                if (result.sensitivity >= 50) concerns.push('empfindliche Haut')
+                if (result.redness >= 50) concerns.push("Redness")
+                if (result.blemishes >= 50) concerns.push("Blemishes")
+                if (result.dryness >= 50) concerns.push("Dryness")
+                if (result.sensitivity >= 50) concerns.push("sensitive skin")
                 const skinLabel = skinTypeMap[result.skinType] || result.skinType
             const productQuery = concerns.length > 0
-                  ? `Hauttyp: ${skinLabel}. Probleme: ${concerns.join(', ')}. Empfehle passende Produkte.`
-                  : `Hauttyp: ${skinLabel}. Empfehle passende Produkte.`
+                  ? `Skin type: ${skinLabel}. Concerns: ${concerns.join(', ')}. Recommend suitable products.`
+                  : `Skin type: ${skinLabel}. Recommend suitable products.`
 
                 setTimeout(async () => {
                   const productMsgId = crypto.randomUUID()
@@ -668,8 +669,8 @@ useEffect(() => {
             <Sparkles className="h-4 w-4 text-[#A97745]" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-foreground !font-sans">KI-Beratung</h1>
-            <p className="text-xs text-muted-foreground">Produktempfehlungen aus dem SelfGlow Sortiment</p>
+            <h1 className="text-xl font-bold text-foreground !font-sans">AI advisor</h1>
+            <p className="text-xs text-muted-foreground">Product recommendations from the SelfGlow catalog</p>
           </div>
         </div>
 
@@ -677,11 +678,11 @@ useEffect(() => {
           <aside className="self-start rounded-lg border border-border bg-background p-3 lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-hidden">
             <Button type="button" onClick={startNewConversation} disabled={isLoading}
               className="mb-3 h-9 w-full rounded-full bg-[#D4A574] text-sm text-white hover:bg-[#C49464]">
-              <Plus className="mr-2 h-4 w-4" /> Neue Beratung
+              <Plus className="mr-2 h-4 w-4" />  New consultation
             </Button>
             <button type="button" onClick={() => setShowAnalysis(true)}
               className="mb-3 flex h-9 w-full items-center justify-center gap-2 rounded-full border border-[#e0c9a8] bg-[#FDF6EE] text-sm font-medium text-[#A97745] transition-colors hover:bg-[#F5E6D3]">
-              <Camera className="h-4 w-4" /> Haut analysieren
+              <Camera className="h-4 w-4" />  Analyze skin
             </button>
 
             {/* ── Wetter-Widget ── */}
@@ -712,12 +713,12 @@ useEffect(() => {
                 }}
               className="mb-3 flex h-9 w-full items-center justify-between gap-2 rounded-full border border-[#e0c9a8] bg-[#FDF6EE] px-4 text-sm font-medium text-[#A97745] transition-colors hover:bg-[#F5E6D3] disabled:opacity-60"
             >
-              <span>🌤️ Wetter-Tipps</span>
+              <span>🌤️ Weather tips</span>
               <span className="text-xs opacity-70">→</span>
             </button>
 
-            <h2 className="mb-3 text-sm font-semibold text-foreground">Chatverlauf</h2>
-            {isLoadingHistory && <p className="mb-2 text-xs text-muted-foreground">Chats werden geladen...</p>}
+            <h2 className="mb-3 text-sm font-semibold text-foreground">Chat history</h2>
+            {isLoadingHistory && <p className="mb-2 text-xs text-muted-foreground">Loading chats...</p>}
             <div className="max-h-[220px] space-y-2 overflow-y-auto pr-1 lg:max-h-[calc(100vh-18rem)]">
               {chatState.conversations.map((conversation) => {
                 const isActive = conversation.id === chatState.activeConversationId
@@ -737,7 +738,7 @@ useEffect(() => {
                     </button>
                     <button type="button" onClick={() => setConversationToDelete(conversation.id)} disabled={isLoading}
                       className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-muted-foreground opacity-70 transition-colors hover:bg-red-50 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-40 lg:opacity-0 lg:group-hover:opacity-100"
-                      aria-label="Chat löschen">
+                      aria-label="Delete chat">
                       <Trash2 className="h-3.5 w-3.5" />
                     </button>
                   </div>
@@ -830,10 +831,10 @@ useEffect(() => {
                       <div className={cn('max-w-[min(620px,85%)] rounded-lg px-3 py-2 text-sm leading-relaxed',
                         message.role === 'user' ? 'bg-[#D4A574] text-white' : 'bg-[#F5F5F5] text-foreground')}>
                         {message.imageUrl && (
-                          <img src={message.imageUrl} alt="Bild" className="mb-2 max-h-48 w-auto rounded-md object-cover" />
+                          <img src={message.imageUrl} alt="Image" className="mb-2 max-h-48 w-auto rounded-md object-cover" />
                         )}
                         {message.role === 'assistant' && message.content.trim().length === 0
-                          ? <span className="text-muted-foreground">Denke nach...</span>
+                          ? <span className="text-muted-foreground">Thinking...</span>
                           : renderMessageContent(message)}
                       </div>
                       {message.role === 'user' && (
@@ -849,7 +850,7 @@ useEffect(() => {
                         {glowLoadingForMsg === message.id ? (
                           <div className="flex items-center gap-2 text-sm text-muted-foreground">
                             <Sparkles className="h-3.5 w-3.5 animate-pulse text-[#A97745]" />
-                            ✨ Erstelle dein Glow-Bild...
+                            ✨ Creating your glow image...
                           </div>
                         ) : (
                           <button
@@ -859,7 +860,7 @@ useEffect(() => {
                             className="flex items-center gap-2 rounded-full border border-[#e0c9a8] bg-[#FDF6EE] px-4 py-2 text-sm font-medium text-[#A97745] transition-colors hover:bg-[#F5E6D3] disabled:opacity-50"
                           >
                             <Sparkles className="h-3.5 w-3.5" />
-                            ✨ Zeig mir meine Glow-Haut
+                            ✨ Show me my glowing skin
                           </button>
                         )}
                       </div>
@@ -874,7 +875,7 @@ useEffect(() => {
                                 <ProductImage src={product.imageUrl || 'https://placehold.co/120x120?text=Kein+Bild'} alt={product.name}
                                   className="h-16 w-16 shrink-0 rounded-md bg-[#F5F5F5] object-cover" />
                                 <div className="min-w-0">
-                                  <p className="text-xs text-muted-foreground">{product.category}</p>
+                                  <p className="text-xs text-muted-foreground">{displayLabel(product.category)}</p>
                                   <h3 className="line-clamp-2 text-sm font-medium group-hover:text-[#D4A574]">{product.name}</h3>
                                   <p className="mt-0.5 text-xs text-muted-foreground">{product.brand}</p>
                                   <p className="mt-1 text-sm font-semibold">€{product.price.toFixed(2)}</p>
@@ -895,7 +896,7 @@ useEffect(() => {
                                   disabled={Boolean(explainingMessageId) || isLoading}
                                   className="h-8 w-full rounded-full border-[#E8D5C0] px-3 text-xs text-[#A97745] hover:bg-[#FDF7F0]">
                                   <Sparkles className="mr-1.5 h-3.5 w-3.5" />
-                                  {explainingMessageId === `${message.id}-${product.id}` ? 'KI erklärt...' : 'Von KI erklären lassen'}
+                                  {explainingMessageId === `${message.id}-${product.id}` ? "AI is explaining..." : "Ask AI to explain"}
                                 </Button>
                               </div>
                             )}
@@ -911,7 +912,7 @@ useEffect(() => {
                     <div className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#F5E6D3]">
                       <Bot className="h-3.5 w-3.5 text-[#A97745]" />
                     </div>
-                    <div className="rounded-lg bg-[#F5F5F5] px-3 py-2 text-sm text-muted-foreground">Denke nach...</div>
+                    <div className="rounded-lg bg-[#F5F5F5] px-3 py-2 text-sm text-muted-foreground">Thinking...</div>
                   </div>
                 )}
 
@@ -922,7 +923,7 @@ useEffect(() => {
                     <div className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#F5E6D3]">
                       <Bot className="h-3.5 w-3.5 text-[#A97745]" />
                     </div>
-                    <div className="rounded-lg bg-[#F5F5F5] px-3 py-2 text-sm text-muted-foreground">KI erklärt das Produkt...</div>
+                    <div className="rounded-lg bg-[#F5F5F5] px-3 py-2 text-sm text-muted-foreground">AI is explaining the product...</div>
                   </div>
                 )}
               </div>
@@ -931,17 +932,17 @@ useEffect(() => {
 
               <form onSubmit={handleSubmit} className="border-t border-border p-3 md:p-4">
                 <div className="flex gap-2">
-                  <button type="button" onClick={() => setShowAnalysis(true)} title="Haut analysieren"
+                  <button type="button" onClick={() => setShowAnalysis(true)} title="Analyze skin"
                     className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#e0c9a8] bg-[#FDF6EE] text-[#A97745] transition-colors hover:bg-[#F5E6D3]">
                     <Camera className="h-4 w-4" />
                   </button>
                   <input value={input} onChange={(e) => setInput(e.target.value)}
-                    placeholder="Frag nach Hauttyp, Anliegen oder Produktwunsch..."
+                    placeholder="Ask about your skin type, concerns, or product preferences..."
                     className="min-w-0 flex-1 rounded-full border border-border bg-background px-3 py-2 text-sm outline-none transition-colors focus:border-[#D4A574]"
                     disabled={isLoading} />
                   <Button type="submit" disabled={isLoading || input.trim().length === 0}
                     className="h-10 w-10 shrink-0 rounded-full bg-[#D4A574] p-0 text-white hover:bg-[#C49464]"
-                    aria-label="Nachricht senden">
+                    aria-label="Send message">
                     <Send className="h-4 w-4" />
                   </Button>
                 </div>
@@ -949,7 +950,7 @@ useEffect(() => {
             </section>
 
             <section className="rounded-lg border border-border bg-background p-3 sm:p-4">
-              <h2 className="mb-3 text-sm font-semibold text-foreground !font-sans">Schnell starten</h2>
+              <h2 className="mb-3 text-sm font-semibold text-foreground !font-sans">Quick start</h2>
               <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
                 {personalizedStarterQuestions.map((q) => (
                   <button key={q.label} type="button"
@@ -961,7 +962,7 @@ useEffect(() => {
                 ))}
               </div>
               <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-                Die Beratung nutzt Produktdaten aus dem Sortiment und ersetzt keine medizinische Beratung.
+                This advice uses products from our catalog and does not replace medical advice.
               </p>
             </section>
           </main>

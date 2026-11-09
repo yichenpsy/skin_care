@@ -199,11 +199,11 @@ export default function Header() {
           {/* NAVIGATION */}
           <nav className="hidden lg:flex flex-1 items-center justify-center gap-10">
            {[
-  { to: '/', label: 'Startseite', end: true },
-  { to: '/shop', label: 'Produkte', end: false },
-  { to: '/about', label: 'Über uns', end: false },
-  { to: '/chatbot', label: 'KI-Beratung', end: false },
-  { to: '/hautwissen', label: 'Hautwissen', end: false },
+  { to: '/', label: "Home", end: true },
+  { to: '/shop', label: "Products", end: false },
+  { to: '/about', label: "About us", end: false },
+  { to: '/chatbot', label: "AI advisor", end: false },
+  { to: '/hautwissen', label: "Skin guide", end: false },
 ].map(({ to, label, end }) => (
   <NavLink
     key={to}
@@ -281,7 +281,7 @@ export default function Header() {
                 type="text"
                 value={searchTerm}
                 onChange={(e) => handleSearch(e.target.value)}
-                placeholder="Produkte suchen..."
+                placeholder="Search products..."
                 style={{
                   fontFamily: "'Outfit', sans-serif",
                   fontSize: 15,
@@ -384,7 +384,7 @@ export default function Header() {
                   {user?.name || user?.email}
                 </span>
               ) : (
-                <span>Anmelden</span>
+                <span>Sign in</span>
               )}
             </NavLink>
 
@@ -427,7 +427,7 @@ export default function Header() {
                 setSearchOpen(false)
               }
             }}
-            placeholder="Produkte suchen"
+            placeholder="Search products"
             className="w-full rounded-full border border-[#D4A574] px-4 py-2 outline-none"
             autoFocus
             />
@@ -437,14 +437,14 @@ export default function Header() {
       {mobileOpen && (
   <div className="lg:hidden fixed top-[70px] left-0 w-full z-40 bg-white border-b border-[#f0e0cc] shadow-lg">
     <nav className="flex flex-col px-5 py-4 gap-3 text-[#4a3a2a] font-semibold">
-      <Link to="/" onClick={() => setMobileOpen(false)}>Startseite</Link>
-      <Link to="/shop" onClick={() => setMobileOpen(false)}>Produkte</Link>
-      <Link to="/about" onClick={() => setMobileOpen(false)}>Über uns</Link>
-      <Link to="/chatbot" onClick={() => setMobileOpen(false)}>KI-Beratung</Link>
-      <Link to="/hautwissen" onClick={() => setMobileOpen(false)}>Hautwissen</Link>
-      <Link to="/wishlist" onClick={() => setMobileOpen(false)}>Merkliste</Link>
+      <Link to="/" onClick={() => setMobileOpen(false)}>Home</Link>
+      <Link to="/shop" onClick={() => setMobileOpen(false)}>Products</Link>
+      <Link to="/about" onClick={() => setMobileOpen(false)}>About us</Link>
+      <Link to="/chatbot" onClick={() => setMobileOpen(false)}>AI advisor</Link>
+      <Link to="/hautwissen" onClick={() => setMobileOpen(false)}>Skin guide</Link>
+      <Link to="/wishlist" onClick={() => setMobileOpen(false)}>Wishlist</Link>
       <Link to={isLoggedIn ? "/profile" : "/login"} onClick={() => setMobileOpen(false)}>
-        {isLoggedIn ? "Mein Profil" : "Anmelden"}
+        {isLoggedIn ? "My profile" : "Sign in"}
       </Link>
     </nav>
   </div>
@@ -454,11 +454,11 @@ export default function Header() {
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 px-4">
           <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl">
             <h2 className="mb-2 text-lg font-bold text-[#2a1c10]">
-              Wirklich abmelden?
+              Sign out?
             </h2>
 
             <p className="mb-6 text-sm text-gray-600">
-              Möchtest du dich wirklich von deinem SelfGlow-Konto abmelden?
+              Are you sure you want to sign out of your SelfGlow account?
             </p>
 
             <div className="flex gap-3">
@@ -467,7 +467,7 @@ export default function Header() {
                 onClick={() => setShowLogout(false)}
                 className="flex-1 rounded-full border border-gray-300 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
               >
-                Abbrechen
+                Cancel
               </button>
 
               <button
@@ -475,7 +475,7 @@ export default function Header() {
                 onClick={handleLogout}
                 className="flex-1 rounded-full bg-[#D4A574] py-2.5 text-sm font-medium text-white hover:bg-[#c4945f]"
               >
-                Abmelden
+                Sign out
               </button>
             </div>
           </div>

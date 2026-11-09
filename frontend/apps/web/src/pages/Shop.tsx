@@ -1,3 +1,4 @@
+import { displayLabel } from '@/lib/display-labels'
 import { ProductImage } from '@/components/ProductImage'
 import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
@@ -52,26 +53,26 @@ const PRODUCTS_PER_PAGE = 25
 type SortOption = 'relevance' | 'name-asc' | 'name-desc' | 'price-asc' | 'price-desc'
 
 const sortOptions: { value: SortOption; label: string }[] = [
-  { value: 'relevance', label: 'Relevanz' },
+  { value: 'relevance', label: "Relevance" },
   { value: 'name-asc', label: 'Name (A-Z)' },
   { value: 'name-desc', label: 'Name (Z-A)' },
-  { value: 'price-asc', label: 'Preis (niedrig - hoch)' },
-  { value: 'price-desc', label: 'Preis (hoch - niedrig)' },
+  { value: 'price-asc', label: "Price (low to high)" },
+  { value: 'price-desc', label: "Price (high to low)" },
 ]
 
 const skinTypes = [
-  { name: 'Combination', label: 'Mischhaut' },
-  { name: 'Dry', label: 'Trockene Haut' },
-  { name: 'Oily', label: 'Fettige Haut' },
-  { name: 'Normal', label: 'Normale Haut' },
-  { name: 'Sensitive', label: 'Sensible Haut' },
+  { name: 'Combination', label: "Combination skin" },
+  { name: 'Dry', label: "Dry skin" },
+  { name: 'Oily', label: "Oily skin" },
+  { name: 'Normal', label: "Normal skin" },
+  { name: 'Sensitive', label: "Sensitive skin" },
 ]
 
 const concerns = [
-  { name: 'Acne', label: 'Akne' },
+  { name: 'Acne', label: "Acne" },
   { name: 'Anti-Aging', label: 'Anti-Aging' },
-  { name: 'Grosse Poren', label: 'Große Poren' },
-  { name: 'Rötungen', label: 'Rötungen' },
+  { name: 'Grosse Poren', label: "Large pores" },
+  { name: 'Rötungen', label: "Redness" },
 ]
 
 const productTypes = [
@@ -84,8 +85,8 @@ const productTypes = [
 
 const productFeatures = [
   { key: 'vegan', label: 'Vegan' },
-  { key: 'alcoholFree', label: 'Alkoholfrei' },
-  { key: 'fragranceFree', label: 'Parfümfrei' },
+  { key: 'alcoholFree', label: "Alcohol-free" },
+  { key: 'fragranceFree', label: "Fragrance-free" },
 ]
 
 const productBadges = [
@@ -97,13 +98,13 @@ const productBadges = [
   },
   {
     key: 'alcoholFree' as const,
-    label: 'Alkoholfrei',
+    label: "Alcohol-free",
     Icon: WineOff,
     className: 'bg-[#F8E9EE] text-[#A64D6A]',
   },
   {
     key: 'fragranceFree' as const,
-    label: 'Parfümfrei',
+    label: "Fragrance-free",
     Icon: DropletOff,
     className: 'bg-[#E5F0F6] text-[#2F6D8A]',
   },
@@ -228,7 +229,7 @@ function ProductCard({ product }: { product: Product }) {
   <Check className="h-5 w-5 shrink-0" />
 
   <span className="text-xs sm:text-sm font-medium">
-    Produkt wurde zum Warenkorb hinzugefügt
+    Product added to cart
   </span>
 </div>
         </div>
@@ -255,8 +256,8 @@ function ProductCard({ product }: { product: Product }) {
             )}
             aria-label={
               inWishlist
-                ? 'Aus Merkliste entfernen'
-                : 'Zur Merkliste hinzufügen'
+                ? "Remove from wishlist"
+                : "Add to wishlist"
             }
           >
             <Heart
@@ -272,14 +273,14 @@ function ProductCard({ product }: { product: Product }) {
           {showLoginHint && (
             <div className="absolute top-12 left-3 right-3 z-20 rounded-xl bg-white p-3 text-xs shadow-lg border border-border">
               <p className="mb-2 text-foreground">
-                Bitte einloggen, um Produkte zu speichern.
+                Please sign in to save products.
               </p>
 
               <Link
                 to="/login"
                 className="font-medium text-[#D4A574] hover:underline"
               >
-                Zur Anmeldung
+                Go to sign in
               </Link>
             </div>
           )}
@@ -288,7 +289,7 @@ function ProductCard({ product }: { product: Product }) {
 <Link to={`/product/${product.id}`} className="block flex-1">
           <div className="p-4 pb-2">
             <p className="text-xs text-muted-foreground mb-1">
-              {product.category}
+              {displayLabel(product.category)}
             </p>
 
             <h3 className="font-medium text-foreground text-sm mb-1 line-clamp-2 hover:text-[#D4A574] transition-colors">
@@ -345,7 +346,7 @@ function ProductCard({ product }: { product: Product }) {
 
             <div className="flex items-center gap-2">
               <span className="font-bold text-foreground">
-                {product.price.toLocaleString('de-DE', {
+                {product.price.toLocaleString('en-GB', {
                   style: 'currency',
                   currency: 'EUR',
                 })}
@@ -366,7 +367,7 @@ function ProductCard({ product }: { product: Product }) {
                   }
                 }}
                 className="px-2"
-                aria-label="Menge verringern"
+                aria-label="Decrease quantity"
               >
                 -
               </button>
@@ -376,7 +377,7 @@ function ProductCard({ product }: { product: Product }) {
               <button
                 onClick={() => updateQuantity(product.id, cartItem.quantity + 1)}
                 className="px-2"
-                aria-label="Menge erhöhen"
+                aria-label="Increase quantity"
               >
                 +
               </button>
@@ -387,7 +388,7 @@ function ProductCard({ product }: { product: Product }) {
               className="w-full rounded-full text-sm transition-colors bg-[#F5E6D3] text-foreground hover:bg-[#E8D5C0]"
             >
               <ShoppingCart className="h-4 w-4 mr-2" />
-              In den Warenkorb
+              Add to cart
             </Button>
           )}
         </div>
@@ -590,14 +591,14 @@ export default function Shop() {
         )
 
         if (!response.ok) {
-          throw new Error('Produkte konnten nicht geladen werden')
+          throw new Error("Could not load products")
         }
 
         const data: Product[] = await response.json()
         setProducts(data)
       } catch (err) {
         console.error(err)
-        setError('Fehler beim Laden der Produkte')
+        setError("Error loading products")
       } finally {
         setLoading(false)
       }
@@ -630,12 +631,12 @@ export default function Shop() {
         const scoreDiff = (b.recommendationScore ?? 0) - (a.recommendationScore ?? 0)
         if (scoreDiff !== 0) return scoreDiff
 
-        return a.name.localeCompare(b.name, 'de')
+        return a.name.localeCompare(b.name, 'en')
       }
       case 'name-asc':
-        return a.name.localeCompare(b.name, 'de')
+        return a.name.localeCompare(b.name, 'en')
       case 'name-desc':
-        return b.name.localeCompare(a.name, 'de')
+        return b.name.localeCompare(a.name, 'en')
       case 'price-asc':
         return a.price - b.price
       case 'price-desc':
@@ -661,9 +662,9 @@ export default function Shop() {
 
   const renderFilterContent = () => (
     <>
-      <FilterSection title="Hauttyp">
+      <FilterSection title="Skin type">
         {skinTypes.map((type) => (
-          <label key={type.name} className="group flex items-center gap-2 cursor-pointer rounded-lg px-2 py-1.5 transition-all duration-150 hover:bg-[#F5E6D3]">
+          <label key={displayLabel(type.name)} className="group flex items-center gap-2 cursor-pointer rounded-lg px-2 py-1.5 transition-all duration-150 hover:bg-[#F5E6D3]">
             <Checkbox
               checked={selectedSkinType.includes(type.name)}
               onCheckedChange={() =>
@@ -682,7 +683,7 @@ export default function Shop() {
         ))}
       </FilterSection>
 
-      <FilterSection title="Hautanliegen">
+      <FilterSection title="Skin concerns">
         {concerns.map((concern) => (
           <label key={concern.name} className="group flex items-center gap-2 cursor-pointer rounded-lg px-2 py-1.5 transition-all duration-150 hover:bg-[#F5E6D3]">
             <Checkbox
@@ -703,7 +704,7 @@ export default function Shop() {
         ))}
       </FilterSection>
 
-      <FilterSection title="Produkteigenschaften">
+      <FilterSection title="Product features">
         {productFeatures.map((feature) => (
           <label key={feature.key} className="group flex items-center gap-2 cursor-pointer rounded-lg px-2 py-1.5 transition-all duration-150 hover:bg-[#F5E6D3]">
             <Checkbox
@@ -717,9 +718,9 @@ export default function Shop() {
         ))}
       </FilterSection>
 
-      <FilterSection title="Produkttyp">
+      <FilterSection title="Product type">
         {productTypes.map((type) => (
-          <label key={type.name} className="group flex items-center gap-2 cursor-pointer rounded-lg px-2 py-1.5 transition-all duration-150 hover:bg-[#F5E6D3]">
+          <label key={displayLabel(type.name)} className="group flex items-center gap-2 cursor-pointer rounded-lg px-2 py-1.5 transition-all duration-150 hover:bg-[#F5E6D3]">
             <Checkbox
               checked={selectedCategory.includes(type.name)}
               onCheckedChange={() =>
@@ -732,18 +733,18 @@ export default function Shop() {
               }
             />
             <span className="text-sm text-foreground transition-colors group-hover:text-[#A97745]">
-              {type.name}
+              {displayLabel(type.name)}
             </span>
           </label>
         ))}
       </FilterSection>
 
-      <FilterSection title="Preis">
+      <FilterSection title="Price">
         <div className="px-2 space-y-4">
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             <div className="flex-1">
               <label className="block text-xs text-muted-foreground mb-1">
-                Min. Preis
+                Min. price
               </label>
 
               <input
@@ -787,7 +788,7 @@ export default function Shop() {
 
             <div className="flex-1">
               <label className="block text-xs text-muted-foreground mb-1">
-                Max. Preis
+                Max. price
               </label>
 
               <input
@@ -835,7 +836,7 @@ export default function Shop() {
             variant="outline"
             onClick={resetAllFilters}
             className="w-full rounded-full bg-[#F5E6D3] text-[#4a3a2a] hover:bg-[#E8D5C0] transition-colors"          >
-            Alles Zurücksetzen
+            Reset all
           </Button>
         </div>
       </FilterSection>
@@ -886,13 +887,13 @@ export default function Shop() {
         </aside>
 
         <div className="flex-1">
-          {loading && <p>Produkte werden geladen...</p>}
+          {loading && <p>Loading products...</p>}
 
           {error && <p className="text-red-500">{error}</p>}
 
           {!loading && !error && searchQuery && (
             <p className="mb-4 text-sm text-muted-foreground">
-              Suchergebnisse für:{' '}
+              Search results for:{' '}
               <span className="font-medium text-foreground">
                 {searchQuery}
               </span>
@@ -901,7 +902,7 @@ export default function Shop() {
 
           {!loading && !error && sortedProducts.length === 0 && (
             <p className="text-muted-foreground">
-              Keine Produkte gefunden.
+              No products found.
             </p>
           )}
 
@@ -909,7 +910,7 @@ export default function Shop() {
             <>
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-6">
                 <p className="text-sm text-muted-foreground">
-                  {sortedProducts.length} Produkte
+                  {sortedProducts.length}  Products
                 </p>
 
                 <div className="flex items-center gap-2">
@@ -945,8 +946,8 @@ export default function Shop() {
 
               <div className="mt-10 flex flex-col items-center gap-3">
                 <p className="text-sm text-muted-foreground">
-                  Zeige 1 - {Math.min(visibleCount, sortedProducts.length)} von{' '}
-                  {sortedProducts.length} Produkten
+                  Showing 1 - {Math.min(visibleCount, sortedProducts.length)} of{' '}
+                  {sortedProducts.length}  products
                 </p>
 
                 {visibleCount < sortedProducts.length && (
@@ -956,7 +957,7 @@ export default function Shop() {
                     }
                     className="bg-[#F5E6D3] text-foreground hover:bg-[#E8D5C0] rounded-full px-8"
                   >
-                    Weitere Produkte laden
+                    Load more products
                   </Button>
                 )}
               </div>

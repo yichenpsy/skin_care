@@ -1,3 +1,4 @@
+import { displayLabel } from '@/lib/display-labels'
 import { ProductImage } from '@/components/ProductImage'
 import { useState, useEffect, useMemo  } from 'react'
 import { Link } from 'react-router-dom'
@@ -34,13 +35,13 @@ export default function Cart() {
         const response = await fetch(apiUrl('/api/products'))
 
         if (!response.ok) {
-          throw new Error('Produkte konnten nicht geladen werden')
+          throw new Error("Could not load products")
         }
 
         const data = await response.json()
         setProducts(data)
       } catch (error) {
-        console.error('Fehler beim Laden der Produkte:', error)
+        console.error("Error loading products:", error)
       }
     }
 
@@ -90,7 +91,7 @@ export default function Cart() {
   }
 
   const formatPrice = (price: number) =>
-    `${price.toFixed(2).replace('.', ',')} €`
+    new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'EUR' }).format(price)
 
   const routineCategories = [
     'Gesichtsreinigung',
@@ -188,18 +189,18 @@ export default function Cart() {
   }, [items, products, cartAnalysis])
 
     const skinTypeLabels: Record<string, string> = {
-      Oily: 'fettige Haut',
-      Dry: 'trockene Haut',
-      Sensitive: 'sensible Haut',
-      Combination: 'Mischhaut',
-      Normal: 'normale Haut',
+      Oily: "oily skin",
+      Dry: "dry skin",
+      Sensitive: "sensitive skin",
+      Combination: "Combination skin",
+      Normal: "normal skin",
     }
 
     const concernLabels: Record<string, string> = {
-      Acne: 'Akne',
+      Acne: "Acne",
       'Anti-Aging': 'Anti-Aging',
-      'Grosse Poren': 'große Poren',
-      'Rötungen': 'Rötungen',
+      'Grosse Poren': "large pores",
+      'Rötungen': "Redness",
     }
   const getRecommendationReasons = (product: Product) => {
     const reasons: string[] = []
@@ -209,7 +210,7 @@ export default function Cart() {
       product.skinTypes?.toLowerCase().includes(cartAnalysis.preferredSkinType.toLowerCase())
     ) {
       reasons.push(
-        `Für ${skinTypeLabels[cartAnalysis.preferredSkinType] ?? cartAnalysis.preferredSkinType} geeignet`
+        `For ${skinTypeLabels[cartAnalysis.preferredSkinType] ?? cartAnalysis.preferredSkinType}`
       )
     }
 
@@ -218,7 +219,7 @@ export default function Cart() {
       product.concerns?.toLowerCase().includes(cartAnalysis.preferredConcern.toLowerCase())
     ) {
       reasons.push(
-        `Unterstützt bei ${concernLabels[cartAnalysis.preferredConcern] ?? cartAnalysis.preferredConcern}`
+        `Helps with ${concernLabels[cartAnalysis.preferredConcern] ?? cartAnalysis.preferredConcern}`
       )
     }
 
@@ -227,15 +228,15 @@ export default function Cart() {
     }
 
     if (cartAnalysis.alcoholFreePreferred && product.alcoholFree) {
-      reasons.push('Alkoholfrei')
+      reasons.push("Alcohol-free")
     }
 
     if (cartAnalysis.fragranceFreePreferred && product.fragranceFree) {
-      reasons.push('Parfümfrei')
+      reasons.push("Fragrance-free")
     }
 
     if (reasons.length === 0) {
-      reasons.push('Passende Ergänzung für deine Routine')
+      reasons.push("A great addition to your routine")
     }
     return reasons
   }
@@ -249,17 +250,17 @@ export default function Cart() {
           </div>
 
           <h1 className="text-2xl font-bold text-foreground mb-4">
-            Dein Warenkorb ist leer
+            Your cart is empty
           </h1>
 
           <p className="text-muted-foreground mb-8">
-            Du hast noch keine Produkte in deinen Warenkorb gelegt.
+            You haven't added any products to your cart yet.
           </p>
 
           <Link to="/shop">
             <Button className="bg-[#D4A574] text-white hover:bg-[#C49464] rounded-full px-8">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Weiter einkaufen
+              Continue shopping
             </Button>
           </Link>
         </div>
@@ -272,7 +273,7 @@ export default function Cart() {
     <div className="container mx-auto px-4 py-8">
 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
 <h1 className="text-2xl sm:text-3xl font-bold text-foreground">
-            Warenkorb
+            Cart
         </h1>
 
         <Button
@@ -280,7 +281,7 @@ export default function Cart() {
           className="rounded-full border border-[#E8D5C0] bg-white px-5 py-2 text-[#8A6337] shadow-sm hover:bg-[#FDF7F0] hover:border-[#D4A574]"
         >
           <Trash2 className="h-4 w-4 mr-2" />
-          Warenkorb leeren
+          Clear cart
         </Button>
       </div>
 
@@ -295,7 +296,7 @@ export default function Cart() {
             />
 
             <span className="text-sm text-muted-foreground">
-              Alle auswählen ({selectedCartItems.length} ausgewählt)
+              Select all ({selectedCartItems.length}  selected)
             </span>
           </label>
 
@@ -324,7 +325,7 @@ className="flex flex-col sm:flex-row gap-4 p-4 bg-background border border-borde
 
               <div className="flex-1 min-w-0">
                 <p className="text-xs text-muted-foreground mb-1">
-                  {item.category}
+                  {displayLabel(item.category)}
                 </p>
 
                 <Link to={`/product/${item.id}`}>
@@ -350,7 +351,7 @@ className="flex flex-col sm:flex-row gap-4 p-4 bg-background border border-borde
                   <button
                   onClick={() => handleRemoveItem(item.id)}
                   className="p-1 text-muted-foreground hover:text-destructive transition-colors"
-                  aria-label="Produkt entfernen"
+                  aria-label="Remove product"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
@@ -360,7 +361,7 @@ className="flex flex-col sm:flex-row gap-4 p-4 bg-background border border-borde
                     onClick={() => updateQuantity(item.id, item.quantity - 1)}
                     disabled={item.quantity === 1}
                     className="flex h-7 w-7 items-center justify-center hover:bg-[#E8D5C0] rounded-full transition-colors disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent"
-                    aria-label="Menge verringern"
+                    aria-label="Decrease quantity"
                   >
                     <Minus
                       className={`h-3 w-3 ${
@@ -376,7 +377,7 @@ className="flex flex-col sm:flex-row gap-4 p-4 bg-background border border-borde
                   <button
                     onClick={() => updateQuantity(item.id, item.quantity + 1)}
                     className="flex h-7 w-7 items-center justify-center hover:bg-[#E8D5C0] rounded-full transition-colors"
-                    aria-label="Menge erhöhen"
+                    aria-label="Increase quantity"
                   >
                     <Plus className="h-3 w-3 text-foreground" />
                   </button>
@@ -389,11 +390,11 @@ className="flex flex-col sm:flex-row gap-4 p-4 bg-background border border-borde
           {recommendedProducts.length > 0 && (
             <div className="mt-8">
               <h2 className="text-xl font-bold text-foreground mb-2">
-                Ergänze deine Hautpflegeroutine
+                Complete your skincare routine
               </h2>
 
               <p className="text-sm text-muted-foreground mb-4">
-                Basierend auf deinem Warenkorb empfehlen wir Produkte, die deine Hautpflegeroutine sinnvoll ergänzen.              </p>
+                Based on your cart, we recommend products that complement your skincare routine.              </p>
 
               <div className="w-full max-w-full overflow-x-auto pb-3">
                 <div className="flex w-max gap-4 snap-x scroll-smooth">
@@ -408,7 +409,7 @@ className="flex flex-col sm:flex-row gap-4 p-4 bg-background border border-borde
                           className="h-44 sm:h-56 lg:h-64 w-full rounded-lg object-contain mb-3 hover:scale-[1.02] transition-transform"                      />
 
                         <p className="text-xs text-muted-foreground">
-                          {product.category}
+                          {displayLabel(product.category)}
                         </p>
 
                         <h3 className="font-medium mb-2 min-h-[72px] line-clamp-3 hover:text-[#D4A574]">
@@ -430,7 +431,7 @@ className="flex flex-col sm:flex-row gap-4 p-4 bg-background border border-borde
 
                         <div className="mt-4 border-t border-[#E8D5C0] pt-3 flex items-center gap-3">
                           <p className="text-xl font-bold whitespace-nowrap">
-                            {product.price.toLocaleString('de-DE', {
+                            {product.price.toLocaleString('en-GB', {
                               style: 'currency',
                               currency: 'EUR',
                             })}
@@ -454,7 +455,7 @@ className="flex flex-col sm:flex-row gap-4 p-4 bg-background border border-borde
                             className="flex-1 rounded-full bg-[#D4A574] text-white hover:bg-[#C49464]"
                           >
                             <ShoppingCart className="h-4 w-4 mr-2" />
-                            Hinzufügen
+                            Add
                           </Button>
                         </div>
                     </div>
@@ -467,25 +468,25 @@ className="flex flex-col sm:flex-row gap-4 p-4 bg-background border border-borde
         <div className="lg:col-span-1 pt-9">
           <div className="sticky top-24 bg-[#F5E6D3] rounded-xl p-6">
             <h2 className="text-lg font-bold text-foreground mb-4">
-              Bestellübersicht
+              Order summary
             </h2>
 
             <div className="space-y-3 mb-6">
               <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Zwischensumme</span>
+                <span className="text-muted-foreground">Subtotal</span>
                 <span className="text-foreground">
                   {formatPrice(selectedTotalPrice)}
                 </span>
               </div>
 
               <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Versand</span>
-                <span className="text-foreground">Kostenlos</span>
+                <span className="text-muted-foreground">Shipping</span>
+                <span className="text-foreground">Free</span>
               </div>
 
               <div className="border-t border-[#D4A574]/30 pt-3">
                 <div className="flex justify-between font-bold">
-                  <span className="text-foreground">Gesamt</span>
+                  <span className="text-foreground">Total</span>
                   <span className="text-foreground">
                     {formatPrice(selectedTotalPrice)}
                   </span>
@@ -496,7 +497,7 @@ className="flex flex-col sm:flex-row gap-4 p-4 bg-background border border-borde
             {selectedCartItems.length > 0 ? (
               <Link to="/checkout" className="block">
                 <Button className="w-full bg-[#D4A574] text-white hover:bg-[#C49464] rounded-full mb-3">
-                  Zur Kasse
+                  Checkout
                 </Button>
               </Link>
             ) : (
@@ -504,7 +505,7 @@ className="flex flex-col sm:flex-row gap-4 p-4 bg-background border border-borde
                 disabled
                 className="w-full bg-[#D4A574] text-white rounded-full mb-3 opacity-50 cursor-not-allowed"
               >
-                Zur Kasse
+                Checkout
               </Button>
             )}
 
@@ -513,7 +514,7 @@ className="flex flex-col sm:flex-row gap-4 p-4 bg-background border border-borde
                 variant="outline"
                 className="w-full rounded-full border-[#D4A574] text-[#8A6337] hover:bg-[#F5E6D3]"
               >
-                Weiter einkaufen
+                Continue shopping
               </Button>
             </Link>
           </div>
@@ -524,11 +525,11 @@ className="flex flex-col sm:flex-row gap-4 p-4 bg-background border border-borde
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 px-4">
           <div className="w-full max-w-lg rounded-[28px] bg-white p-8 shadow-2xl">
             <h2 className="mb-4 text-2xl font-bold text-foreground">
-              Warenkorb leeren?
+              Clear cart?
             </h2>
 
             <p className="mb-8 text-muted-foreground">
-              Möchtest du wirklich alle Produkte aus deinem Warenkorb entfernen?
+              Are you sure you want to remove all products from your cart?
             </p>
 
             <div className="flex gap-4">
@@ -538,7 +539,7 @@ className="flex flex-col sm:flex-row gap-4 p-4 bg-background border border-borde
                 onClick={() => setShowClearCartModal(false)}
                 className="flex-1 rounded-full border-border py-3 text-muted-foreground hover:bg-gray-50"
               >
-                Abbrechen
+                Cancel
               </Button>
 
               <Button
@@ -546,7 +547,7 @@ className="flex flex-col sm:flex-row gap-4 p-4 bg-background border border-borde
                 onClick={confirmClearCart}
                 className="flex-1 rounded-full bg-[#D4A574] py-3 text-white hover:bg-[#C49464]"
               >
-                Leeren
+                Clear
               </Button>
             </div>
           </div>
@@ -557,11 +558,11 @@ className="flex flex-col sm:flex-row gap-4 p-4 bg-background border border-borde
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 px-4">
           <div className="w-full max-w-lg rounded-[28px] bg-white p-8 shadow-2xl">
             <h2 className="mb-4 text-2xl font-bold text-foreground">
-              Produkt entfernen?
+              Remove product?
             </h2>
 
             <p className="mb-8 text-muted-foreground">
-              Möchtest du dieses Produkt wirklich aus dem Warenkorb entfernen?
+              Are you sure you want to remove this product from your cart?
             </p>
 
             <div className="flex gap-4">
@@ -571,7 +572,7 @@ className="flex flex-col sm:flex-row gap-4 p-4 bg-background border border-borde
                 onClick={() => setItemToRemove(null)}
                 className="flex-1 rounded-full border-border py-3 text-muted-foreground hover:bg-gray-50"
               >
-                Abbrechen
+                Cancel
               </Button>
 
               <Button
@@ -579,7 +580,7 @@ className="flex flex-col sm:flex-row gap-4 p-4 bg-background border border-borde
                 onClick={confirmRemoveItem}
                 className="flex-1 rounded-full bg-[#D4A574] py-3 text-white hover:bg-[#C49464]"
               >
-                Entfernen
+                Remove
               </Button>
             </div>
           </div>

@@ -9,14 +9,14 @@ export default function ThankYou() {
     || localStorage.getItem('lastOrderNumber')       
     || '—'
 
-  const userEmail = user?.email || guestEmail || 'deine E-Mail'
+  const userEmail = user?.email || guestEmail || "your email address"
 
   return (
     <div className="min-h-screen flex items-start justify-center bg-[#f6f6f6] px-4 pt-20 sm:pt-30">
       <div className="text-center max-w-xl w-full">
         <h1 className="text-[16px] text-[20px] tracking-[0.15em] sm:tracking-[0.25em] font-medium text-gray-700 mb-8"
           style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>
-          VIELEN DANK FÜR DEINEN EINKAUF!
+          THANK YOU FOR YOUR ORDER!
         </h1>
 
         <div className="flex justify-center mb-8">
@@ -34,26 +34,26 @@ export default function ThankYou() {
         <div className="flex justify-center mb-6 px-2">
           <p className="text-[13px] sm:text-[15px] font-normal text-gray-700 text-center"
             style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>
-            Eine Bestellbestätigung wird in Kürze per E-Mail an <strong>{userEmail}</strong> verschickt.
+            An order confirmation will be emailed shortly to <strong>{userEmail}</strong> verschickt.
           </p>
         </div>
 
         {/* ← Kommt jetzt aus der DB, immer eindeutig */}
         <p className="text-[12px] sm:text-[13px] text-gray-500 mb-10"
           style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>
-          Deine Bestellnummer: <strong>{orderNumber}</strong>
+          Your order number: <strong>{orderNumber}</strong>
         </p>
 
         <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 px-4 sm:px-0">
           <Link to="/profile"
             className="px-6 py-2.5 text-[13px] bg-[#D4A574] text-white tracking-wide text-center"
             style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>
-            Zu Bestellungen
+            View orders
           </Link>
           <Link to="/shop"
             className="px-6 py-2.5 text-[13px] border border-gray-400 text-gray-700 tracking-wide text-center"
             style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>
-            Weiter einkaufen
+            Continue shopping
           </Link>
         </div>
       </div>

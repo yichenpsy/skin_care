@@ -1,3 +1,4 @@
+import { displayLabel } from '@/lib/display-labels'
 import { ProductImage } from '@/components/ProductImage'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
@@ -26,7 +27,7 @@ type ChatResponseData = {
 }
 
 const PRODUCT_HISTORY_PAGE_SIZE = 8
-const SHORT_WELCOME_MESSAGE = 'Wobei kann ich helfen?'
+const SHORT_WELCOME_MESSAGE = "How can I help?"
 
 function parseSseEvent(eventText: string) {
   const eventType = eventText.split('\n').find((line) => line.startsWith('event:'))?.slice(6).trim()
@@ -92,7 +93,7 @@ function isStoredWelcomeMessage(message: Message) {
   return (
     message.id === 'welcome' ||
     message.content === SHORT_WELCOME_MESSAGE ||
-    message.content.includes('SelfGlow KI-Beratung')
+    message.content.includes("SelfGlow AI advisor")
   )
 }
 
@@ -125,7 +126,7 @@ function HistoryDivider() {
   return (
     <div className="flex items-center gap-2 py-1 text-xs text-muted-foreground">
       <span className="h-px flex-1 bg-[#E8D5C0]" />
-      <span>--- Chatverlauf ---</span>
+      <span>--- Chat history ---</span>
       <span className="h-px flex-1 bg-[#E8D5C0]" />
     </div>
   )
@@ -208,7 +209,7 @@ export default function FloatingChat({
 
     fetch(apiUrl(`/api/products/${currentProductId}`), { signal: controller.signal })
       .then(async (response) => {
-        if (!response.ok) throw new Error('Produkt konnte nicht geladen werden')
+        if (!response.ok) throw new Error("Could not load the product")
         return response.json() as Promise<CurrentProduct>
       })
       .then((product) => setCurrentProduct(product))
@@ -356,8 +357,8 @@ export default function FloatingChat({
         }),
       })
 
-      if (!response.ok) throw new Error('Die KI-Beratung konnte gerade nicht antworten.')
-      if (!response.body) throw new Error('Streaming nicht unterstützt.')
+      if (!response.ok) throw new Error("The AI advisor could not respond right now.")
+      if (!response.body) throw new Error("Streaming is not supported.")
 
       const reader = response.body.getReader()
       const decoder = new TextDecoder()
@@ -404,7 +405,7 @@ export default function FloatingChat({
           }
 
           if (parsed.event === 'error') {
-            throw new Error(parsed.data.message ?? 'Fehler beim Streamen.')
+            throw new Error(parsed.data.message ?? "Streaming failed.")
           }
         }
 
@@ -451,7 +452,7 @@ export default function FloatingChat({
           msgs.filter((message) => message.id !== assistantMessageId || message.content.trim().length > 0)
         )
       }
-      setError('Die KI-Beratung ist gerade nicht erreichbar. Bitte versuche es gleich nochmal.')
+      setError("The AI advisor is currently unavailable. Please try again shortly.")
     } finally {
       setIsLoading(false)
     }
@@ -466,7 +467,7 @@ export default function FloatingChat({
     if (!currentProduct || isLoading) return
 
     void sendMessage(
-      `Bitte bewerte dieses Produkt für mich: ${currentProduct.brand} ${currentProduct.name}. Passt es zu meiner Haut und worauf soll ich achten?`
+      `Please review this product for me: ${currentProduct.brand} ${currentProduct.name}. Does it suit my skin, and what should I look out for?`
     )
   }
 
@@ -489,7 +490,7 @@ export default function FloatingChat({
             )}
           >
             {message.role === 'assistant' && message.content.trim().length === 0
-              ? <span className="text-muted-foreground">Denke nach...</span>
+              ? <span className="text-muted-foreground">Thinking...</span>
               : renderStructuredText(message.content)}
           </div>
 
@@ -515,7 +516,7 @@ export default function FloatingChat({
                   className="h-14 w-14 shrink-0 rounded-md bg-[#F5F5F5] object-cover"
                 />
                 <div className="min-w-0">
-                  <p className="truncate text-xs text-muted-foreground">{product.category}</p>
+                  <p className="truncate text-xs text-muted-foreground">{displayLabel(product.category)}</p>
                   <h3 className="line-clamp-2 text-sm font-medium">{product.name}</h3>
                   <p className="text-xs text-muted-foreground">{product.brand}</p>
                 </div>
@@ -537,8 +538,8 @@ export default function FloatingChat({
                 <Bot className="h-4 w-4 text-[#A97745]" />
               </div>
               <div>
-                <h2 className="text-sm font-semibold text-foreground">KI-Beratung</h2>
-                <p className="text-xs text-muted-foreground">Direkt auf dieser Seite</p>
+                <h2 className="text-sm font-semibold text-foreground">AI advisor</h2>
+                <p className="text-xs text-muted-foreground">Right on this page</p>
               </div>
             </div>
 
@@ -546,7 +547,7 @@ export default function FloatingChat({
               type="button"
               onClick={() => setIsOpen(false)}
               className="flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-[#F5E6D3] hover:text-foreground"
-              aria-label="KI-Beratung schließen"
+              aria-label="Close AI advisor"
             >
               <X className="h-4 w-4" />
             </button>
@@ -563,7 +564,7 @@ export default function FloatingChat({
                 onClick={loadOlderProductMessages}
                 className="mx-auto flex rounded-full border border-[#E8D5C0] bg-white px-4 py-1.5 text-xs font-medium text-[#8A5D2F] shadow-sm transition hover:bg-[#FFFBF6]"
               >
-                Historische Nachrichten
+                Previous messages
               </button>
             )}
 
@@ -606,7 +607,7 @@ export default function FloatingChat({
                   <Bot className="h-3.5 w-3.5 text-[#A97745]" />
                 </div>
                 <div className="rounded-lg bg-white px-3 py-2 text-sm text-muted-foreground shadow-sm">
-                  Denke nach...
+                  Thinking...
                 </div>
               </div>
             )}
@@ -626,7 +627,7 @@ export default function FloatingChat({
                   className="h-14 w-14 shrink-0 rounded-lg bg-[#F5F5F5] object-cover"
                 />
                 <div className="min-w-0 flex-1">
-                  <p className="text-xs text-[#A97745]">Dieses Produkt fragen</p>
+                  <p className="text-xs text-[#A97745]">Ask about this product</p>
                   <h3 className="line-clamp-2 text-sm font-semibold text-foreground">
                     {currentProduct.name}
                   </h3>
@@ -649,7 +650,7 @@ export default function FloatingChat({
               <input
                 value={input}
                 onChange={(event) => setInput(event.target.value)}
-                placeholder={currentProductId ? 'Frag etwas zu diesem Produkt...' : 'Frag nach Hautpflege oder Produkten...'}
+                placeholder={currentProductId ? "Ask about this product..." : "Ask about skincare or products..."}
                 className="min-w-0 flex-1 rounded-full border border-border bg-background px-3 py-2 text-sm outline-none transition-colors focus:border-[#D4A574]"
                 disabled={isLoading}
               />
@@ -657,7 +658,7 @@ export default function FloatingChat({
                 type="submit"
                 disabled={isLoading || input.trim().length === 0}
                 className="h-10 w-10 shrink-0 rounded-full bg-[#D4A574] p-0 text-white hover:bg-[#C49464]"
-                aria-label="Nachricht senden"
+                aria-label="Send message"
               >
                 <Send className="h-4 w-4" />
               </Button>
@@ -670,8 +671,8 @@ export default function FloatingChat({
         type="button"
         onClick={() => setIsOpen((open) => !open)}
         className="fixed bottom-24 right-3 sm:bottom-40 sm:right-5 z-50 flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-[#D4A574] text-white shadow-lg transition hover:bg-[#C49464] hover:scale-105"
-        aria-label="KI-Beratung öffnen"
-        title="KI-Beratung öffnen"
+        aria-label="Open AI advisor"
+        title="Open AI advisor"
       >
         {isOpen ? <X className="h-6 w-6" /> : <Sparkles className="h-6 w-6" />}
       </button>

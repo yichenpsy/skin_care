@@ -286,52 +286,52 @@ function hasTextMatch(source, targets) {
 }
 
 const SKIN_TYPE_LABELS = {
-  Normal: "Normale Haut",
-  Oily: "Fettige Haut",
-  Dry: "Trockene Haut",
-  Combination: "Mischhaut",
-  Sensitive: "Sensible Haut",
+  Normal: "Normal skin",
+  Oily: "Oily skin",
+  Dry: "Dry skin",
+  Combination: "Combination skin",
+  Sensitive: "Sensitive skin",
 };
 
 const FACT_LABELS = {
-  acne: "Akne",
-  blemishes: "Unreinheiten",
-  redness: "Rötungen",
-  pores: "Poren",
-  blackheads: "Mitesser",
-  dark_spots: "Pigmentflecken",
-  dark_circles: "Augenringe",
-  wrinkles: "Falten",
+  acne: "Acne",
+  blemishes: "Blemishes",
+  redness: "Redness",
+  pores: "Pores",
+  blackheads: "Blackheads",
+  dark_spots: "Dark spots",
+  dark_circles: "Dark circles",
+  wrinkles: "Wrinkles",
   balanced: "Balance",
-  oily: "Fettig",
+  oily: "Oily",
   oily_t_zone: "T-Zone",
-  dryness: "Feuchtigkeit",
-  dehydration: "Feuchtigkeit",
-  tightness: "Spannung",
-  flakiness: "Schuppen",
-  rough_texture: "Textur",
-  shine: "Glanz",
-  refined_pores: "Poren",
-  clear_skin: "Klare Haut",
-  matte: "Matt",
-  combination_zones: "Mischhaut",
-  hydration: "Feuchtigkeit",
-  calming: "Beruhigung",
+  dryness: "Hydration",
+  dehydration: "Hydration",
+  tightness: "Tightness",
+  flakiness: "Flakiness",
+  rough_texture: "Texture",
+  shine: "Shine",
+  refined_pores: "Pores",
+  clear_skin: "Clear skin",
+  matte: "Matte",
+  combination_zones: "Combination skin",
+  hydration: "Hydration",
+  calming: "Soothing",
   glow: "Glow",
   anti_aging: "Anti-Aging",
-  barrier_support: "Hautbarriere",
-  exfoliation: "Peeling",
-  brightening: "Aufhellung",
-  sun_protection: "Sonnenschutz",
-  light_texture: "Leichte Textur",
-  rich_texture: "Reichhaltig",
-  fragrance_free: "Parfümfrei",
-  alcohol_free: "Alkoholfrei",
+  barrier_support: "Skin barrier",
+  exfoliation: "Exfoliation",
+  brightening: "Brightening",
+  sun_protection: "Sunscreen",
+  light_texture: "Lightweight texture",
+  rich_texture: "Rich texture",
+  fragrance_free: "Fragrance-free",
+  alcohol_free: "Alcohol-free",
   vegan: "Vegan",
-  non_comedogenic: "Nicht komedogen",
-  oil_free: "Ölfrei",
-  cruelty_free: "Tierversuchsfrei",
-  natural_ingredients: "Natürlich",
+  non_comedogenic: "Non-comedogenic",
+  oil_free: "Oil-free",
+  cruelty_free: "Cruelty-free",
+  natural_ingredients: "Natural",
 };
 
 function getFactLabel(value) {
@@ -426,19 +426,19 @@ function scoreRecommendedProduct(product, user, facts, productSignals = {}) {
 
   if (cartProductIds.has(product.id)) {
     bonus += 0.8;
-    reasons.push("Liegt bereits in deinem Warenkorb");
-    bullets.push("Warenkorb");
+    reasons.push("Already in your cart");
+    bullets.push("Cart");
   }
 
   if (wishlistProductIds.has(product.id)) {
     bonus += 0.65;
-    reasons.push("Ist auf deiner Merkliste");
-    bullets.push("Merkliste");
+    reasons.push("On your wishlist");
+    bullets.push("Wishlist");
   }
 
   if (effectiveSkinType && hasTextMatch(product.skinTypes, [effectiveSkinType])) {
     bonus += 0.12;
-    reasons.push(`Passt zu deinem Hauttyp: ${effectiveSkinType}`);
+    reasons.push(`Matches your skin type: ${effectiveSkinType}`);
     bullets.push(SKIN_TYPE_LABELS[effectiveSkinType] || effectiveSkinType);
   }
 
@@ -450,7 +450,7 @@ function scoreRecommendedProduct(product, user, facts, productSignals = {}) {
 
   if (matchedConcerns.length > 0) {
     bonus += 0.1;
-    reasons.push("Passt zu deinen Hautbedürfnissen");
+    reasons.push("Matches your skin needs");
     bullets.push(...matchedConcerns.map(getFactLabel));
   }
 
@@ -460,14 +460,14 @@ function scoreRecommendedProduct(product, user, facts, productSignals = {}) {
 
   if (sensitive && product.fragranceFree) {
     bonus += 0.06;
-    reasons.push("Parfümfrei für sensible Haut");
-    bullets.push("Parfümfrei");
+    reasons.push("Fragrance-free for sensitive skin");
+    bullets.push("Fragrance-free");
   }
 
   if (sensitive && product.alcoholFree) {
     bonus += 0.04;
-    reasons.push("Alkoholfrei für sensible Haut");
-    bullets.push("Alkoholfrei");
+    reasons.push("Alcohol-free for sensitive skin");
+    bullets.push("Alcohol-free");
   }
 
   const preferences = facts
@@ -482,26 +482,26 @@ function scoreRecommendedProduct(product, user, facts, productSignals = {}) {
 
   if (matchedGoals.length > 0) {
     bonus += Math.min(0.12, matchedGoals.length * 0.06);
-    reasons.push("Passt zu deinen Pflegezielen");
+    reasons.push("Matches your skincare goals");
     bullets.push(...matchedGoals.map(getFactLabel));
   }
 
   if (preferences.includes("vegan") && product.vegan) {
     bonus += 0.05;
-    reasons.push("Vegan entsprechend deiner Vorliebe");
+    reasons.push("Vegan, as you prefer");
     bullets.push("Vegan");
   }
 
   if (preferences.includes("alcohol_free") && product.alcoholFree) {
     bonus += 0.04;
-    reasons.push("Alkoholfrei entsprechend deiner Vorliebe");
-    bullets.push("Alkoholfrei");
+    reasons.push("Alcohol-free, as you prefer");
+    bullets.push("Alcohol-free");
   }
 
   if (preferences.includes("fragrance_free") && product.fragranceFree) {
     bonus += 0.04;
-    reasons.push("Parfümfrei entsprechend deiner Vorliebe");
-    bullets.push("Parfümfrei");
+    reasons.push("Fragrance-free, as you prefer");
+    bullets.push("Fragrance-free");
   }
 
   const textMatchedPreferences = findMatchingValues(
@@ -512,7 +512,7 @@ function scoreRecommendedProduct(product, user, facts, productSignals = {}) {
 
   if (textMatchedPreferences.length > 0) {
     bonus += Math.min(0.08, textMatchedPreferences.length * 0.04);
-    reasons.push("Passt zu deinen Produkt-Vorlieben");
+    reasons.push("Matches your product preferences");
     bullets.push(...textMatchedPreferences.map(getFactLabel));
   }
 
@@ -525,14 +525,14 @@ function scoreRecommendedProduct(product, user, facts, productSignals = {}) {
   for (const avoidance of avoidances) {
     if (ingredients.some((ingredient) => ingredient.includes(String(avoidance).toLowerCase()))) {
       bonus -= 0.3;
-      reasons.push(`Achtung: enthält möglicherweise ${avoidance}`);
-      bullets.push("Hinweis");
+      reasons.push(`Caution: may contain ${avoidance}`);
+      bullets.push("Note");
     }
   }
 
   return {
     bonus,
-    reason: reasons[0] || "Basierend auf deinem Hautprofil empfohlen",
+    reason: reasons[0] || "Recommended based on your skin profile",
     bullets: [...new Set(bullets)].slice(0, 4),
   };
 }

@@ -35,14 +35,14 @@ function parseOrderItems(items: string): OrderItem[] {
 }
 
 function formatCurrency(value: number) {
-  return new Intl.NumberFormat('de-DE', {
+  return new Intl.NumberFormat('en-GB', {
     style: 'currency',
     currency: 'EUR',
   }).format(value)
 }
 
 function formatDate(value: string) {
-  return new Intl.DateTimeFormat('de-DE', {
+  return new Intl.DateTimeFormat('en-GB', {
     day: '2-digit',
     month: 'long',
     year: 'numeric',
@@ -79,7 +79,7 @@ export default function OrderDetail() {
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-10">
-        Bestellung wird geladen...
+        Loading order...
       </div>
     )
   }
@@ -87,7 +87,7 @@ export default function OrderDetail() {
   if (!order) {
     return (
       <div className="container mx-auto px-4 py-10">
-        Bestellung nicht gefunden.
+        Order not found.
       </div>
     )
   }
@@ -101,12 +101,12 @@ export default function OrderDetail() {
         className="flex items-center gap-2 text-[#5F5F5F] hover:text-[#D4A574] mb-6 sm:mb-8"
       >
         <ArrowLeft className="h-5 w-5" />
-        Zurück zum Profil
+        Back to profile
       </button>
 
       <div className="rounded-2xl border border-[#F0DCC8] bg-white p-4 sm:p-6 mb-6 !font-sans">
         <h1 className="text-3xl font-bold mb-2">
-          Bestellung #{order.id}
+          Order #{order.id}
         </h1>
 
         <p className="text-muted-foreground mb-4">
@@ -126,7 +126,7 @@ export default function OrderDetail() {
 
       <div className="rounded-2xl border border-[#F0DCC8] bg-white p-4 sm:p-6 !font-sans">
         <h2 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6">
-          Bestellte Produkte
+          Ordered products
         </h2>
 
         <div className="space-y-4">
@@ -166,7 +166,7 @@ to={`/product/${item.id}?from=order&orderId=${order.id}`}
         </div>
 
         <div className="mt-6 pt-6 border-t border-[#F0DCC8] flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 sm:gap-0">
-          <span className="font-medium">Gesamtbetrag</span>
+          <span className="font-medium">Total amount</span>
 
           <span className="text-lg sm:text-xl font-bold text-[#D4A574]">
             {formatCurrency(order.totalPrice)}

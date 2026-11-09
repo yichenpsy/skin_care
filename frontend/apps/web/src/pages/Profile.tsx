@@ -19,59 +19,59 @@ type ProfileImageSnapshot = { id?: string; imageData: string; source: 'skin_anal
 type SkinProfile = { skinType: string | null; gender?: string | null; facts: SkinFact[]; latestAnalysis?: SkinAnalysisSnapshot | null; latestProfileImage?: ProfileImageSnapshot | null; profileImages?: ProfileImageSnapshot[] }
 type EditableSkinFacts = Record<string, string[]>
 
-function formatCurrency(value: number) { return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(value) }
-function formatDate(value: string) { return new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(value)) }
+function formatCurrency(value: number) { return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'EUR' }).format(value) }
+function formatDate(value: string) { return new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(value)) }
 function formatPaymentMethod(value: string) { return ({ klarna: 'Klarna', paypal: 'PayPal' })[value.toLowerCase()] || value }
 function parseOrderItems(items: string): OrderItem[] { try { const p = JSON.parse(items); return Array.isArray(p) ? p : [] } catch { return [] } }
-function genderLabel(g: Gender) { return g === 'female' ? '👩 Frau' : g === 'male' ? '👨 Mann' : g === 'diverse' ? '🧑 Divers' : 'Nicht angegeben' }
-function skinTypeLabel(s?: string | null) { return ({ Normal: 'Normale Haut', Oily: 'Fettige Haut', Dry: 'Trockene Haut', Combination: 'Mischhaut', Sensitive: 'Sensible Haut' } as Record<string, string>)[s || ''] || 'Nicht angegeben' }
+function genderLabel(g: Gender) { return g === 'female' ? "👩 Woman" : g === 'male' ? "👨 Man" : g === 'diverse' ? "🧑 Non-binary" : "Not specified" }
+function skinTypeLabel(s?: string | null) { return ({ Normal: "Normal skin", Oily: "Oily skin", Dry: "Dry skin", Combination: "Combination skin", Sensitive: "Sensitive skin" } as Record<string, string>)[s || ''] || "Not specified" }
 function factKeyLabel(key: string) {
   return ({
-    concern: 'Hautthemen',
-    skin_state: 'Hautzustand',
-    sensitivity: 'Empfindlichkeit',
-    product_reaction: 'Reaktionen',
-    ingredient_avoidance: 'Meiden',
-    allergy: 'Allergien',
-    goal: 'Ziele',
-    preference: 'Vorlieben',
-    skin_type: 'Hauttyp',
+    concern: "Skin concerns",
+    skin_state: "Skin condition",
+    sensitivity: "Sensitivity",
+    product_reaction: "Reactions",
+    ingredient_avoidance: "Avoid",
+    allergy: "Allergies",
+    goal: "Goals",
+    preference: "Preferences",
+    skin_type: "Skin type",
   } as Record<string, string>)[key] || key
 }
 function factLabel(value: string) {
   return ({
-    acne: 'Akne', blemishes: 'Unreinheiten', redness: 'Rötungen', pores: 'Große Poren',
-    blackheads: 'Mitesser', dark_spots: 'Pigmentflecken', dark_circles: 'Augenringe', wrinkles: 'Falten',
-    balanced: 'Ausgeglichen', oily: 'Fettig', oily_t_zone: 'Ölige T-Zone', shine: 'Glanz',
-    dryness: 'Trockenheit', dehydration: 'Feuchtigkeitsarm', tightness: 'Spannungsgefühl', flakiness: 'Schuppig',
-    rough_texture: 'Raue Textur', matte: 'Matt',
-    sensitive: 'Empfindlich', tolerant: 'Robust', fragrance: 'Parfum',
-    burning: 'Brennen', too_greasy: 'Wird fettig', drying: 'Trocknet aus', breakout: 'Pickelreaktion',
-    alcohol: 'Alkohol', retinol: 'Retinol', vitamin_c: 'Vitamin C', niacinamide: 'Niacinamid',
-    hydration: 'Mehr Feuchtigkeit', calming: 'Beruhigung', glow: 'Glow', anti_aging: 'Anti-Aging',
-    barrier_support: 'Hautbarriere', sun_protection: 'Sonnenschutz', brightening: 'Aufhellung',
-    light_texture: 'Leichte Textur', rich_texture: 'Reichhaltige Textur', fragrance_free: 'Parfümfrei',
-    alcohol_free: 'Alkoholfrei', vegan: 'Vegan', non_comedogenic: 'Nicht komedogen',
-    oil_free: 'Ölfrei', cruelty_free: 'Tierversuchsfrei', natural_ingredients: 'Natürliche Inhaltsstoffe',
+    acne: "Acne", blemishes: "Blemishes", redness: "Redness", pores: "Large pores",
+    blackheads: "Blackheads", dark_spots: "Dark spots", dark_circles: "Dark circles", wrinkles: "Wrinkles",
+    balanced: "Balanced", oily: "Oily", oily_t_zone: "Oily T-zone", shine: "Shine",
+    dryness: "Dryness", dehydration: "Dehydrated", tightness: "tightness", flakiness: "Flaky",
+    rough_texture: "Rough texture", matte: "Matte",
+    sensitive: "Sensitive", tolerant: "Resilient", fragrance: "Fragrance",
+    burning: "Burning", too_greasy: "Becomes oily", drying: "Dries out", breakout: "Breakouts",
+    alcohol: "Alcohol", retinol: 'Retinol', vitamin_c: 'Vitamin C', niacinamide: "Niacinamide",
+    hydration: "More hydration", calming: "Soothing", glow: 'Glow', anti_aging: 'Anti-Aging',
+    barrier_support: "Skin barrier", sun_protection: "Sunscreen", brightening: "Brightening",
+    light_texture: "Lightweight texture", rich_texture: "Rich texture", fragrance_free: "Fragrance-free",
+    alcohol_free: "Alcohol-free", vegan: 'Vegan', non_comedogenic: "Non-comedogenic",
+    oil_free: "Oil-free", cruelty_free: "Cruelty-free", natural_ingredients: "Natural ingredients",
   } as Record<string, string>)[value] || value
 }
 const skinTypeOptions = [
   { value: 'Normal', label: 'Normal', tone: '#7ab87a' },
-  { value: 'Oily', label: 'Fettig', tone: '#D4A574' },
-  { value: 'Dry', label: 'Trocken', tone: '#7aa7b8' },
-  { value: 'Combination', label: 'Mischhaut', tone: '#b88bd4' },
-  { value: 'Sensitive', label: 'Sensibel', tone: '#c47a5a' },
+  { value: 'Oily', label: "Oily", tone: '#D4A574' },
+  { value: 'Dry', label: "Dry", tone: '#7aa7b8' },
+  { value: 'Combination', label: "Combination skin", tone: '#b88bd4' },
+  { value: 'Sensitive', label: "Sensitive", tone: '#c47a5a' },
 ]
 
 const editableFactGroups = [
-  { key: 'concern', label: 'Hautthemen', values: ['acne', 'blemishes', 'blackheads', 'redness', 'pores', 'dark_spots', 'dark_circles', 'wrinkles'] },
-  { key: 'skin_state', label: 'Aktueller Zustand', values: ['balanced', 'oily', 'oily_t_zone', 'shine', 'dryness', 'dehydration', 'tightness', 'flakiness', 'rough_texture', 'matte'] },
-  { key: 'sensitivity', label: 'Empfindlichkeit', values: ['sensitive', 'tolerant'] },
-  { key: 'preference', label: 'Produkt-Vorlieben', values: ['light_texture', 'rich_texture', 'fragrance_free', 'alcohol_free', 'vegan', 'non_comedogenic', 'oil_free', 'cruelty_free', 'natural_ingredients'] },
-  { key: 'product_reaction', label: 'Reaktionen', values: ['burning', 'too_greasy', 'drying', 'breakout'] },
-  { key: 'ingredient_avoidance', label: 'Meiden', values: ['fragrance', 'alcohol', 'retinol', 'vitamin_c'] },
-  { key: 'allergy', label: 'Allergien', values: ['fragrance', 'alcohol', 'retinol', 'niacinamide', 'vitamin_c'] },
-  { key: 'goal', label: 'Ziele', values: ['hydration', 'calming', 'glow', 'anti_aging', 'barrier_support', 'sun_protection', 'brightening'] },
+  { key: 'concern', label: "Skin concerns", values: ['acne', 'blemishes', 'blackheads', 'redness', 'pores', 'dark_spots', 'dark_circles', 'wrinkles'] },
+  { key: 'skin_state', label: "Current condition", values: ['balanced', 'oily', 'oily_t_zone', 'shine', 'dryness', 'dehydration', 'tightness', 'flakiness', 'rough_texture', 'matte'] },
+  { key: 'sensitivity', label: "Sensitivity", values: ['sensitive', 'tolerant'] },
+  { key: 'preference', label: "Product preferences", values: ['light_texture', 'rich_texture', 'fragrance_free', 'alcohol_free', 'vegan', 'non_comedogenic', 'oil_free', 'cruelty_free', 'natural_ingredients'] },
+  { key: 'product_reaction', label: "Reactions", values: ['burning', 'too_greasy', 'drying', 'breakout'] },
+  { key: 'ingredient_avoidance', label: "Avoid", values: ['fragrance', 'alcohol', 'retinol', 'vitamin_c'] },
+  { key: 'allergy', label: "Allergies", values: ['fragrance', 'alcohol', 'retinol', 'niacinamide', 'vitamin_c'] },
+  { key: 'goal', label: "Goals", values: ['hydration', 'calming', 'glow', 'anti_aging', 'barrier_support', 'sun_protection', 'brightening'] },
 ]
 
 const editableFactValuesByKey = Object.fromEntries(
@@ -236,8 +236,8 @@ to={`/product/${item.id}?from=order&orderId=${orderId}`}
           }}
         >
           {expanded
-            ? '▲ Weniger anzeigen'
-            : `▼ +${items.length - 3} weitere anzeigen`}
+            ? "▲ Show less"
+            : `▼ +${items.length - 3} show more`}
         </button>
       )}
 
@@ -263,13 +263,13 @@ to={`/product/${item.id}?from=order&orderId=${orderId}`}
           e.currentTarget.style.background = '#D4A574'
         }}
       >
-        Details ansehen
+        View details
       </Link>
     </div>
   )
 }
 
-function ConfirmModal({ title, message, onConfirm, onCancel, confirmLabel = 'Ja, bestätigen', danger = false }: {
+function ConfirmModal({ title, message, onConfirm, onCancel, confirmLabel = "Yes, confirm", danger = false }: {
   title: string; message: string; onConfirm: () => void; onCancel: () => void; confirmLabel?: string; danger?: boolean
 }) {
   return (
@@ -283,7 +283,7 @@ function ConfirmModal({ title, message, onConfirm, onCancel, confirmLabel = 'Ja,
         <p style={{ fontSize: 13, color: '#9a7a5a', textAlign: 'center', margin: '0 0 24px', fontWeight: 300, lineHeight: 1.6 }}>{message}</p>
         <div style={{ display: 'flex', gap: 10 }}>
           <button onClick={onCancel} style={{ flex: 1, padding: '12px', borderRadius: 12, border: '1px solid #F0DCC8', background: 'transparent', color: '#9a7a5a', fontWeight: 600, fontSize: 14, cursor: 'pointer', fontFamily: "'Outfit',sans-serif" }}>
-            Abbrechen
+            Cancel
           </button>
           <button onClick={onConfirm} style={{ flex: 1, padding: '12px', borderRadius: 12, border: 'none', background: danger ? '#c47a5a' : '#D4A574', color: '#fff', fontWeight: 600, fontSize: 14, cursor: 'pointer', fontFamily: "'Outfit',sans-serif" }}>
             {confirmLabel}
@@ -296,9 +296,9 @@ function ConfirmModal({ title, message, onConfirm, onCancel, confirmLabel = 'Ja,
 
 function GenderPicker({ value, onChange }: { value: Gender; onChange: (g: Gender) => void }) {
   const options: { val: Gender; label: string; emoji: string }[] = [
-    { val: 'female',  label: 'Frau',   emoji: '👩' },
-    { val: 'male',    label: 'Mann',   emoji: '👨' },
-    { val: 'diverse', label: 'Divers', emoji: '🧑' },
+    { val: 'female',  label: "Woman",   emoji: '👩' },
+    { val: 'male',    label: "Man",   emoji: '👨' },
+    { val: 'diverse', label: "Non-binary", emoji: '🧑' },
   ]
   return (
     <div style={{ display: 'flex', gap: 8 }}>
@@ -364,10 +364,10 @@ function SkinProfileModal({
       <div style={{ width: '100%', maxWidth: 760, background: '#fff', borderRadius: 28, padding: 0, boxShadow: '0 24px 60px rgba(0,0,0,0.18)', maxHeight: '92vh', overflowY: 'auto' }}>
         <div className="p-modal-box-lg-header" style={{ padding: 28, borderBottom: '1px solid #F0DCC8', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
           <div>
-            <p style={{ fontSize: 11, color: '#D4A574', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', margin: '0 0 6px' }}>Meine Haut</p>
+            <p style={{ fontSize: 11, color: '#D4A574', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', margin: '0 0 6px' }}>My skin</p>
             <h2 style={{ fontFamily: "'Outfit',sans-serif", fontSize: 24, fontWeight: 800, color: '#1c1209', margin: 0 }}>{skinTypeLabel(editSkinType)}</h2>
           </div>
-          <button className="p-close-btn" onClick={onClose} title="Schließen"><X size={20} /></button>
+          <button className="p-close-btn" onClick={onClose} title="Close"><X size={20} /></button>
         </div>
 
         <div style={{ padding: 22, display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -375,7 +375,7 @@ function SkinProfileModal({
             <div style={{ border: '1px solid #F0DCC8', borderRadius: 18, padding: 14, background: 'linear-gradient(135deg,#FFF9F3 0%,#fff 100%)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
                 <div>
-                  <p style={{ fontSize: 12, color: '#9a7a5a', margin: '0 0 4px', fontWeight: 700 }}>Hautprofil</p>
+                  <p style={{ fontSize: 12, color: '#9a7a5a', margin: '0 0 4px', fontWeight: 700 }}>Skin profile</p>
                   <p style={{ fontSize: 28, color: '#1c1209', margin: '0 0 12px', fontWeight: 800, letterSpacing: '-0.02em' }}>{completion}%</p>
                 </div>
               </div>
@@ -384,12 +384,12 @@ function SkinProfileModal({
                 <div style={{ border: '1px solid #F0DCC8', borderRadius: 12, padding: 8, background: '#fff' }}>
                   <Activity size={15} color="#D4A574" />
                   <p style={{ fontSize: 18, fontWeight: 800, color: '#1c1209', margin: '6px 0 0' }}>{selectedFactCount}</p>
-                  <p style={{ fontSize: 11, color: '#9a7a5a', margin: 0 }}>Ausgewählt</p>
+                  <p style={{ fontSize: 11, color: '#9a7a5a', margin: 0 }}>Selected</p>
                 </div>
                 <div style={{ border: '1px solid #F0DCC8', borderRadius: 12, padding: 8, background: '#fff' }}>
                   <ShieldCheck size={15} color="#D4A574" />
                   <p style={{ fontSize: 18, fontWeight: 800, color: '#1c1209', margin: '6px 0 0' }}>{filledFactGroups}</p>
-                  <p style={{ fontSize: 11, color: '#9a7a5a', margin: 0 }}>Bereiche</p>
+                  <p style={{ fontSize: 11, color: '#9a7a5a', margin: 0 }}>Areas</p>
                 </div>
               </div>
             </div>
@@ -401,7 +401,7 @@ function SkinProfileModal({
                 onClick={() => { if (images.length > 0) setPhotoViewerIndex(0) }}
                 style={{ cursor: images.length > 0 ? 'pointer' : 'default', minHeight: 150 }}
               >
-                {latestImage && <img className="p-mirror-img" src={latestImage} alt="Letztes Hautprofil" />}
+                {latestImage && <img className="p-mirror-img" src={latestImage} alt="Latest skin profile" />}
                 <span className="p-mirror-shine" />
               </button>
 
@@ -458,7 +458,7 @@ function SkinProfileModal({
 
           {(saving || message) && (
             <p style={{ fontSize: 13, color: message.startsWith('✓') || saving ? '#7ab87a' : '#c47a5a', margin: 0, fontWeight: 600 }}>
-              {saving ? 'Wird gespeichert…' : message}
+              {saving ? "Saving…" : message}
             </p>
           )}
         </div>
@@ -469,12 +469,12 @@ function SkinProfileModal({
           <div style={{ width: '100%', maxWidth: 760, maxHeight: '92vh', background: '#fff', borderRadius: 22, overflow: 'hidden', boxShadow: '0 24px 70px rgba(0,0,0,0.35)', display: 'flex', flexDirection: 'column' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, padding: '14px 18px', borderBottom: '1px solid #F0DCC8' }}>
               <div>
-                <p style={{ fontSize: 13, fontWeight: 800, color: '#1c1209', margin: 0 }}>Gespeicherte Bilder</p>
+                <p style={{ fontSize: 13, fontWeight: 800, color: '#1c1209', margin: 0 }}>Saved images</p>
                 <p style={{ fontSize: 12, color: '#9a7a5a', margin: '2px 0 0' }}>
-                  {activePhoto.source === 'chat' ? 'Chat' : 'Hautanalyse'} · {activePhoto.createdAt ? formatDate(activePhoto.createdAt) : 'Gespeichert'}
+                  {activePhoto.source === 'chat' ? 'Chat' : "Skin analysis"} · {activePhoto.createdAt ? formatDate(activePhoto.createdAt) : "Saved"}
                 </p>
               </div>
-              <button className="p-close-btn" onClick={() => setPhotoViewerIndex(null)} title="Schließen"><X size={20} /></button>
+              <button className="p-close-btn" onClick={() => setPhotoViewerIndex(null)} title="Close"><X size={20} /></button>
             </div>
             <div className="p-photo-viewer-stage">
               {activePhoto.id && (
@@ -482,13 +482,13 @@ function SkinProfileModal({
                   className="p-photo-delete-cta"
                   onClick={deleteActivePhoto}
                   disabled={deletingPhotoId === activePhoto.id}
-                  title="Bild löschen"
+                  title="Delete image"
                 >
                   <Trash2 size={18} />
-                  <span>{deletingPhotoId === activePhoto.id ? 'Löscht...' : 'Bild löschen'}</span>
+                  <span>{deletingPhotoId === activePhoto.id ? "Deleting..." : "Delete image"}</span>
                 </button>
               )}
-              <img src={activePhoto.imageData} alt="Gespeichertes Hautprofil" style={{ maxWidth: '100%', maxHeight: '62vh', objectFit: 'contain', display: 'block' }} />
+              <img src={activePhoto.imageData} alt="Saved skin profile" style={{ maxWidth: '100%', maxHeight: '62vh', objectFit: 'contain', display: 'block' }} />
             </div>
             <div className="p-photo-viewer-footer">
               <div className="p-photo-viewer-thumbs">
@@ -498,7 +498,7 @@ function SkinProfileModal({
                     type="button"
                     className={`p-photo-viewer-thumb ${index === photoViewerIndex ? 'active' : ''}`}
                     onClick={() => setPhotoViewerIndex(index)}
-                    title={`${image.source === 'chat' ? 'Chat' : 'Hautanalyse'} ${image.createdAt ? formatDate(image.createdAt) : ''}`}
+                    title={`${image.source === 'chat' ? 'Chat' : "Skin analysis"} ${image.createdAt ? formatDate(image.createdAt) : ''}`}
                   >
                     <img src={image.imageData} alt="" />
                   </button>
@@ -562,7 +562,7 @@ export default function Profile() {
     if (!token) { setIsLoading(false); return }
     fetch(apiUrl('/api/checkout/orders'), { headers: { Authorization: `Bearer ${token}` } })
       .then(r => r.json()).then(data => setOrders(data.orders || []))
-      .catch(() => setError('Bestellungen konnten nicht geladen werden.'))
+      .catch(() => setError("Could not load orders."))
       .finally(() => setIsLoading(false))
   }, [token])
 
@@ -639,9 +639,9 @@ export default function Profile() {
         body: JSON.stringify({ name: editName }),
       })
       const data = await res.json()
-      if (res.ok && data.user) { updateUser({ ...data.user, token }); setNameSuccess('✓ Name gespeichert') }
-      else setNameMsg(data.message || 'Fehler beim Speichern')
-    } catch { setNameMsg('Netzwerkfehler') }
+      if (res.ok && data.user) { updateUser({ ...data.user, token }); setNameSuccess("✓ Name saved") }
+      else setNameMsg(data.message || "Error saving")
+    } catch { setNameMsg("Network error") }
   }
 
   const handleSaveGender = async () => {
@@ -653,14 +653,14 @@ export default function Profile() {
         body: JSON.stringify({ gender: editGender }),
       })
       const data = await res.json()
-      if (res.ok && data.user) { updateUser({ ...data.user, token }); setGenderSuccess('✓ Gespeichert'); setGenderSaved(true) }
-      else setGenderMsg(data.message || 'Fehler beim Speichern')
-    } catch { setGenderMsg('Netzwerkfehler') }
+      if (res.ok && data.user) { updateUser({ ...data.user, token }); setGenderSuccess("✓ Saved"); setGenderSaved(true) }
+      else setGenderMsg(data.message || "Error saving")
+    } catch { setGenderMsg("Network error") }
   }
 
   const handleUpdatePassword = async () => {
     setPwMsg(''); setPwSuccess(''); setConfirmSavePw(false)
-    if (!currentPw || !newPw) { setPwMsg('Beide Felder ausfüllen'); return }
+    if (!currentPw || !newPw) { setPwMsg("Fill in both fields"); return }
     try {
       const res  = await fetch(apiUrl('/api/auth/update-password'), {
         method: 'PATCH',
@@ -668,9 +668,9 @@ export default function Profile() {
         body: JSON.stringify({ currentPassword: currentPw, newPassword: newPw }),
       })
       const data = await res.json()
-      if (res.ok) { setPwSuccess('✓ Passwort erfolgreich geändert'); setCurrentPw(''); setNewPw('') }
-      else setPwMsg(data.message || 'Fehler beim Ändern')
-    } catch { setPwMsg('Netzwerkfehler') }
+      if (res.ok) { setPwSuccess("✓ Password changed successfully"); setCurrentPw(''); setNewPw('') }
+      else setPwMsg(data.message || "Error updating")
+    } catch { setPwMsg("Network error") }
   }
 
   const openSkinProfile = () => {
@@ -693,7 +693,7 @@ export default function Profile() {
       })
       const data = await res.json()
       if (!res.ok) {
-        setSkinMsg(data.message || 'Fehler beim Speichern')
+        setSkinMsg(data.message || "Error saving")
         return
       }
       if (data.user) updateUser({ ...data.user, token })
@@ -708,9 +708,9 @@ export default function Profile() {
         setEditSkinType(data.profile.skinType ?? null)
         setEditSkinFacts(factsFromProfile(nextProfile))
       }
-      setSkinMsg('✓ Automatisch gespeichert')
+      setSkinMsg("✓ Saved automatically")
     } catch {
-      setSkinMsg('Netzwerkfehler')
+      setSkinMsg("Network error")
     } finally {
       setSkinSaving(false)
     }
@@ -742,7 +742,7 @@ export default function Profile() {
       })
       const data = await res.json().catch(() => ({}))
       if (!res.ok) {
-        setSkinMsg(data.message || 'Bild konnte nicht gelöscht werden')
+        setSkinMsg(data.message || "Could not delete image")
         return false
       }
 
@@ -757,11 +757,11 @@ export default function Profile() {
           : prev.latestAnalysis || null
         return { ...prev, latestProfileImage, latestAnalysis, profileImages }
       })
-      setSkinMsg('✓ Bild gelöscht')
+      setSkinMsg("✓ Image deleted")
       void loadSkinProfileContext()
       return true
     } catch {
-      setSkinMsg('Netzwerkfehler')
+      setSkinMsg("Network error")
       return false
     } finally {
       setDeletingPhotoId(null)
@@ -774,7 +774,7 @@ export default function Profile() {
     setGenderMsg(''); setGenderSuccess('')
   }
 
-  const firstName = user?.name?.split(' ')[0] || user?.email?.split('@')[0] || 'Nutzer'
+  const firstName = user?.name?.split(' ')[0] || user?.email?.split('@')[0] || "User"
 
   return (
     <div className="profile-root" style={{ background: '#FDFAF6', minHeight: '100vh', padding: '0 0 60px' }}>
@@ -802,9 +802,9 @@ export default function Profile() {
         {/* ── Stats ── */}
         <div className="p-fade" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(180px,1fr))', gap: 14, marginBottom: 32 }}>
           {[
-            { icon: ShoppingBag, label: 'Bestellungen', value: orders.length,  onClick: () => setActiveTab('orders') },
-            { icon: Heart,       label: 'Merkliste',    value: wishlistTotal,   onClick: () => navigate('/wishlist') },
-            { icon: Star,        label: 'Ø Bewertung',  value: avgRating,       onClick: () => setActiveTab('reviews') },
+            { icon: ShoppingBag, label: "Orders", value: orders.length,  onClick: () => setActiveTab('orders') },
+            { icon: Heart,       label: "Wishlist",    value: wishlistTotal,   onClick: () => navigate('/wishlist') },
+            { icon: Star,        label: "Average rating",  value: avgRating,       onClick: () => setActiveTab('reviews') },
           ].map(s => (
             <div key={s.label} className="p-stat" onClick={s.onClick} style={{ cursor: 'pointer' }}>
               <div style={{ width: 36, height: 36, borderRadius: 10, background: '#fff', border: '1.5px solid #D4A574', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 12 }}>
@@ -817,7 +817,7 @@ export default function Profile() {
           <button className="p-mirror" onClick={openSkinProfile} style={{ minHeight: 128 }}>
             <span className="p-mirror-shine" />
             <div className="p-mirror-content" style={{ minHeight: 128 }}>
-              <p className="p-mirror-title">meine Haut Profile</p>
+              <p className="p-mirror-title">My skin profiles</p>
             </div>
           </button>
         </div>
@@ -826,7 +826,7 @@ export default function Profile() {
         <div className="p-tabs-row" style={{ display: 'flex', gap: 8, marginBottom: 24, background: '#fff', borderRadius: 100, padding: 4, border: '1px solid #F0DCC8', width: 'fit-content' }}>
           {(['orders', 'reviews', 'account'] as const).map(tab => (
             <button key={tab} className={`p-tab ${activeTab === tab ? 'active' : ''}`} onClick={() => setActiveTab(tab)}>
-              {tab === 'orders' ? `Bestellungen (${orders.length})` : tab === 'reviews' ? `Bewertungen (${userReviews.length})` : 'Konto'}
+              {tab === 'orders' ? `Orders (${orders.length})` : tab === 'reviews' ? `Reviews (${userReviews.length})` : "Account"}
             </button>
           ))}
         </div>
@@ -834,13 +834,13 @@ export default function Profile() {
         {/* ── ORDERS TAB ── */}
         {activeTab === 'orders' && (
           <div className="p-fade">
-            {isLoading && <p style={{ color: '#9a7a5a', fontSize: 14 }}>Wird geladen…</p>}
+            {isLoading && <p style={{ color: '#9a7a5a', fontSize: 14 }}>Loading…</p>}
             {error && <div style={{ background: '#fff0f0', border: '1px solid #fcc', borderRadius: 12, padding: '12px 16px', fontSize: 13, color: '#c47a5a', marginBottom: 16 }}>{error}</div>}
             {!isLoading && orders.length === 0 && (
               <div style={{ textAlign: 'center', padding: '60px 0', color: '#9a7a5a' }}>
                 <ShoppingBag size={40} style={{ margin: '0 auto 12px', opacity: 0.3 }} />
-                <p style={{ fontWeight: 500 }}>Noch keine Bestellungen</p>
-                <Link to="/shop" style={{ color: '#D4A574', fontSize: 13, textDecoration: 'none' }}>Jetzt einkaufen →</Link>
+                <p style={{ fontWeight: 500 }}>No orders yet</p>
+                <Link to="/shop" style={{ color: '#D4A574', fontSize: 13, textDecoration: 'none' }}>Shop now →</Link>
               </div>
             )}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
@@ -851,7 +851,7 @@ export default function Profile() {
                   <div key={order.id} className="p-order-card">
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12, flexWrap: 'wrap', gap: 8 }}>
                       <div>
-                        <p style={{ fontWeight: 700, fontSize: 15, margin: '0 0 2px', color: '#1c1209' }}>Bestellung #{order.id}</p>
+                        <p style={{ fontWeight: 700, fontSize: 15, margin: '0 0 2px', color: '#1c1209' }}>Order #{order.id}</p>
                         <p style={{ fontSize: 12, color: '#9a7a5a', margin: 0 }}>{formatDate(order.createdAt)}</p>
                       </div>
                       <div style={{ textAlign: 'right' }}>
@@ -865,7 +865,7 @@ export default function Profile() {
                       <MapPin size={12} style={{ marginTop: 2, flexShrink: 0 }} />{order.address}, {order.postal} {order.city}, {order.country}
                     </div>
                     <div style={{ borderTop: '1px solid #F0DCC8', paddingTop: 12 }}>
-                      <p style={{ fontSize: 12, fontWeight: 600, color: '#7a5c42', margin: '0 0 8px' }}>{itemCount} Artikel</p>
+                      <p style={{ fontSize: 12, fontWeight: 600, color: '#7a5c42', margin: '0 0 8px' }}>{itemCount}  items</p>
                       <ExpandableItems items={items} orderId={order.id} />
                     </div>
                   </div>
@@ -878,13 +878,13 @@ export default function Profile() {
         {/* ── REVIEWS TAB ── */}
         {activeTab === 'reviews' && (
           <div className="p-fade">
-            {reviewsLoad && <p style={{ color: '#9a7a5a', fontSize: 14 }}>Wird geladen…</p>}
+            {reviewsLoad && <p style={{ color: '#9a7a5a', fontSize: 14 }}>Loading…</p>}
             {!reviewsLoad && userReviews.length === 0 && (
               <div style={{ textAlign: 'center', padding: '60px 0', color: '#9a7a5a' }}>
                 <Star size={40} style={{ margin: '0 auto 12px', opacity: 0.3 }} />
-                <p style={{ fontWeight: 500 }}>Noch keine Bewertungen</p>
-                <p style={{ fontSize: 13, fontWeight: 300 }}>Kaufe Produkte und teile deine Erfahrung.</p>
-                <Link to="/shop" style={{ color: '#D4A574', fontSize: 13, textDecoration: 'none' }}>Produkte entdecken →</Link>
+                <p style={{ fontWeight: 500 }}>No reviews yet</p>
+                <p style={{ fontSize: 13, fontWeight: 300 }}>Buy products and share your experience.</p>
+                <Link to="/shop" style={{ color: '#D4A574', fontSize: 13, textDecoration: 'none' }}>Explore products →</Link>
               </div>
             )}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(300px,1fr))', gap: 14 }}>
@@ -899,7 +899,7 @@ export default function Profile() {
                       <Link to={`/product/${review.productId}`} style={{ color: '#c4a882', display: 'flex', alignItems: 'center' }}>
                         <ExternalLink size={14} />
                       </Link>
-                      <button className="p-delete-btn" onClick={() => setConfirmDeleteId(review.id)} title="Bewertung löschen">
+                      <button className="p-delete-btn" onClick={() => setConfirmDeleteId(review.id)} title="Delete review">
                         <Trash2 size={14} />
                       </button>
                     </div>
@@ -911,7 +911,7 @@ export default function Profile() {
                   <span style={{ fontSize: 11, color: '#c4a882', fontWeight: 300 }}>
                     {review.product?.name
                       ? `${review.product.name} (#${review.productId})`
-                      : `Produkt #${review.productId}`}
+                      : `Product #${review.productId}`}
                   </span>
                     <span style={{ fontSize: 12, fontWeight: 700, color: '#D4A574' }}>{review.rating}/5</span>
                   </div>
@@ -925,12 +925,12 @@ export default function Profile() {
         {activeTab === 'account' && (
           <div className="p-fade" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 14 }}>
             <div className="p-card" style={{ padding: 18 }}>
-              <h2 style={{ fontFamily: "'Outfit',sans-serif", fontSize: 16, fontWeight: 700, color: '#1c1209', margin: '0 0 20px' }}>Kontodaten</h2>
+              <h2 style={{ fontFamily: "'Outfit',sans-serif", fontSize: 16, fontWeight: 700, color: '#1c1209', margin: '0 0 20px' }}>Account details</h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                 {[
-                  { icon: UserRound, label: 'Name',      value: user?.name   || 'Nicht angegeben' },
-                  { icon: Mail,      label: 'E-Mail',    value: user?.email  || '' },
-                  { icon: UserRound, label: 'Geschlecht', value: genderLabel((user?.gender as Gender) ?? null) },
+                  { icon: UserRound, label: 'Name',      value: user?.name   || "Not specified" },
+                  { icon: Mail,      label: "Email",    value: user?.email  || '' },
+                  { icon: UserRound, label: "Gender", value: genderLabel((user?.gender as Gender) ?? null) },
                 ].map(row => (
                   <div key={row.label} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
                     <div style={{ width: 32, height: 32, borderRadius: 8, background: '#FDF6EE', border: '1px solid #e8c9a0', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -945,15 +945,15 @@ export default function Profile() {
               </div>
               <button onClick={() => { setEditName(user?.name || ''); setEditGender((user?.gender as Gender) ?? null); setGenderSaved(true); setGenderSuccess(''); setShowEditProfile(true) }}
                 style={{ marginTop: 24, width: '100%', padding: '12px', borderRadius: 12, border: 'none', background: '#D4A574', color: '#fff', fontWeight: 600, cursor: 'pointer', fontFamily: "'Outfit',sans-serif", fontSize: 14 }}>
-                Profil bearbeiten
+                Edit profile
               </button>
             </div>
 
             <div className="p-card" style={{ padding: 18 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 16, marginBottom: 18 }}>
                 <div>
-                  <h2 style={{ fontFamily: "'Outfit',sans-serif", fontSize: 16, fontWeight: 700, color: '#1c1209', margin: '0 0 6px' }}>Meine Haut Profile</h2>
-                  <p style={{ fontSize: 13, color: '#9a7a5a', fontWeight: 300, margin: 0 }}>Dein gespeichertes Hautprofil</p>
+                  <h2 style={{ fontFamily: "'Outfit',sans-serif", fontSize: 16, fontWeight: 700, color: '#1c1209', margin: '0 0 6px' }}>My skin profiles</h2>
+                  <p style={{ fontSize: 13, color: '#9a7a5a', fontWeight: 300, margin: 0 }}>Your saved skin profile</p>
                 </div>
                 <div style={{ width: 38, height: 38, borderRadius: 12, background: '#FDF6EE', border: '1px solid #e8c9a0', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   <Droplets size={18} color="#D4A574" />
@@ -961,11 +961,11 @@ export default function Profile() {
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 16 }}>
                 <div style={{ background: '#FDFAF6', border: '1px solid #F0DCC8', borderRadius: 14, padding: 12 }}>
-                  <p style={{ fontSize: 11, color: '#c4a882', margin: '0 0 4px', fontWeight: 600 }}>Hauttyp</p>
+                  <p style={{ fontSize: 11, color: '#c4a882', margin: '0 0 4px', fontWeight: 600 }}>Skin type</p>
                   <p style={{ fontSize: 14, color: '#1c1209', margin: 0, fontWeight: 700 }}>{skinTypeLabel(skinProfile?.skinType || user?.skinType)}</p>
                 </div>
                 <div style={{ background: '#FDFAF6', border: '1px solid #F0DCC8', borderRadius: 14, padding: 12 }}>
-                  <p style={{ fontSize: 11, color: '#c4a882', margin: '0 0 4px', fontWeight: 600 }}>Merkmale</p>
+                  <p style={{ fontSize: 11, color: '#c4a882', margin: '0 0 4px', fontWeight: 600 }}>Features</p>
                   <p style={{ fontSize: 14, color: '#1c1209', margin: 0, fontWeight: 700 }}>{skinFactCount}</p>
                 </div>
               </div>
@@ -973,18 +973,18 @@ export default function Profile() {
                 {(skinProfile?.facts || []).filter(f => f.key !== 'skin_type').slice(0, 4).map(fact => (
                   <span key={`${fact.key}-${fact.value}`} className="p-fact-pill">{factLabel(fact.value)}</span>
                 ))}
-                {skinFactCount === 0 && <p style={{ fontSize: 13, color: '#9a7a5a', margin: 0 }}>Noch keine Details gespeichert.</p>}
+                {skinFactCount === 0 && <p style={{ fontSize: 13, color: '#9a7a5a', margin: 0 }}>No details saved yet.</p>}
               </div>
               <button className="p-mirror" onClick={openSkinProfile} style={{ width: '100%', minHeight: 132 }}>
                 <span className="p-mirror-shine" />
                 <div className="p-mirror-content" style={{ minHeight: 132 }}>
-                  <p className="p-mirror-title">meine Haut</p>
+                  <p className="p-mirror-title">My skin</p>
                 </div>
               </button>
             </div>
 
             <div className="p-card" style={{ padding: 18 }}>
-              <h2 style={{ fontFamily: "'Outfit',sans-serif", fontSize: 16, fontWeight: 700, color: '#1c1209', margin: '0 0 20px' }}>Letzte Bestellung</h2>
+              <h2 style={{ fontFamily: "'Outfit',sans-serif", fontSize: 16, fontWeight: 700, color: '#1c1209', margin: '0 0 20px' }}>Latest order</h2>
               {latestOrder ? (
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
@@ -998,17 +998,17 @@ export default function Profile() {
                   <p style={{ fontSize: 20, fontWeight: 800, color: '#D4A574', margin: '12px 0 0', letterSpacing: '-0.02em' }}>{formatCurrency(latestOrder.totalPrice)}</p>
                 </div>
               ) : (
-                <p style={{ fontSize: 13, color: '#9a7a5a', fontWeight: 300 }}>Noch keine Bestellungen.</p>
+                <p style={{ fontSize: 13, color: '#9a7a5a', fontWeight: 300 }}>No orders yet.</p>
               )}
             </div>
 
             <div className="p-card" style={{ padding: 18 }}>
-              <h2 style={{ fontFamily: "'Outfit',sans-serif", fontSize: 16, fontWeight: 700, color: '#1c1209', margin: '0 0 12px' }}>Merkliste</h2>
+              <h2 style={{ fontFamily: "'Outfit',sans-serif", fontSize: 16, fontWeight: 700, color: '#1c1209', margin: '0 0 12px' }}>Wishlist</h2>
               <p style={{ fontSize: 13, color: '#9a7a5a', fontWeight: 300, margin: '0 0 16px', lineHeight: 1.6 }}>
-                Du hast <strong style={{ color: '#1c1209' }}>{wishlistTotal}</strong> {wishlistTotal === 1 ? 'Produkt' : 'Produkte'} auf deiner Merkliste.
+                You have <strong style={{ color: '#1c1209' }}>{wishlistTotal}</strong> {wishlistTotal === 1 ? "Product" : "Products"}  on your wishlist.
               </p>
               <Link to="/wishlist" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 13, fontWeight: 600, color: '#D4A574', textDecoration: 'none' }}>
-                <Heart size={13} /> Merkliste anzeigen
+                <Heart size={13} />  View wishlist
               </Link>
             </div>
           </div>
@@ -1017,22 +1017,22 @@ export default function Profile() {
 
       {/* ── Confirm Modals ── */}
       {confirmDeleteId !== null && (
-        <ConfirmModal title="Bewertung löschen?" message="Diese Aktion kann nicht rückgängig gemacht werden."
-          confirmLabel="Ja, löschen" danger={true}
+        <ConfirmModal title="Delete review?" message="This action cannot be undone."
+          confirmLabel="Yes, delete" danger={true}
           onConfirm={() => handleDeleteReview(confirmDeleteId)}
           onCancel={() => setConfirmDeleteId(null)} />
       )}
       {confirmSaveName && (
-        <ConfirmModal title="Name ändern?" message={`Möchtest du deinen Namen wirklich zu "${editName}" ändern?`}
-          confirmLabel="Ja, ändern" onConfirm={handleSaveName} onCancel={() => setConfirmSaveName(false)} />
+        <ConfirmModal title="Change name?" message={`Are you sure you want to change your name to "${editName}"?`}
+          confirmLabel="Yes, change" onConfirm={handleSaveName} onCancel={() => setConfirmSaveName(false)} />
       )}
       {confirmSavePw && (
-        <ConfirmModal title="Passwort ändern?" message="Möchtest du dein Passwort wirklich ändern?"
-          confirmLabel="Ja, ändern" onConfirm={handleUpdatePassword} onCancel={() => setConfirmSavePw(false)} />
+        <ConfirmModal title="Change password?" message="Are you sure you want to change your password?"
+          confirmLabel="Yes, change" onConfirm={handleUpdatePassword} onCancel={() => setConfirmSavePw(false)} />
       )}
       {confirmSaveGender && (
-        <ConfirmModal title="Geschlecht ändern?" message={`Möchtest du dein Geschlecht wirklich auf "${genderLabel(editGender)}" ändern?`}
-          confirmLabel="Ja, ändern" onConfirm={handleSaveGender} onCancel={() => setConfirmSaveGender(false)} />
+        <ConfirmModal title="Change gender?" message={`Are you sure you want to change your gender to "${genderLabel(editGender)}"?`}
+          confirmLabel="Yes, change" onConfirm={handleSaveGender} onCancel={() => setConfirmSaveGender(false)} />
       )}
 
       {showSkinProfile && (
@@ -1057,56 +1057,56 @@ export default function Profile() {
           <div className="p-modal-box" style={{ width: '100%', maxWidth: 460, background: '#fff', borderRadius: 28, padding: 36, boxShadow: '0 24px 60px rgba(0,0,0,0.18)', maxHeight: '90vh', overflowY: 'auto' }}>
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 28 }}>
-              <h2 style={{ fontFamily: "'Outfit',sans-serif", fontSize: 22, fontWeight: 800, color: '#1c1209', margin: 0 }}>Profil bearbeiten</h2>
-              <button className="p-close-btn" onClick={closeModal} title="Schließen"><X size={20} /></button>
+              <h2 style={{ fontFamily: "'Outfit',sans-serif", fontSize: 22, fontWeight: 800, color: '#1c1209', margin: 0 }}>Edit profile</h2>
+              <button className="p-close-btn" onClick={closeModal} title="Close"><X size={20} /></button>
             </div>
 
             {/* ── Name ── */}
             <p style={{ fontSize: 12, color: '#9a7a5a', margin: '0 0 6px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Name</p>
-            <input className="p-input" placeholder="Name eingeben" value={editName}
+            <input className="p-input" placeholder="Enter name" value={editName}
               onChange={(e) => setEditName(e.target.value)} style={{ marginBottom: 8 }} />
             {nameMsg     && <p style={{ fontSize: 12, color: '#c47a5a', margin: '0 0 8px' }}>{nameMsg}</p>}
             {nameSuccess && <p style={{ fontSize: 12, color: '#7ab87a', margin: '0 0 8px' }}>{nameSuccess}</p>}
             <button className="p-btn-primary" onClick={() => {
-              if (!editName.trim()) { setNameMsg('Name darf nicht leer sein'); return }
-              if (editName.trim() === (user?.name || '').trim()) { setNameMsg('Bitte einen anderen Namen eingeben'); return }
+              if (!editName.trim()) { setNameMsg("Name cannot be empty"); return }
+              if (editName.trim() === (user?.name || '').trim()) { setNameMsg("Please enter a different name"); return }
               setNameMsg(''); setConfirmSaveName(true)
             }} style={{ marginBottom: 28 }}>
-              Name speichern
+              Save name
             </button>
 
             {/* ── Geschlecht ── */}
-            <p style={{ fontSize: 12, color: '#9a7a5a', margin: '0 0 8px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Geschlecht</p>
+            <p style={{ fontSize: 12, color: '#9a7a5a', margin: '0 0 8px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Gender</p>
             <GenderPicker value={editGender} onChange={(g) => { setEditGender(g); setGenderSaved(false); setGenderSuccess('') }} />
             <div style={{ marginTop: 12, marginBottom: 28 }}>
               {genderMsg && <p style={{ fontSize: 12, color: '#c47a5a', margin: '0 0 8px' }}>{genderMsg}</p>}
               {genderSaved ? (
-                <p style={{ fontSize: 12, color: '#7ab87a', margin: 0, fontWeight: 600 }}>✓ Gespeichert</p>
+                <p style={{ fontSize: 12, color: '#7ab87a', margin: 0, fontWeight: 600 }}>✓ Saved</p>
               ) : (
                 <button className="p-btn-primary" onClick={() => setConfirmSaveGender(true)}>
-                  Geschlecht speichern
+                  Save gender
                 </button>
               )}
             </div>
 
             {/* ── E-Mail (readonly) ── */}
-            <p style={{ fontSize: 12, color: '#9a7a5a', margin: '0 0 6px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em' }}>E-Mail</p>
+            <p style={{ fontSize: 12, color: '#9a7a5a', margin: '0 0 6px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Email</p>
             <input className="p-input" value={user?.email || ''} disabled style={{ marginBottom: 28 }} />
 
             {/* ── Passwort ── */}
-            <p style={{ fontSize: 12, color: '#9a7a5a', margin: '0 0 6px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Passwort ändern</p>
-            <input className="p-input" type="password" placeholder="Aktuelles Passwort" value={currentPw}
+            <p style={{ fontSize: 12, color: '#9a7a5a', margin: '0 0 6px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Change password</p>
+            <input className="p-input" type="password" placeholder="Current password" value={currentPw}
               onChange={(e) => setCurrentPw(e.target.value)} style={{ marginBottom: 10 }} />
-            <input className="p-input" type="password" placeholder="Neues Passwort (mind. 8 Zeichen, Groß, Zahl, Sonderzeichen)" value={newPw}
+            <input className="p-input" type="password" placeholder="New password (min. 8 characters, uppercase, number, special character)" value={newPw}
               onChange={(e) => setNewPw(e.target.value)} style={{ marginBottom: 8 }} />
             {pwMsg     && <p style={{ fontSize: 12, color: '#c47a5a', margin: '0 0 8px' }}>{pwMsg}</p>}
             {pwSuccess && <p style={{ fontSize: 12, color: '#7ab87a', margin: '0 0 8px' }}>{pwSuccess}</p>}
             <button className="p-btn-dark" onClick={() => {
-              if (!currentPw || !newPw) { setPwMsg('Beide Felder ausfüllen'); return }
-              if (currentPw === newPw) { setPwMsg('Neues Passwort muss sich vom aktuellen unterscheiden'); return }
+              if (!currentPw || !newPw) { setPwMsg("Fill in both fields"); return }
+              if (currentPw === newPw) { setPwMsg("Your new password must differ from your current password"); return }
               setPwMsg(''); setConfirmSavePw(true)
             }}>
-              Passwort ändern
+              Change password
             </button>
           </div>
         </div>

@@ -51,26 +51,26 @@ exports.createOrder = async (req, res) => {
     
         return res.status(500).json({
           message:
-            'Bestellung wurde gespeichert, aber die Bestätigungsmail konnte nicht gesendet werden.',
+            "Your order was saved, but the confirmation email could not be sent.",
         })
       }
     } else {
       return res.status(400).json({
-        message: 'Keine E-Mail-Adresse für die Bestellbestätigung vorhanden.',
+        message: "No email address is available for the order confirmation.",
       })
     }
 
     return res.status(201).json({
-      message: 'Bestellung erfolgreich',
+      message: "Order placed successfully",
       order,
     })
   } catch (err) {
     console.error('CHECKOUT ERROR:', err.message)
 
-    const status = err.message.includes('Zu viele Versuche') ? 429 : 500
+    const status = err.message.includes("Too many attempts") ? 429 : 500
 
     return res.status(status).json({
-      message: err.message || 'Fehler bei Bestellung',
+      message: err.message || "Could not place order",
     })
   }
 }
@@ -81,7 +81,7 @@ exports.getMyOrders = async (req, res) => {
 
     if (!userId) {
       return res.status(401).json({
-        message: 'Nicht eingeloggt',
+        message: "Not signed in",
       })
     }
 
@@ -92,7 +92,7 @@ exports.getMyOrders = async (req, res) => {
     console.error('ORDER HISTORY ERROR:', err.message)
 
     return res.status(500).json({
-      message: 'Fehler beim Laden der Bestellungen',
+      message: "Could not load orders",
       error: err.message,
     })
   }

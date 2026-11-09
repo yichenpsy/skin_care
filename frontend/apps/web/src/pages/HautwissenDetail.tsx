@@ -16,314 +16,314 @@ import rasierpickel from '@/images/rasierpickel.png'
 const hautProbleme = [
   {
     slug: 'acne',
-    title: 'Akne',
+    title: "Acne",
     image: acne,
     intro:
-      'Akne zeigt sich häufig durch Pickel, entzündete Stellen und verstopfte Poren.',
-    symptoms: ['Pickel', 'Entzündungen', 'Verstopfte Poren', 'Ölige Haut'],
+      "Acne often appears as pimples, inflamed areas, and clogged pores.",
+    symptoms: ["Pimples", "Inflammation", "Clogged pores", "Oily skin"],
     causes: [
-      'Überschüssige Talgproduktion',
-      'Verstopfte Poren durch abgestorbene Hautzellen',
-      'Hormonelle Veränderungen',
-      'Bakterien und Entzündungen',
+      "Excess oil production",
+      "Pores clogged by dead skin cells",
+      "Hormonal changes",
+      "Bacteria and inflammation",
     ],
     tips: [
-      'Reinige dein Gesicht mild und nicht zu aggressiv.',
-      'Drücke Pickel nicht aus.',
-      'Nutze leichte, nicht-komedogene Pflegeprodukte.',
-      'Achte auf täglichen Sonnenschutz.',
+      "Cleanse your face gently without harsh products.",
+      "Avoid squeezing pimples.",
+      "Use lightweight, non-comedogenic skincare.",
+      "Wear sunscreen every day.",
     ],
     ingredients: [
-      { name: 'Salicylsäure', text: 'Hilft gegen verstopfte Poren.' },
-      { name: 'Niacinamid', text: 'Beruhigt die Haut und stärkt die Hautbarriere.' },
-      { name: 'Azelainsäure', text: 'Kann Rötungen und Pickelmale mildern.' },
-      { name: 'Benzoylperoxid', text: 'Wirkt gegen Akne-Bakterien.' },
+      { name: "Salicylic acid", text: "Helps clear clogged pores." },
+      { name: "Niacinamide", text: "Soothes the skin and supports the skin barrier." },
+      { name: "Azelaic acid", text: "May reduce redness and post-acne marks." },
+      { name: "Benzoyl peroxide", text: "Targets acne-causing bacteria." },
     ],
   },
   {
     slug: 'blackheads',
-    title: 'Mitesser',
+    title: "Blackheads",
     image: blackheads,
     intro:
-      'Mitesser sind kleine verstopfte Poren, die besonders auf Nase, Stirn und Kinn sichtbar werden.',
-    symptoms: ['Schwarze Punkte', 'Verstopfte Poren', 'Ölige T-Zone', 'Unreine Haut'],
+      "Blackheads are small clogged pores, often visible on the nose, forehead, and chin.",
+    symptoms: ["Black dots", "Clogged pores", "Oily T-zone", "Blemish-prone skin"],
     causes: [
-      'Talg sammelt sich in den Poren',
-      'Abgestorbene Hautzellen verstopfen die Hautoberfläche',
-      'Ölige Haut begünstigt Mitesser',
-      'Zu reichhaltige Pflegeprodukte',
+      "Oil builds up in pores",
+      "Dead skin cells clog the skin's surface",
+      "Oily skin can contribute to blackheads",
+      "Skincare products that are too rich",
     ],
     tips: [
-      'Verwende eine milde Reinigung.',
-      'Nutze gelegentlich ein sanftes BHA-Peeling.',
-      'Vermeide stark fettende Produkte.',
-      'Drücke Mitesser nicht grob aus.',
+      "Use a gentle cleanser.",
+      "Use a gentle BHA exfoliant occasionally.",
+      "Avoid very greasy products.",
+      "Avoid squeezing blackheads aggressively.",
     ],
     ingredients: [
-      { name: 'Salicylsäure', text: 'Dringt in die Poren ein und löst Verstopfungen.' },
-      { name: 'Niacinamid', text: 'Kann die Talgproduktion ausgleichen.' },
-      { name: 'Tonerde', text: 'Nimmt überschüssigen Talg auf.' },
-      { name: 'Retinol', text: 'Unterstützt die Hauterneuerung.' },
+      { name: "Salicylic acid", text: "Penetrates pores and helps clear blockages." },
+      { name: "Niacinamide", text: "May help balance oil production." },
+      { name: "Clay", text: "Absorbs excess oil." },
+      { name: "Retinol", text: "Supports skin renewal." },
     ],
   },
   {
     slug: 'dry-skin',
-    title: 'Trockene Haut',
+    title: "Dry skin",
     image: dryskin,
     intro:
-      'Trockene Haut fühlt sich oft gespannt, rau oder schuppig an und braucht besonders viel Feuchtigkeit und Schutz.',
-    symptoms: ['Spannungsgefühl', 'Schuppige Haut', 'Raue Stellen', 'Juckreiz'],
+      "Dry skin often feels tight, rough, or flaky and needs extra hydration and protection.",
+    symptoms: ["tightness", "Flaky skin", "Rough patches", "Itching"],
     causes: [
-      'Geschwächte Hautbarriere',
-      'Kälte, Heizungsluft oder häufiges Waschen',
-      'Zu aggressive Reinigungsprodukte',
-      'Zu wenig Feuchtigkeit in der Pflege',
+      "Weakened skin barrier",
+      "Cold weather, indoor heating, or frequent washing",
+      "Harsh cleansing products",
+      "Not enough hydration in your skincare routine",
     ],
     tips: [
-      'Nutze eine milde Reinigung.',
-      'Trage regelmäßig Feuchtigkeitspflege auf.',
-      'Vermeide sehr heißes Wasser im Gesicht.',
-      'Stärke deine Hautbarriere mit beruhigenden Produkten.',
+      "Use a gentle cleanser.",
+      "Apply moisturizer regularly.",
+      "Avoid very hot water on your face.",
+      "Support your skin barrier with soothing products.",
     ],
     ingredients: [
-      { name: 'Hyaluronsäure', text: 'Bindet Feuchtigkeit in der Haut.' },
-      { name: 'Glycerin', text: 'Spendet Feuchtigkeit und schützt vor Austrocknung.' },
-      { name: 'Ceramide', text: 'Stärken die natürliche Hautbarriere.' },
-      { name: 'Panthenol', text: 'Beruhigt trockene und gereizte Haut.' },
+      { name: "Hyaluronic acid", text: "Helps retain moisture in the skin." },
+      { name: "Glycerin", text: "Hydrates and protects against dryness." },
+      { name: "Ceramides", text: "Support the natural skin barrier." },
+      { name: "Panthenol", text: "Soothes dry and irritated skin." },
     ],
   },
   {
     slug: 'oily-skin',
-    title: 'Fettige Haut',
+    title: "Oily skin",
     image: oily,
     intro:
-      'Fettige Haut glänzt schnell und produziert mehr Talg als normale Haut. Trotzdem braucht sie Feuchtigkeit.',
-    symptoms: ['Glanz', 'Ölige T-Zone', 'Vergrößerte Poren', 'Unreinheiten'],
+      "Oily skin becomes shiny quickly and produces more oil than normal skin. It still needs hydration.",
+    symptoms: ["Shine", "Oily T-zone", "Enlarged pores", "Blemishes"],
     causes: [
-      'Erhöhte Talgproduktion',
-      'Genetische Veranlagung',
-      'Hormonelle Schwankungen',
-      'Zu aggressive Reinigung',
+      "Increased oil production",
+      "Genetic factors",
+      "Hormonal fluctuations",
+      "Harsh cleansing",
     ],
     tips: [
-      'Verwende leichte, ölfreie Pflegeprodukte.',
-      'Reinige dein Gesicht sanft, aber regelmäßig.',
-      'Vermeide schwere Cremes.',
-      'Nutze mattierende Produkte, ohne die Haut auszutrocknen.',
+      "Use lightweight, oil-free skincare.",
+      "Cleanse your face gently and regularly.",
+      "Avoid heavy creams.",
+      "Use mattifying products without drying out your skin.",
     ],
     ingredients: [
-      { name: 'Niacinamid', text: 'Kann Glanz reduzieren und die Haut beruhigen.' },
-      { name: 'Salicylsäure', text: 'Hilft gegen verstopfte Poren.' },
-      { name: 'Zink', text: 'Kann überschüssigen Talg regulieren.' },
-      { name: 'Grüner Tee', text: 'Wirkt beruhigend und antioxidativ.' },
+      { name: "Niacinamide", text: "May reduce shine and soothe the skin." },
+      { name: "Salicylic acid", text: "Helps clear clogged pores." },
+      { name: "Zinc", text: "May help regulate excess oil." },
+      { name: "Green tea", text: "Provides soothing and antioxidant benefits." },
     ],
   },
   {
     slug: 'redness',
-    title: 'Rötungen',
+    title: "Redness",
     image: redness,
     intro:
-      'Rötungen können durch empfindliche Haut, Reizungen oder äußere Einflüsse entstehen.',
-    symptoms: ['Brennen', 'Wärmegefühl', 'Empfindlichkeit', 'Sichtbare Rötung'],
+      "Redness can result from sensitive skin, irritation, or external factors.",
+    symptoms: ["Burning", "Warm sensation", "Sensitivity", "Visible redness"],
     causes: [
-      'Empfindliche oder gereizte Haut',
-      'Hitze, Kälte oder Sonne',
-      'Zu starke Pflegeprodukte',
-      'Stress oder bestimmte Lebensmittel',
+      "Sensitive or irritated skin",
+      "Heat, cold, or sun exposure",
+      "Harsh skincare products",
+      "Stress or certain foods",
     ],
     tips: [
-      'Verwende reizfreie und beruhigende Pflege.',
-      'Vermeide Duftstoffe und aggressive Peelings.',
-      'Nutze täglich Sonnenschutz.',
-      'Beobachte, welche Auslöser deine Haut stärker röten.',
+      "Use gentle, soothing skincare.",
+      "Avoid fragrances and harsh exfoliants.",
+      "Wear sunscreen daily.",
+      "Notice which triggers make your skin redder.",
     ],
     ingredients: [
-      { name: 'Panthenol', text: 'Beruhigt gereizte Haut und unterstützt die Hautbarriere.' },
-      { name: 'Centella Asiatica', text: 'Hilft bei empfindlicher Haut und wirkt beruhigend.' },
-      { name: 'Aloe Vera', text: 'Spendet Feuchtigkeit und kühlt die Haut angenehm.' },
-      { name: 'Niacinamid', text: 'Kann Rötungen mildern und die Haut stärken.' },
+      { name: "Panthenol", text: "Soothes irritated skin and supports the skin barrier." },
+      { name: "Centella Asiatica", text: "Helps soothe sensitive skin." },
+      { name: "Aloe Vera", text: "Hydrates and gently cools the skin." },
+      { name: "Niacinamide", text: "May reduce redness and strengthen the skin." },
     ],
   },
   {
     slug: 'hyperpigmentation',
-    title: 'Hyperpigmentierung',
+    title: "Hyperpigmentation",
     image: hyperpigmentation,
     intro:
-      'Hyperpigmentierung zeigt sich durch dunkle Flecken oder einen ungleichmäßigen Hautton.',
-    symptoms: ['Dunkle Flecken', 'Pickelmale', 'Ungleichmäßiger Hautton', 'Pigmentflecken'],
+      "Hyperpigmentation appears as dark spots or uneven skin tone.",
+    symptoms: ["Dark spots", "Post-acne marks", "Uneven skin tone", "Dark spots"],
     causes: [
-      'Sonneneinstrahlung',
-      'Pickelmale nach Entzündungen',
-      'Hormonelle Veränderungen',
-      'Ungleichmäßige Melaninproduktion',
+      "Sun exposure",
+      "Post-inflammatory acne marks",
+      "Hormonal changes",
+      "Uneven melanin production",
     ],
     tips: [
-      'Nutze jeden Tag Sonnenschutz.',
-      'Vermeide es, Pickel aufzukratzen.',
-      'Verwende aufhellende Wirkstoffe regelmäßig.',
-      'Sei geduldig, da Flecken Zeit brauchen.',
+      "Wear sunscreen every day.",
+      "Avoid picking at pimples.",
+      "Use brightening ingredients consistently.",
+      "Be patient, as spots take time to fade.",
     ],
     ingredients: [
-      { name: 'Vitamin C', text: 'Kann den Hautton ebenmäßiger wirken lassen.' },
-      { name: 'Niacinamid', text: 'Hilft bei einem ausgeglicheneren Hautbild.' },
-      { name: 'Azelainsäure', text: 'Kann dunkle Flecken und Rötungen mildern.' },
-      { name: 'Alpha-Arbutin', text: 'Wird häufig gegen Pigmentflecken eingesetzt.' },
+      { name: "Vitamin C", text: "May help even out skin tone." },
+      { name: "Niacinamide", text: "Helps promote a more balanced appearance." },
+      { name: "Azelaic acid", text: "May reduce dark spots and redness." },
+      { name: "Alpha-Arbutin", text: "Often used for dark spots." },
     ],
   },
   {
     slug: 'dark-circles',
-    title: 'Augenringe',
+    title: "Dark circles",
     image: darkcircles,
     intro:
-      'Augenringe lassen die Augenpartie müde wirken und können verschiedene Ursachen haben.',
-    symptoms: ['Dunkle Schatten', 'Müder Blick', 'Trockene Augenpartie', 'Leichte Schwellung'],
+      "Dark circles can make the eye area look tired and have various causes.",
+    symptoms: ["Dark shadows", "Tired appearance", "Dry under-eye area", "Mild puffiness"],
     causes: [
-      'Schlafmangel',
-      'Genetische Veranlagung',
-      'Dünne Haut unter den Augen',
-      'Flüssigkeitsmangel oder Stress',
+      "Lack of sleep",
+      "Genetic factors",
+      "Thin skin under the eyes",
+      "Dehydration or stress",
     ],
     tips: [
-      'Achte auf ausreichend Schlaf.',
-      'Pflege die Augenpartie mit Feuchtigkeit.',
-      'Kühlende Augenpads können kurzfristig helfen.',
-      'Trage Sonnenschutz vorsichtig um die Augenpartie auf.',
+      "Get enough sleep.",
+      "Keep the eye area hydrated.",
+      "Cooling eye patches may provide temporary relief.",
+      "Apply sunscreen carefully around the eye area.",
     ],
     ingredients: [
-      { name: 'Koffein', text: 'Kann Schwellungen optisch reduzieren.' },
-      { name: 'Hyaluronsäure', text: 'Spendet Feuchtigkeit und polstert optisch auf.' },
-      { name: 'Peptide', text: 'Unterstützen ein glatteres Hautbild.' },
-      { name: 'Vitamin C', text: 'Kann die Augenpartie frischer wirken lassen.' },
+      { name: "Caffeine", text: "May reduce the appearance of puffiness." },
+      { name: "Hyaluronic acid", text: "Hydrates and visibly plumps the skin." },
+      { name: "Peptides", text: "Support a smoother appearance." },
+      { name: "Vitamin C", text: "May help the eye area look fresher." },
     ],
   },
   {
     slug: 'large-pores',
-    title: 'Große Poren',
+    title: "Large pores",
     image: poren,
     intro:
-      'Große Poren entstehen oft durch Talg, Hautstruktur und verstopfte Poren. Ganz verschwinden können Poren nicht, aber sie können feiner wirken.',
-    symptoms: ['Sichtbare Poren', 'Unebene Haut', 'Ölige Stellen', 'Verstopfte Poren'],
+      "Large pores are often linked to oil, skin texture, and clogged pores. Pores cannot disappear completely, but they can look smaller.",
+    symptoms: ["Visible pores", "Uneven skin texture", "Oily areas", "Clogged pores"],
     causes: [
-      'Erhöhte Talgproduktion',
-      'Verstopfte Poren',
-      'Genetische Veranlagung',
-      'Nachlassende Hautelastizität',
+      "Increased oil production",
+      "Clogged pores",
+      "Genetic factors",
+      "Reduced skin elasticity",
     ],
     tips: [
-      'Reinige die Haut regelmäßig und mild.',
-      'Nutze BHA gegen verstopfte Poren.',
-      'Vermeide schwere, komedogene Produkte.',
-      'Achte auf Sonnenschutz.',
+      "Cleanse your skin regularly and gently.",
+      "Use BHA to help clear clogged pores.",
+      "Avoid heavy, comedogenic products.",
+      "Remember sunscreen.",
     ],
     ingredients: [
-      { name: 'Niacinamid', text: 'Kann Poren optisch feiner wirken lassen.' },
-      { name: 'Salicylsäure', text: 'Hilft, Poren von innen zu reinigen.' },
-      { name: 'Retinol', text: 'Unterstützt die Hauterneuerung.' },
-      { name: 'Tonerde', text: 'Nimmt überschüssigen Talg auf.' },
+      { name: "Niacinamide", text: "May make pores look smaller." },
+      { name: "Salicylic acid", text: "Helps cleanse inside pores." },
+      { name: "Retinol", text: "Supports skin renewal." },
+      { name: "Clay", text: "Absorbs excess oil." },
     ],
   },
   {
     slug: 'sensitive-skin',
-    title: 'Empfindliche Haut',
+    title: "Sensitive skin",
     image: sensibleskin,
     intro:
-      'Empfindliche Haut reagiert schnell mit Brennen, Jucken, Trockenheit oder leichter Rötung.',
-    symptoms: ['Brennen', 'Juckreiz', 'Trockenheit', 'Schnelle Reizung'],
+      "Sensitive skin can quickly react with burning, itching, dryness, or mild redness.",
+    symptoms: ["Burning", "Itching", "Dryness", "Easily irritated"],
     causes: [
-      'Geschwächte Hautbarriere',
-      'Duftstoffe oder reizende Inhaltsstoffe',
-      'Wetterwechsel',
-      'Zu viele Produkte gleichzeitig',
+      "Weakened skin barrier",
+      "Fragrances or irritating ingredients",
+      "Weather changes",
+      "Too many products at once",
     ],
     tips: [
-      'Halte deine Routine einfach und mild.',
-      'Vermeide Duftstoffe und Alkohol.',
-      'Teste neue Produkte zuerst vorsichtig.',
-      'Nutze beruhigende und barrierestärkende Pflege.',
+      "Keep your routine simple and gentle.",
+      "Avoid fragrances and alcohol.",
+      "Patch-test new products first.",
+      "Use soothing skincare that supports your skin barrier.",
     ],
     ingredients: [
-      { name: 'Ceramide', text: 'Stärken die Hautbarriere.' },
-      { name: 'Panthenol', text: 'Beruhigt empfindliche Haut.' },
-      { name: 'Aloe Vera', text: 'Spendet Feuchtigkeit und kühlt.' },
-      { name: 'Centella Asiatica', text: 'Wirkt beruhigend bei gereizter Haut.' },
+      { name: "Ceramides", text: "Support the skin barrier." },
+      { name: "Panthenol", text: "Soothes sensitive skin." },
+      { name: "Aloe Vera", text: "Hydrates and cools." },
+      { name: "Centella Asiatica", text: "Soothes irritated skin." },
     ],
   },
   {
     slug: 'acne-scars',
-    title: 'Pickelmale',
+    title: "Post-acne marks",
     image: acnescars,
     intro:
-      'Pickelmale bleiben oft nach Entzündungen zurück und können als dunkle oder rötliche Flecken sichtbar sein.',
-    symptoms: ['Rötliche Flecken', 'Dunkle Flecken', 'Unebener Hautton', 'Spuren nach Pickeln'],
+      "Post-acne marks often remain after inflammation and may appear as dark or reddish spots.",
+    symptoms: ["Reddish spots", "Dark spots", "Uneven skin tone", "Marks left by pimples"],
     causes: [
-      'Entzündete Pickel',
-      'Ausdrücken oder Aufkratzen',
-      'Sonneneinstrahlung kann Flecken verstärken',
-      'Langsame Hauterneuerung',
+      "Inflamed pimples",
+      "Squeezing or scratching",
+      "Sun exposure can make spots more noticeable",
+      "Slow skin renewal",
     ],
     tips: [
-      'Verwende täglich Sonnenschutz.',
-      'Drücke Pickel nicht aus.',
-      'Nutze Wirkstoffe zur Hauterneuerung.',
-      'Sei geduldig, Pickelmale brauchen Zeit.',
+      "Wear sunscreen every day.",
+      "Avoid squeezing pimples.",
+      "Use ingredients that support skin renewal.",
+      "Be patient, post-acne marks take time to fade.",
     ],
     ingredients: [
-      { name: 'Niacinamid', text: 'Kann Flecken und Rötungen mildern.' },
-      { name: 'Vitamin C', text: 'Unterstützt einen ebenmäßigeren Hautton.' },
-      { name: 'Azelainsäure', text: 'Hilft bei Rötungen und Pickelmalen.' },
-      { name: 'Retinol', text: 'Fördert die Hauterneuerung.' },
+      { name: "Niacinamide", text: "May reduce spots and redness." },
+      { name: "Vitamin C", text: "Supports a more even skin tone." },
+      { name: "Azelaic acid", text: "Helps with redness and post-acne marks." },
+      { name: "Retinol", text: "Promotes skin renewal." },
     ],
   },
   {
     slug: 'stress-breakouts',
-    title: 'Stressbedingte Unreinheiten',
+    title: "Stress-related breakouts",
     image: stressbreakouts,
     intro:
-      'Stress kann sich auch auf die Haut auswirken und Unreinheiten verstärken.',
-    symptoms: ['Plötzliche Pickel', 'Unruhige Haut', 'Rötungen', 'Mehr Talg'],
+      "Stress can also affect the skin and worsen blemishes.",
+    symptoms: ["Sudden breakouts", "Unsettled skin", "Redness", "More oil"],
     causes: [
-      'Stresshormone beeinflussen die Talgproduktion',
-      'Weniger Schlaf in stressigen Phasen',
-      'Unregelmäßige Pflegeroutine',
-      'Häufiges Berühren des Gesichts',
+      "Stress hormones affect oil production",
+      "Less sleep during stressful periods",
+      "Inconsistent skincare routine",
+      "Frequently touching your face",
     ],
     tips: [
-      'Halte deine Pflegeroutine einfach.',
-      'Achte auf Schlaf und Erholung.',
-      'Berühre dein Gesicht möglichst wenig.',
-      'Nutze beruhigende Pflege.',
+      "Keep your skincare routine simple.",
+      "Make time for sleep and rest.",
+      "Avoid touching your face unnecessarily.",
+      "Use soothing skincare.",
     ],
     ingredients: [
-      { name: 'Niacinamid', text: 'Beruhigt die Haut und stärkt die Barriere.' },
-      { name: 'Salicylsäure', text: 'Hilft gegen verstopfte Poren.' },
-      { name: 'Panthenol', text: 'Beruhigt gereizte Haut.' },
-      { name: 'Grüner Tee', text: 'Wirkt beruhigend und antioxidativ.' },
+      { name: "Niacinamide", text: "Soothes the skin and supports the barrier." },
+      { name: "Salicylic acid", text: "Helps clear clogged pores." },
+      { name: "Panthenol", text: "Soothes irritated skin." },
+      { name: "Green tea", text: "Provides soothing and antioxidant benefits." },
     ],
   },
   {
     slug: 'razor-bumps',
-    title: 'Rasierpickel',
+    title: "Razor bumps",
     image: rasierpickel,
     intro:
-      'Rasierpickel entstehen häufig nach der Rasur und zeigen sich als kleine rote Punkte, Reizungen oder eingewachsene Haare.',
-    symptoms: ['Rote Punkte', 'Eingewachsene Haare', 'Juckreiz', 'Reizung nach Rasur'],
+      "Razor bumps often appear after shaving as small red bumps, irritation, or ingrown hairs.",
+    symptoms: ["Red bumps", "Ingrown hairs", "Itching", "Irritation after shaving"],
     causes: [
-      'Reizung durch Rasur',
-      'Eingewachsene Haare',
-      'Stumpfe Rasierklingen',
-      'Zu wenig Pflege nach der Rasur',
+      "Irritation caused by shaving",
+      "Ingrown hairs",
+      "Dull razor blades",
+      "Not enough care after shaving",
     ],
     tips: [
-      'Rasiere mit einer sauberen und scharfen Klinge.',
-      'Rasiere möglichst in Haarwuchsrichtung.',
-      'Beruhige die Haut nach der Rasur.',
-      'Vermeide direkt nach der Rasur reizende Produkte.',
+      "Use a clean, sharp razor.",
+      "Shave in the direction of hair growth where possible.",
+      "Soothe your skin after shaving.",
+      "Avoid irritating products immediately after shaving.",
     ],
     ingredients: [
-      { name: 'Aloe Vera', text: 'Kühlt und beruhigt gereizte Haut.' },
-      { name: 'Panthenol', text: 'Unterstützt die Hautbarriere.' },
-      { name: 'Salicylsäure', text: 'Kann eingewachsenen Haaren vorbeugen.' },
-      { name: 'Centella Asiatica', text: 'Beruhigt empfindliche und gereizte Haut.' },
+      { name: "Aloe Vera", text: "Cools and soothes irritated skin." },
+      { name: "Panthenol", text: "Supports the skin barrier." },
+      { name: "Salicylic acid", text: "May help prevent ingrown hairs." },
+      { name: "Centella Asiatica", text: "Soothes sensitive and irritated skin." },
     ],
   },
 ]
@@ -343,14 +343,14 @@ export default function HautwissenDetail() {
       <main className="min-h-screen bg-[#FFF9F5] px-4 pt-24 sm:px-6 sm:pt-32 !font-sans">
         <div className="mx-auto max-w-3xl rounded-3xl bg-white p-6 sm:p-8 shadow-sm !font-sans">
           <h1 className="text-3xl font-bold text-[#2a1c10] !font-sans">
-            Hautproblem nicht gefunden
+            Skin concern not found
           </h1>
 
           <Link
             to="/hautwissen"
             className="mt-6 inline-block font-semibold text-[#D4A574] !font-sans"
           >
-            Zurück zu Hautwissen
+            Back to skin guide
           </Link>
         </div>
       </main>
@@ -364,7 +364,7 @@ export default function HautwissenDetail() {
           to="/hautwissen"
           className="mb-6 inline-block font-semibold text-[#D4A574] !font-sans"
         >
-          ← Zurück zu Hautwissen
+          ← Back to skin guide
         </Link>
 
         <section className="grid overflow-hidden rounded-[36px] bg-white shadow-lg md:grid-cols-2 !font-sans">
@@ -378,7 +378,7 @@ export default function HautwissenDetail() {
 
           <div className="flex flex-col justify-center p-6 sm:p-8 md:p-12 !font-sans">
             <span className="mb-4 w-fit rounded-full bg-[#FDECEC] px-4 py-2 text-sm font-semibold text-[#b76b5f] !font-sans">
-              Hautwissen
+              Skin guide
             </span>
 
             <h1 className="text-3xl font-bold text-[#2a1c10] sm:text-4xl md:text-5xl !font-sans">
@@ -393,7 +393,7 @@ export default function HautwissenDetail() {
               onClick={() => navigate('/chatbot')}
               className="mt-8 w-fit rounded-full bg-[#D4A574] px-7 py-3 font-semibold text-white transition hover:bg-[#c4945f]"
             >
-              KI-Beratung starten
+              Start AI consultation
             </button> */}
           </div>
         </section>
@@ -418,7 +418,7 @@ export default function HautwissenDetail() {
         <section className="mt-8 grid gap-4 sm:gap-6 md:grid-cols-2 !font-sans">
           <div className="rounded-[32px] bg-white p-6 sm:p-8 shadow-sm !font-sans">
             <h2 className="text-xl sm:text-2xl font-bold text-[#2a1c10] !font-sans">
-              Warum entsteht das?
+              What causes it?
             </h2>
 
             <div className="mt-5 grid gap-4 !font-sans">
@@ -436,7 +436,7 @@ export default function HautwissenDetail() {
 
           <div className="rounded-[32px] bg-white p-8 shadow-sm !font-sans">
             <h2 className="text-xl sm:text-2xl font-bold text-[#2a1c10] !font-sans">
-              Was kann helfen?
+              What can help?
             </h2>
 
             <div className="mt-5 grid gap-4 !font-sans">
@@ -455,7 +455,7 @@ export default function HautwissenDetail() {
 
         <section className="mt-8 rounded-[32px] bg-white p-6 sm:p-8 shadow-sm !font-sans">
           <h2 className="text-xl sm:text-2xl font-bold text-[#2a1c10] !font-sans">
-            Geeignete Inhaltsstoffe
+            Suitable ingredients
           </h2>
 
           <div className="mt-6 grid gap-4 sm:gap-5 md:grid-cols-2 !font-sans">
@@ -477,11 +477,11 @@ export default function HautwissenDetail() {
 
         <section className="mt-10 rounded-[36px] bg-[#2a1c10] p-6 text-white sm:p-8 md:p-10">
           <h2 className="text-2xl font-bold sm:text-3xl !font-sans">
-            Du bist dir unsicher, was zu deiner Haut passt?
+            Not sure what suits your skin?
           </h2>
 
           <p className="mt-4 max-w-2xl text-sm text-white/80 sm:text-base !font-sans">
-            Starte die KI-Beratung und erhalte passendere Empfehlungen für deine Hautpflege.
+            Start an AI consultation for more personalized skincare recommendations.
           </p>
 
    <button
@@ -497,12 +497,12 @@ export default function HautwissenDetail() {
   }
   className="mt-7 w-full rounded-full bg-[#D4A574] px-8 py-3 text-center font-semibold text-white transition hover:bg-[#c4945f] sm:w-auto !font-sans"
 >
-  KI-Beratung starten
+  Start AI consultation
 </button>
         </section>
 
         <p className="mt-8 text-sm text-gray-500 !font-sans">
-          Hinweis: Diese Informationen ersetzen keine ärztliche Beratung.
+          Note: This information does not replace medical advice.
         </p>
       </article>
     </main>

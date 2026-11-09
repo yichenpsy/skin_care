@@ -28,42 +28,42 @@ function facts(...items: Array<[string, string]>): QuizFact[] {
 const questionsFemale: QuizQuestion[] = [
   {
     id: 1,
-    question: 'Wie fühlt sich deine Haut morgens nach dem Aufwachen an?',
+    question: "How does your skin feel when you wake up?",
     options: [
-      { label: 'Frisch und angenehm ausgeglichen',          value: 'Normal',      facts: facts(['skin_state', 'balanced']) },
-      { label: 'Glänzend und fettig',                       value: 'Oily',        facts: facts(['skin_state', 'oily'], ['skin_state', 'shine']) },
-      { label: 'Fest, trocken und spannend',                value: 'Dry',         facts: facts(['skin_state', 'dryness'], ['skin_state', 'tightness']) },
-      { label: 'T-Zone fettig, Wangen eher trocken',        value: 'Combination', facts: facts(['skin_state', 'oily_t_zone'], ['skin_state', 'dryness']) },
+      { label: "Fresh and comfortably balanced",          value: 'Normal',      facts: facts(['skin_state', 'balanced']) },
+      { label: "Shiny and oily",                       value: 'Oily',        facts: facts(['skin_state', 'oily'], ['skin_state', 'shine']) },
+      { label: "Tight and dry",                value: 'Dry',         facts: facts(['skin_state', 'dryness'], ['skin_state', 'tightness']) },
+      { label: "Oily T-zone, drier cheeks",        value: 'Combination', facts: facts(['skin_state', 'oily_t_zone'], ['skin_state', 'dryness']) },
     ],
   },
   {
     id: 2,
-    question: 'Wie reagiert deine Haut auf neue Pflegeprodukte?',
+    question: "How does your skin react to new skincare products?",
     options: [
-      { label: 'Kaum — verträgt fast alles problemlos',      value: 'Normal',    facts: facts(['sensitivity', 'tolerant']) },
-      { label: 'Wird schnell noch fettiger oder glänzender', value: 'Oily',      facts: facts(['product_reaction', 'too_greasy'], ['skin_state', 'oily'], ['skin_state', 'shine']) },
-      { label: 'Rötungen, Brennen oder Jucken',              value: 'Sensitive', facts: facts(['sensitivity', 'sensitive'], ['concern', 'redness'], ['product_reaction', 'burning']) },
-      { label: 'Spannt, schuppt oder zieht sich zusammen',   value: 'Dry',       facts: facts(['skin_state', 'dryness'], ['skin_state', 'tightness'], ['skin_state', 'flakiness'], ['product_reaction', 'drying']) },
+      { label: "Hardly reacts — tolerates almost everything",      value: 'Normal',    facts: facts(['sensitivity', 'tolerant']) },
+      { label: "Quickly becomes oilier or shinier", value: 'Oily',      facts: facts(['product_reaction', 'too_greasy'], ['skin_state', 'oily'], ['skin_state', 'shine']) },
+      { label: "Redness, burning, or itching",              value: 'Sensitive', facts: facts(['sensitivity', 'sensitive'], ['concern', 'redness'], ['product_reaction', 'burning']) },
+      { label: "Feels tight, flaky, or drawn",   value: 'Dry',       facts: facts(['skin_state', 'dryness'], ['skin_state', 'tightness'], ['skin_state', 'flakiness'], ['product_reaction', 'drying']) },
     ],
   },
   {
     id: 3,
-    question: 'Wie oft siehst du vergrößerte Poren?',
+    question: "How often do you notice enlarged pores?",
     options: [
-      { label: 'Selten bis nie',                             value: 'Normal',      facts: facts(['skin_state', 'refined_pores']) },
-      { label: 'Häufig, besonders im Gesichtszentrum',       value: 'Oily',        facts: facts(['concern', 'pores'], ['skin_state', 'oily']) },
-      { label: 'Nur in der T-Zone',                          value: 'Combination', facts: facts(['concern', 'pores'], ['skin_state', 'oily_t_zone']) },
-      { label: 'Kaum sichtbar, aber Haut wirkt matt',        value: 'Dry',         facts: facts(['skin_state', 'matte'], ['skin_state', 'dryness']) },
+      { label: "Rarely or never",                             value: 'Normal',      facts: facts(['skin_state', 'refined_pores']) },
+      { label: "Often, especially in the center of my face",       value: 'Oily',        facts: facts(['concern', 'pores'], ['skin_state', 'oily']) },
+      { label: "Only in the T-zone",                          value: 'Combination', facts: facts(['concern', 'pores'], ['skin_state', 'oily_t_zone']) },
+      { label: "Barely visible, but skin looks dull",        value: 'Dry',         facts: facts(['skin_state', 'matte'], ['skin_state', 'dryness']) },
     ],
   },
   {
     id: 4,
-    question: 'Wie fühlt sich deine Haut nach der Reinigung an?',
+    question: "How does your skin feel after cleansing?",
     options: [
-      { label: 'Angenehm sauber und frisch',                 value: 'Normal',    facts: facts(['skin_state', 'balanced']) },
-      { label: 'Immer noch etwas fettig',                    value: 'Oily',      facts: facts(['skin_state', 'oily']) },
-      { label: 'Sehr trocken und spannt stark',              value: 'Dry',       facts: facts(['skin_state', 'dryness'], ['skin_state', 'tightness'], ['product_reaction', 'drying']) },
-      { label: 'Empfindlich und leicht gereizt',             value: 'Sensitive', facts: facts(['sensitivity', 'sensitive'], ['concern', 'redness']) },
+      { label: "Comfortably clean and fresh",                 value: 'Normal',    facts: facts(['skin_state', 'balanced']) },
+      { label: "Still a little oily",                    value: 'Oily',      facts: facts(['skin_state', 'oily']) },
+      { label: "Very dry and tight",              value: 'Dry',       facts: facts(['skin_state', 'dryness'], ['skin_state', 'tightness'], ['product_reaction', 'drying']) },
+      { label: "Sensitive and slightly irritated",             value: 'Sensitive', facts: facts(['sensitivity', 'sensitive'], ['concern', 'redness']) },
     ],
   },
 ]
@@ -72,42 +72,42 @@ const questionsFemale: QuizQuestion[] = [
 const questionsMale: QuizQuestion[] = [
   {
     id: 1,
-    question: 'Wie fühlt sich deine Haut morgens nach dem Aufwachen an?',
+    question: "How does your skin feel when you wake up?",
     options: [
-      { label: 'Frisch und normal — kein Problem',           value: 'Normal',      facts: facts(['skin_state', 'balanced']) },
-      { label: 'Fettig und glänzend',                        value: 'Oily',        facts: facts(['skin_state', 'oily'], ['skin_state', 'shine']) },
-      { label: 'Trocken und spannt',                         value: 'Dry',         facts: facts(['skin_state', 'dryness'], ['skin_state', 'tightness']) },
-      { label: 'Stirn fettig, Wangen eher trocken',          value: 'Combination', facts: facts(['skin_state', 'oily_t_zone'], ['skin_state', 'dryness']) },
+      { label: "Fresh and normal — no issues",           value: 'Normal',      facts: facts(['skin_state', 'balanced']) },
+      { label: "Oily and shiny",                        value: 'Oily',        facts: facts(['skin_state', 'oily'], ['skin_state', 'shine']) },
+      { label: "Dry and tight",                         value: 'Dry',         facts: facts(['skin_state', 'dryness'], ['skin_state', 'tightness']) },
+      { label: "Oily forehead, drier cheeks",          value: 'Combination', facts: facts(['skin_state', 'oily_t_zone'], ['skin_state', 'dryness']) },
     ],
   },
   {
     id: 2,
-    question: 'Wie reagiert deine Haut nach dem Rasieren?',
+    question: "How does your skin react after shaving?",
     options: [
-      { label: 'Kein Problem, fühlt sich normal an',         value: 'Normal',    facts: facts(['sensitivity', 'tolerant']) },
-      { label: 'Wird schnell wieder fettig',                 value: 'Oily',      facts: facts(['product_reaction', 'too_greasy'], ['skin_state', 'oily']) },
-      { label: 'Brennt, rötet sich oder juckt',              value: 'Sensitive', facts: facts(['sensitivity', 'sensitive'], ['concern', 'redness'], ['product_reaction', 'burning']) },
-      { label: 'Spannt stark und fühlt sich rau an',         value: 'Dry',       facts: facts(['skin_state', 'dryness'], ['skin_state', 'tightness'], ['skin_state', 'rough_texture'], ['product_reaction', 'drying']) },
+      { label: "No issues, feels normal",         value: 'Normal',    facts: facts(['sensitivity', 'tolerant']) },
+      { label: "Quickly becomes oily again",                 value: 'Oily',      facts: facts(['product_reaction', 'too_greasy'], ['skin_state', 'oily']) },
+      { label: "Burns, turns red, or itches",              value: 'Sensitive', facts: facts(['sensitivity', 'sensitive'], ['concern', 'redness'], ['product_reaction', 'burning']) },
+      { label: "Very tight and rough",         value: 'Dry',       facts: facts(['skin_state', 'dryness'], ['skin_state', 'tightness'], ['skin_state', 'rough_texture'], ['product_reaction', 'drying']) },
     ],
   },
   {
     id: 3,
-    question: 'Wie oft hast du Probleme mit Unreinheiten oder Pickeln?',
+    question: "How often do you get blemishes or pimples?",
     options: [
-      { label: 'Selten bis nie',                             value: 'Normal',      facts: facts(['skin_state', 'clear_skin']) },
-      { label: 'Häufig, besonders in der T-Zone',            value: 'Oily',        facts: facts(['concern', 'blemishes'], ['skin_state', 'oily_t_zone']) },
-      { label: 'Manchmal, nur in der Stirngegend',           value: 'Combination', facts: facts(['concern', 'blemishes'], ['skin_state', 'oily_t_zone']) },
-      { label: 'Kaum, aber Haut ist oft trocken',            value: 'Dry',         facts: facts(['skin_state', 'clear_skin'], ['skin_state', 'dryness']) },
+      { label: "Rarely or never",                             value: 'Normal',      facts: facts(['skin_state', 'clear_skin']) },
+      { label: "Often, especially in the T-zone",            value: 'Oily',        facts: facts(['concern', 'blemishes'], ['skin_state', 'oily_t_zone']) },
+      { label: "Sometimes, only on my forehead",           value: 'Combination', facts: facts(['concern', 'blemishes'], ['skin_state', 'oily_t_zone']) },
+      { label: "Rarely, but my skin is often dry",            value: 'Dry',         facts: facts(['skin_state', 'clear_skin'], ['skin_state', 'dryness']) },
     ],
   },
   {
     id: 4,
-    question: 'Was passiert wenn du längere Zeit keine Feuchtigkeitscreme benutzt?',
+    question: "What happens if you go without moisturizer for a while?",
     options: [
-      { label: 'Eigentlich nichts Besonderes',               value: 'Normal',    facts: facts(['skin_state', 'balanced']) },
-      { label: 'Haut wird noch fettiger',                    value: 'Oily',      facts: facts(['skin_state', 'oily']) },
-      { label: 'Haut spannt und schuppt sich',               value: 'Dry',       facts: facts(['skin_state', 'dryness'], ['skin_state', 'tightness'], ['skin_state', 'flakiness']) },
-      { label: 'Haut wird gereizt und empfindlich',          value: 'Sensitive', facts: facts(['sensitivity', 'sensitive'], ['concern', 'redness']) },
+      { label: "Nothing in particular",               value: 'Normal',    facts: facts(['skin_state', 'balanced']) },
+      { label: "Skin becomes oilier",                    value: 'Oily',      facts: facts(['skin_state', 'oily']) },
+      { label: "Skin feels tight and flaky",               value: 'Dry',       facts: facts(['skin_state', 'dryness'], ['skin_state', 'tightness'], ['skin_state', 'flakiness']) },
+      { label: "Skin becomes irritated and sensitive",          value: 'Sensitive', facts: facts(['sensitivity', 'sensitive'], ['concern', 'redness']) },
     ],
   },
 ]
@@ -116,84 +116,84 @@ const questionsMale: QuizQuestion[] = [
 const questionsDiverse: QuizQuestion[] = [
   {
     id: 1,
-    question: 'Wie fühlt sich deine Haut morgens an?',
+    question: "How does your skin feel in the morning?",
     options: [
-      { label: 'Ausgeglichen und angenehm',                  value: 'Normal',      facts: facts(['skin_state', 'balanced']) },
-      { label: 'Fettig und glänzend',                        value: 'Oily',        facts: facts(['skin_state', 'oily'], ['skin_state', 'shine']) },
-      { label: 'Trocken, spannt oder zieht',                 value: 'Dry',         facts: facts(['skin_state', 'dryness'], ['skin_state', 'tightness']) },
-      { label: 'Gemischt je nach Bereich',                   value: 'Combination', facts: facts(['skin_state', 'oily_t_zone'], ['skin_state', 'dryness']) },
+      { label: "Balanced and comfortable",                  value: 'Normal',      facts: facts(['skin_state', 'balanced']) },
+      { label: "Oily and shiny",                        value: 'Oily',        facts: facts(['skin_state', 'oily'], ['skin_state', 'shine']) },
+      { label: "Dry, tight, or drawn",                 value: 'Dry',         facts: facts(['skin_state', 'dryness'], ['skin_state', 'tightness']) },
+      { label: "Varies by area",                   value: 'Combination', facts: facts(['skin_state', 'oily_t_zone'], ['skin_state', 'dryness']) },
     ],
   },
   {
     id: 2,
-    question: 'Wie reagiert deine Haut auf neue Produkte?',
+    question: "How does your skin react to new products?",
     options: [
-      { label: 'Verträgt fast alles ohne Probleme',          value: 'Normal',    facts: facts(['sensitivity', 'tolerant']) },
-      { label: 'Wird schnell fettiger oder glänzender',      value: 'Oily',      facts: facts(['product_reaction', 'too_greasy'], ['skin_state', 'oily'], ['skin_state', 'shine']) },
-      { label: 'Rötungen, Brennen oder Reizung',             value: 'Sensitive', facts: facts(['sensitivity', 'sensitive'], ['concern', 'redness'], ['product_reaction', 'burning']) },
-      { label: 'Spannt oder trocknet weiter aus',            value: 'Dry',       facts: facts(['skin_state', 'dryness'], ['skin_state', 'tightness'], ['product_reaction', 'drying']) },
+      { label: "Tolerates almost everything without issues",          value: 'Normal',    facts: facts(['sensitivity', 'tolerant']) },
+      { label: "Quickly becomes oilier or shinier",      value: 'Oily',      facts: facts(['product_reaction', 'too_greasy'], ['skin_state', 'oily'], ['skin_state', 'shine']) },
+      { label: "Redness, burning, or irritation",             value: 'Sensitive', facts: facts(['sensitivity', 'sensitive'], ['concern', 'redness'], ['product_reaction', 'burning']) },
+      { label: "Feels tight or becomes drier",            value: 'Dry',       facts: facts(['skin_state', 'dryness'], ['skin_state', 'tightness'], ['product_reaction', 'drying']) },
     ],
   },
   {
     id: 3,
-    question: 'Wie fühlst du dich nach der Gesichtsreinigung?',
+    question: "How do you feel after washing your face?",
     options: [
-      { label: 'Sauber und angenehm frisch',                 value: 'Normal',    facts: facts(['skin_state', 'balanced']) },
-      { label: 'Noch leicht fettig',                         value: 'Oily',      facts: facts(['skin_state', 'oily']) },
-      { label: 'Sehr trocken und gespannt',                  value: 'Dry',       facts: facts(['skin_state', 'dryness'], ['skin_state', 'tightness'], ['product_reaction', 'drying']) },
-      { label: 'Empfindlich oder leicht gereizt',            value: 'Sensitive', facts: facts(['sensitivity', 'sensitive'], ['concern', 'redness']) },
+      { label: "Clean and comfortably fresh",                 value: 'Normal',    facts: facts(['skin_state', 'balanced']) },
+      { label: "Still slightly oily",                         value: 'Oily',      facts: facts(['skin_state', 'oily']) },
+      { label: "Very dry and tight",                  value: 'Dry',       facts: facts(['skin_state', 'dryness'], ['skin_state', 'tightness'], ['product_reaction', 'drying']) },
+      { label: "Sensitive or slightly irritated",            value: 'Sensitive', facts: facts(['sensitivity', 'sensitive'], ['concern', 'redness']) },
     ],
   },
   {
     id: 4,
-    question: 'Wie oft siehst du vergrößerte Poren?',
+    question: "How often do you notice enlarged pores?",
     options: [
-      { label: 'Selten bis nie',                             value: 'Normal',      facts: facts(['skin_state', 'refined_pores']) },
-      { label: 'Oft, besonders in Stirn und Nase',           value: 'Oily',        facts: facts(['concern', 'pores'], ['skin_state', 'oily_t_zone']) },
-      { label: 'Nur in bestimmten Bereichen',                value: 'Combination', facts: facts(['concern', 'pores'], ['skin_state', 'oily_t_zone']) },
-      { label: 'Kaum — aber Haut wirkt matt',                value: 'Dry',         facts: facts(['skin_state', 'matte'], ['skin_state', 'dryness']) },
+      { label: "Rarely or never",                             value: 'Normal',      facts: facts(['skin_state', 'refined_pores']) },
+      { label: "Often, especially on my forehead and nose",           value: 'Oily',        facts: facts(['concern', 'pores'], ['skin_state', 'oily_t_zone']) },
+      { label: "Only in certain areas",                value: 'Combination', facts: facts(['concern', 'pores'], ['skin_state', 'oily_t_zone']) },
+      { label: "Rarely — but my skin looks dull",                value: 'Dry',         facts: facts(['skin_state', 'matte'], ['skin_state', 'dryness']) },
     ],
   },
 ]
 
 const skinTypeInfo: Record<string, { label: string; desc: string; descMale: string; shopFilter: string }> = {
   Normal:      {
-    label: 'Normale Haut',
-    desc: 'Deine Haut ist ausgeglichen — weder zu fettig noch zu trocken. Du brauchst leichte Pflege, die deinen natürlichen Zustand erhält.',
-    descMale: 'Deine Haut ist im Gleichgewicht — du brauchst eine einfache Routine die diesen Zustand erhält. Leichte Feuchtigkeitspflege und Sonnenschutz reichen.',
+    label: "Normal skin",
+    desc: "Your skin is balanced, neither too oily nor too dry. You need lightweight skincare to maintain its natural balance.",
+    descMale: "Your skin is balanced. A simple routine with a light moisturizer and sunscreen helps maintain it.",
     shopFilter: 'Normal',
   },
   Oily:        {
-    label: 'Fettige Haut',
-    desc: 'Deine Haut produziert viel Sebum. Leichte, porenreinigende Produkte helfen dir, Glanz zu kontrollieren ohne die Haut auszutrocknen.',
-    descMale: 'Deine Haut produziert viel Talg — besonders nach dem Rasieren. Ölfreie, matterende Produkte und ein guter Reiniger helfen dir den Glanz zu kontrollieren.',
+    label: "Oily skin",
+    desc: "Your skin produces a lot of oil. Lightweight products that clear pores help control shine without drying your skin.",
+    descMale: "Your skin produces a lot of oil, especially after shaving. Oil-free, mattifying products and a good cleanser help control shine.",
     shopFilter: 'Oily',
   },
   Dry:         {
-    label: 'Trockene Haut',
-    desc: 'Deine Haut braucht intensive Feuchtigkeit. Reichhaltige Cremes und Hyaluron-Seren sind deine besten Freunde.',
-    descMale: 'Deine Haut verliert schnell Feuchtigkeit — vor allem nach dem Rasieren. Reichhaltige Feuchtigkeitscremes und Aftershave-Balsam sind ideal.',
+    label: "Dry skin",
+    desc: "Your skin needs intensive hydration. Rich creams and hyaluronic acid serums are ideal.",
+    descMale: "Your skin loses moisture quickly, especially after shaving. Rich moisturizers and aftershave balm are ideal.",
     shopFilter: 'Dry',
   },
   Sensitive:   {
-    label: 'Sensible Haut',
-    desc: 'Deine Haut reagiert empfindlich. Sanfte, parfümfreie Produkte mit beruhigenden Inhaltsstoffen wie Aloe und Ceramiden sind ideal.',
-    descMale: 'Deine Haut reagiert empfindlich — besonders auf Rasieren und neue Produkte. Sanfte, parfümfreie Formulas und beruhigende After-Shave-Produkte sind dein Schlüssel.',
+    label: "Sensitive skin",
+    desc: "Your skin is sensitive. Gentle, fragrance-free products with soothing ingredients such as aloe and ceramides are ideal.",
+    descMale: "Your skin is sensitive, especially to shaving and new products. Gentle, fragrance-free formulas and soothing aftershave products can help.",
     shopFilter: 'Sensitive',
   },
   Combination: {
-    label: 'Mischhaut',
-    desc: 'Deine Haut ist gemischt — T-Zone fettig, Wangen eher trocken. Du brauchst Produkte, die beides balancieren.',
-    descMale: 'Stirn und Nase sind fettig, die Wangen eher trocken. Balancierendes Gel und leichte Feuchtigkeitspflege helfen dir beide Zonen zu harmonisieren.',
+    label: "Combination skin",
+    desc: "You have combination skin: an oily T-zone and drier cheeks. You need products that balance both.",
+    descMale: "Your forehead and nose are oily, while your cheeks are drier. Balancing gel and lightweight moisturizers help care for both areas.",
     shopFilter: 'Combination',
   },
 }
 
 function getIntroConfig(gender: string | null) {
-  if (gender === 'male')    return { emoji: '🧖‍♂️', title: 'Dein Hauttyp als Mann',   sub: '4 Fragen — dein perfekter Skincare-Plan' }
-  if (gender === 'female')  return { emoji: '🧖‍♀️', title: 'Dein Hauttyp als Frau',   sub: '4 Fragen — deine perfekte Skincare-Routine' }
-  if (gender === 'diverse') return { emoji: '🧖',    title: 'Entdecke deinen Hauttyp', sub: '4 Fragen — deine individuelle Hautpflege' }
-  return                           { emoji: '🧖‍♀️', title: 'Schnelles Haut-Quiz',     sub: '4 kurze Fragen — in nur 30 Sekunden' }
+  if (gender === 'male')    return { emoji: '🧖‍♂️', title: "Your skin type as a man",   sub: "4 questions — your ideal skincare plan" }
+  if (gender === 'female')  return { emoji: '🧖‍♀️', title: "Your skin type as a woman",   sub: "4 questions — your ideal skincare routine" }
+  if (gender === 'diverse') return { emoji: '🧖',    title: "Discover your skin type", sub: "4 questions — your personalized skincare" }
+  return                           { emoji: '🧖‍♀️', title: "Quick skin quiz",     sub: "4 quick questions — in just 30 seconds" }
 }
 
 function getQuestions(gender: string | null) {
@@ -265,7 +265,7 @@ export default function SkinQuiz() {
           })
           const data = await res.json()
           if (data.user) updateUser({ ...user, ...data.user, token: user.token })
-        } catch (err) { console.warn('Hauttyp konnte nicht gespeichert werden:', err) }
+        } catch (err) { console.warn("Could not save skin type:", err) }
         finally { setSaving(false) }
       }
     } else {
@@ -287,20 +287,20 @@ export default function SkinQuiz() {
       {showConfirm && (
         <div className="confirm-overlay" style={{ position: 'fixed', inset: 0, zIndex: 300, background: 'rgba(0,0,0,0.45)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
           <div style={{ background: '#fff', borderRadius: 24, padding: 'clamp(24px, 6vw, 36px) clamp(20px, 5vw, 32px)', maxWidth: 360, width: '100%', textAlign: 'center', boxShadow: '0 24px 60px rgba(0,0,0,0.15)', fontFamily: "'Outfit', sans-serif" }}>
-            <h3 style={{ fontSize: 20, fontWeight: 700, color: '#1c1209', margin: '0 0 10px', letterSpacing: '-0.02em' }}>Quiz aufhören?</h3>
-            <p style={{ fontSize: 14, color: '#9a7a5a', margin: '0 0 28px', lineHeight: 1.6, fontWeight: 300 }}>Dein Fortschritt geht verloren. Möchtest du das Quiz wirklich beenden?</p>
+            <h3 style={{ fontSize: 20, fontWeight: 700, color: '#1c1209', margin: '0 0 10px', letterSpacing: '-0.02em' }}>Quit quiz?</h3>
+            <p style={{ fontSize: 14, color: '#9a7a5a', margin: '0 0 28px', lineHeight: 1.6, fontWeight: 300 }}>Your progress will be lost. Are you sure you want to quit the quiz?</p>
             <div style={{ display: 'flex', gap: 10 }}>
               <button onClick={() => setShowConfirm(false)}
                 style={{ flex: 1, padding: '12px 0', borderRadius: 100, border: '1.5px solid #e0c9a8', background: 'transparent', fontSize: 14, fontWeight: 600, color: '#7a5c42', cursor: 'pointer', fontFamily: "'Outfit', sans-serif" }}
                 onMouseEnter={e => (e.currentTarget.style.background = '#FDF6EE')}
                 onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}>
-                Nein, weiter
+                No, continue
               </button>
               <button onClick={confirmExit}
                 style={{ flex: 1, padding: '12px 0', borderRadius: 100, background: '#D4A574', border: 'none', fontSize: 14, fontWeight: 600, color: '#fff', cursor: 'pointer', fontFamily: "'Outfit', sans-serif" }}
                 onMouseEnter={e => (e.currentTarget.style.background = '#c4925a')}
                 onMouseLeave={e => (e.currentTarget.style.background = '#D4A574')}>
-                Ja, beenden
+                Yes, quit
               </button>
             </div>
           </div>
@@ -314,7 +314,7 @@ export default function SkinQuiz() {
             style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'none', border: 'none', cursor: 'pointer', color: '#b8967a', fontSize: 13, fontWeight: 500, fontFamily: "'Outfit', sans-serif", padding: '0 0 24px 0' }}
             onMouseEnter={e => (e.currentTarget.style.color = '#D4A574')}
             onMouseLeave={e => (e.currentTarget.style.color = '#b8967a')}>
-            <ArrowLeft size={15} /> Verlassen
+            <ArrowLeft size={15} />  Leave
           </button>
         )}
 
@@ -327,11 +327,11 @@ export default function SkinQuiz() {
             </h1>
             <p style={{ fontSize: 15, color: '#9a7a5a', lineHeight: 1.7, margin: '0 0 8px', fontWeight: 300 }}>{introConfig.sub}</p>
             <p style={{ fontSize: 14, color: '#c4a882', margin: '0 0 40px', fontWeight: 300 }}>
-              Wir ermitteln deinen Hauttyp und empfehlen die passenden Produkte.
+              We'll identify your skin type and recommend suitable products.
             </p>
             <button onClick={() => setStep(1)}
               style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: '#D4A574', color: '#fff', padding: 'clamp(13px, 3vw, 15px) clamp(24px, 6vw, 36px)', borderRadius: 100, fontSize: 15, fontWeight: 700, border: 'none', cursor: 'pointer', letterSpacing: '0.06em' }}>
-              Quiz starten <ArrowRight size={16} />
+              Start quiz <ArrowRight size={16} />
             </button>
           </div>
         )}
@@ -341,7 +341,7 @@ export default function SkinQuiz() {
           <div className="quiz-slide" key={step}>
             <div style={{ marginBottom: 32 }}>
               <p style={{ fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#C4925A', margin: '0 0 10px', fontWeight: 600 }}>
-                Frage {step} von {totalSteps}
+                Question {step} von {totalSteps}
               </p>
               <h2 style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'clamp(18px,3vw,24px)', fontWeight: 700, color: '#1c1209', margin: 0, letterSpacing: '-0.01em', lineHeight: 1.3 }}>
                 {currentQ.question}
@@ -362,11 +362,11 @@ export default function SkinQuiz() {
             <div style={{ display: 'flex', gap: 12 }}>
               <button onClick={handleBack}
                 style={{ display: 'flex', alignItems: 'center', gap: 6, padding: 'clamp(12px, 3vw, 13px) clamp(14px, 3vw, 20px)', borderRadius: 100, background: 'transparent', border: '1.5px solid #e8c9a0', color: '#9a7a5a', fontSize: 14, fontWeight: 500, cursor: 'pointer', fontFamily: "'Outfit', sans-serif", flexShrink: 0 }}>
-                <ArrowLeft size={15} /> <span className="hide-on-tiny">Zurück</span> 
+                <ArrowLeft size={15} /> <span className="hide-on-tiny">Back</span>
               </button>
               <button onClick={handleNext} disabled={!selected}
                 style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: 'clamp(12px, 3vw, 13px) clamp(16px, 4vw, 24px)', borderRadius: 100, background: selected ? '#D4A574' : '#e8c9a0', color: '#fff', fontSize: 14, fontWeight: 700, border: 'none', cursor: selected ? 'pointer' : 'not-allowed', fontFamily: "'Outfit', sans-serif", transition: 'background 0.2s' }}>
-                {step === totalSteps ? 'Ergebnis anzeigen' : 'Weiter'} <ArrowRight size={15} />
+                {step === totalSteps ? "Show result" : "Next"} <ArrowRight size={15} />
               </button>
             </div>
           </div>
@@ -375,26 +375,26 @@ export default function SkinQuiz() {
         {/* ── RESULT ── */}
         {step === totalSteps + 1 && skinResult && (
           <div className="quiz-slide" style={{ textAlign: 'center' }}>
-            <p style={{ fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#C4925A', marginBottom: 8, fontWeight: 600 }}>Dein Hauttyp</p>
+            <p style={{ fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#C4925A', marginBottom: 8, fontWeight: 600 }}>Your skin type</p>
             <h2 style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'clamp(24px, 6vw, 32px)', fontWeight: 800, color: '#1c1209', margin: '0 0 16px', letterSpacing: '-0.02em' }}>
               {skinResult.label}
             </h2>
             <p style={{ fontSize: 15, color: '#7a5c42', lineHeight: 1.75, margin: '0 auto 16px', maxWidth: 420, fontWeight: 300 }}>
               {resultDesc}
             </p>
-            {user && saving && <p style={{ fontSize: 13, color: '#b8967a', marginBottom: 32, fontWeight: 500 }}>⏳ Wird gespeichert…</p>}
+            {user && saving && <p style={{ fontSize: 13, color: '#b8967a', marginBottom: 32, fontWeight: 500 }}>⏳ Saving…</p>}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               <button onClick={() => navigate(`/shop?skinType=${encodeURIComponent(skinResult.shopFilter)}`)}
                 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, padding: 'clamp(13px, 3vw, 15px) clamp(20px, 5vw, 28px)', borderRadius: 100, background: '#D4A574', color: '#fff', fontSize: 14, fontWeight: 700, border: 'none', cursor: 'pointer', fontFamily: "'Outfit', sans-serif" }}>
-                Passende Produkte entdecken <ArrowRight size={15} />
+                Discover matching products <ArrowRight size={15} />
               </button>
               <button onClick={() => navigate('/')}
                 style={{ padding: 'clamp(12px, 3vw, 13px) clamp(20px, 5vw, 28px)', borderRadius: 100, background: 'transparent', border: '1.5px solid #e8c9a0', color: '#9a7a5a', fontSize: 14, fontWeight: 500, cursor: 'pointer', fontFamily: "'Outfit', sans-serif" }}>
-                Zur Startseite
+                Back to home
               </button>
               <button onClick={resetQuiz}
                 style={{ fontSize: 13, color: '#c4a882', background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Outfit', sans-serif", textDecoration: 'underline' }}>
-                Quiz wiederholen
+                Retake quiz
               </button>
             </div>
           </div>

@@ -17,75 +17,75 @@ import rasierpickel from '@/images/rasierpickel.png'
 const hautProbleme = [
   {
     slug: 'acne',
-    title: 'Akne',
+    title: "Acne",
     image: acne,
-    description: 'Pickel, Entzündungen und verstopfte Poren.',
+    description: "Pimples, inflammation, and clogged pores.",
   },
   {
     slug: 'blackheads',
-    title: 'Mitesser',
+    title: "Blackheads",
     image: blackheads,
-    description: 'Verstopfte Poren, die sich an der Oberfläche der Haut abzeichnen.',
+    description: "Clogged pores visible on the skin's surface.",
   },
   {
     slug: 'dry-skin',
-    title: 'Trockene Haut',
+    title: "Dry skin",
     image: dryskin,
-    description: 'Haut, die an Trockenheit leidet und oft juckt oder rau ist.',
+    description: "Skin that feels dry and is often itchy or rough.",
   },
   {
     slug: 'oily-skin',
-    title: 'Fettige Haut',
+    title: "Oily skin",
     image: oily,
-    description: 'Erhöhte Talgproduktion und schneller Glanz.',
+    description: "Increased oil production and a shiny appearance.",
   },
   {
     slug: 'redness',
-    title: 'Rötungen',
+    title: "Redness",
     image: redness,
-    description: 'Empfindliche Haut und sichtbare Rötungen.',
+    description: "Sensitive skin and visible redness.",
   },
   {
     slug: 'hyperpigmentation',
-    title: 'Hyperpigmentierung',
+    title: "Hyperpigmentation",
     image: hyperpigmentation,
-    description: 'Dunkle Flecken und ungleichmäßiger Hautton.',
+    description: "Dark spots and uneven skin tone.",
   },
   {
     slug: 'dark-circles',
-    title: 'Augenringe',
+    title: "Dark circles",
     image: darkcircles,
-    description: 'Müde wirkende Augenpartie.',
+    description: "Tired-looking under-eye area.",
   },
   {
     slug: 'large-pores',
-    title: 'Große Poren',
+    title: "Large pores",
     image: poren,
-    description: 'Sichtbare Poren und ungleichmäßige Hautstruktur.',
+    description: "Visible pores and uneven skin texture.",
   },
   {
     slug: 'sensitive-skin',
-    title: 'Empfindliche Haut',
+    title: "Sensitive skin",
     image: sensibleskin,
-    description: 'Reagiert schnell auf äußere Einflüsse.',
+    description: "Reacts quickly to external factors.",
   },
   {
     slug: 'acne-scars',
-    title: 'Pickelmale',
+    title: "Post-acne marks",
     image: acnescars,
-    description: 'Dauerhafte Narben nach Akne.',
+    description: "Lasting scars after acne.",
   },
   {
     slug: 'stress-breakouts',
-    title: 'Stressbedingte Unreinheiten',
+    title: "Stress-related breakouts",
     image: stressbreakouts,
-    description: 'Unreinheiten durch Stress und Schlafmangel.',
+    description: "Blemishes caused by stress and lack of sleep.",
   },
   {
     slug: 'razor-bumps',
-    title: 'Rasierpickel',
+    title: "Razor bumps",
     image: rasierpickel,
-    description: 'Reizungen und eingewachsene Haare nach der Rasur.',
+    description: "Irritation and ingrown hairs after shaving.",
   },
 ]
 
@@ -99,22 +99,21 @@ export default function Hautwissen() {
       <div className="mx-auto max-w-6xl">
         <section className="text-center mb-10 sm:mb-16">
           <p className="text-[#D4A574] font-semibold uppercase tracking-wider font-sans text-sm sm:text-base">
-            SelfGlow Hautwissen
+            SelfGlow skin guide
           </p>
 
           <h1 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold text-[#2a1c10] !font-sans">
-            Verstehe deine Haut besser
+            Understand your skin better
           </h1>
 
           <p className="mt-6 max-w-2xl mx-auto text-base sm:text-lg text-gray-600 leading-7 sm:leading-8 font-sans">
-            Entdecke hilfreiche Informationen zu häufigen Hautproblemen
-            und erfahre, was du tun kannst, um deine Haut optimal zu pflegen.
+            Explore helpful information about common skin concerns and learn how to care for your skin.
           </p>
         </section>
 
         <section id="hautprobleme">
           <h2 className="mb-6 sm:mb-8 text-center text-2xl sm:text-3xl font-bold text-[#2a1c10] !font-sans">
-            Häufige Hautprobleme
+            Common skin concerns
           </h2>
 
           <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -143,7 +142,7 @@ export default function Hautwissen() {
 
                   <div className="mt-6 flex items-center justify-between">
                     <span className="font-semibold text-[#D4A574] transition group-hover:translate-x-1">
-                      Mehr erfahren →
+                      Learn more →
                     </span>
                   </div>
                 </div>

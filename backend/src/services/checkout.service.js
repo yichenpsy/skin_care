@@ -18,7 +18,7 @@ function checkSpam(key) {
 
   if (entry.count >= MAX_ATTEMPTS) {
     const waitSec = Math.ceil((WINDOW_MS - (now - entry.firstAttempt)) / 1000)
-    throw new Error(`Zu viele Versuche. Bitte warte ${waitSec} Sekunden.`)
+    throw new Error(`Too many attempts. Please wait ${waitSec} seconds.`)
   }
 
   entry.count++
@@ -36,9 +36,9 @@ exports.createOrder = async (data, userId = null, userIp = 'unknown') => {
   const spamKey = userId ? `user_${userId}` : `ip_${userIp}`
   checkSpam(spamKey)
 
-  if (!items || items.length === 0) throw new Error('Keine Produkte im Warenkorb')
-  if (!shipping?.address) throw new Error('Adresse fehlt')
-  if (!payment) throw new Error('Zahlungsmethode fehlt')
+  if (!items || items.length === 0) throw new Error("No products in cart")
+  if (!shipping?.address) throw new Error("Address is required")
+  if (!payment) throw new Error("Payment method is required")
 
   const code = discountCode?.trim().toUpperCase() || null
 
@@ -49,7 +49,7 @@ exports.createOrder = async (data, userId = null, userIp = 'unknown') => {
     })
 
     if (dbUser?.usedWelcomeCode) {
-      throw new Error('WELCOME10 wurde bereits verwendet.')
+      throw new Error("WELCOME10 has already been used.")
     }
   }
 

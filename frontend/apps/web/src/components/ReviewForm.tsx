@@ -36,17 +36,17 @@ export default function ReviewForm({
         setSuccess(false);
 
         if (!token) {
-            setSubmitError("Sie müssen angemeldet sein, um eine Bewertung zu schreiben.");
+            setSubmitError("You must be signed in to write a review.");
             return;
         }
 
         if (rating === 0) {
-            setSubmitError("Bitte wählen Sie eine Bewertung.");
+            setSubmitError("Please select a rating.");
             return;
         }
 
         if (!reviewText.trim()) {
-            setSubmitError("Bitte schreiben Sie einen Kommentar.");
+            setSubmitError("Please write a comment.");
             return;
         }
 
@@ -65,7 +65,7 @@ export default function ReviewForm({
             }, 1500);
         } catch (err) {
             setSubmitError(
-                err instanceof Error ? err.message : "Ein Fehler ist aufgetreten"
+                err instanceof Error ? err.message : "Something went wrong"
             );
         }
     }
@@ -88,14 +88,14 @@ export default function ReviewForm({
                 type="button"
                 onClick={handleClose}
                 className="absolute top-6 right-6 text-muted-foreground hover:text-[#D4A574] transition-colors p-1"
-                aria-label="Schließen">
+                aria-label="Close">
                     <X className="h-5 w-5"/>
                 </button>
 
                 {/*Rating*/}
                 <div>
                     <label className="block text-sm font-semibold text-foreground mb-4">
-                        Wie war Ihre Erfahrung?
+                        How was your experience?
                     </label>
 
                     <div className="flex gap-3 justify-center">
@@ -120,7 +120,7 @@ export default function ReviewForm({
                 {/*ReviewText*/}
                 <div>
                     <label className="block text-sm font-semibold text-foreground mb-2">
-                        Schreiben Sie Ihren Kommentar
+                        Write your comment
                     </label>
 
                     <textarea
@@ -128,7 +128,7 @@ export default function ReviewForm({
                         onChange={(e) => 
                             setReviewText(e.target.value.slice(0,500))
                         }
-                        placeholder="Ihre Erfahrung mit diesem Produkt..."
+                        placeholder="Your experience with this product..."
                         className="w-full px-4 py-3 border-2 border-[#F5E6D3] rounded-lg focus:outline-none focus:border-[#D4A574] focus:ring-2 focus:ring-[#F5E6D3] resize-none bg-white/50"
                         rows={5}
                     />
@@ -136,7 +136,7 @@ export default function ReviewForm({
                     className={cn("text-xs mt-2 transition-colors",
                         reviewText.length > 450 ? "text-[#D4A574]" : "text-muted-foreground"
                     )}>
-                        {reviewText.length}/500 Zeichen
+                        {reviewText.length}/500 characters
                     </p>
                 </div>
 
@@ -153,7 +153,7 @@ export default function ReviewForm({
                 {success && (
                     <div className="p-3 bg-green-50 border border-green-200 rounded-lg animate-in fade-in">
                         <p className="text-sm text-green-700 font-medium">
-                            Bewertung erfolgreich hinzugefügt
+                            Review added successfully
                         </p>
                     </div>
                 )}
@@ -167,7 +167,7 @@ export default function ReviewForm({
                         className="flex-1 border-[#D4A574] text-[#D4A574] hover:bg-[#F5E6D3]"
                         disabled={loading}
                     >
-                        Abbrechen
+                        Cancel
                     </Button>
 
                     <Button
@@ -175,7 +175,7 @@ export default function ReviewForm({
                         className="flex-1 bg-[#D4A574] text-white hover:bg-[#C19660] font-medium rounded-lg"
                         disabled={loading}
                     >
-                        {loading ? "Wird gesendet..." : "Bewertung posten"}
+                        {loading ? "Sending..." : "Post review"}
                     </Button>
                 </div>
             </form>

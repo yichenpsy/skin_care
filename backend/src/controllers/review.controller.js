@@ -28,19 +28,19 @@ async function createReview(req, res) {
 
         if (!hasPurchased) {
             return res.status(403).json({
-                message: "Sie können nur Produkte bewerten, die sie gekauft haben."
+                message: "You can only review products you have purchased."
             });
         }
 
         if(!productId || !rating || !reviewText) {
             return res.status(400).json({
-                message: "productId/rating/reviewText erforderlich!"
+                message: "Product ID, rating, and review text are required."
             });
         }
 
         if (rating < 1) {
             return res.status(400).json({
-                message: "Die Bewertung muss zwischen 1 und 5 liegen!"
+                message: "Rating must be between 1 and 5."
             });
         }
         const review = await reviewService.createReview({
@@ -52,7 +52,7 @@ async function createReview(req, res) {
 
         if (!review) {
             return res.status(409).json({
-                message: "Sie haben dieses Produkt bereits bewertet!"
+                message: "You have already reviewed this product."
             });
         }
 
@@ -70,7 +70,7 @@ async function createReview(req, res) {
     } catch(error) {
         console.error("createReview error: ", error);
         return res.status(500).json({
-            message: "Bewertung konnte nicht erstellt werden"
+            message: "Could not create review"
         });
     }
 }
@@ -81,7 +81,7 @@ async function getReviewsByProductId(req, res) {
 
         if (Number.isNaN(productId)) {
             return res.status(400).json({
-                message: "Ungültige Produkt ID"
+                message: "Invalid product ID"
             });
         }
 
@@ -90,7 +90,7 @@ async function getReviewsByProductId(req, res) {
     } catch (error) {
         console.error("getReviewsByProductId error: ", error);
         return res.status(500).json({
-            message: "Failed to fecth reviews"
+            message: "Failed to fetch reviews"
         });
     }
 }
@@ -104,7 +104,7 @@ async function getReviewsByUserId(req, res) {
     } catch (error) {
         console.error("getReviewsByUserId error: ", error);
         return res.status(500).json({
-            message: "Bewertungen konnten nicht aufgerufen werden"
+            message: "Could not load reviews"
         });
     }
 }
@@ -115,7 +115,7 @@ async function getRatingByProductId(req, res) {
 
         if (Number.isNaN(productId)) {
             return res.status(400).json({
-                message: "Ungültige Produkt-ID"
+                message: "Invalid product ID"
             });
         }
 
@@ -124,7 +124,7 @@ async function getRatingByProductId(req, res) {
     } catch(error) {
         console.error("getRatingByProductId error: ", error);
         return res.status(500).json({
-            message: "Bewertung konnte nciht abgerufen werden"
+            message: "Could not load rating"
         });
     }
 }
@@ -136,7 +136,7 @@ async function deleteReview(req, res) {
 
         if (Number.isNaN(reviewId)) {
             return res.status(400).json({
-                message: "Ungültige Bewertung-ID"
+                message: "Invalid review ID"
             });
         }
 
@@ -144,16 +144,16 @@ async function deleteReview(req, res) {
 
         if (result === "unauthorized action") {
             return res.status(403).json({
-                message: "Nivcht berechtigt, die Bewertung zu löschen."
+                message: "You are not authorized to delete this review."
             });
         }
         return res.status(200).json({
-            message: "Bewertung gelöscht"
+            message: "Review deleted"
         });
     } catch (error) {
         console.error("deleteReview error: ", error);
         return res.status(500).json({
-            message: "Löschen der Bewertung fehlgeschlagen"
+            message: "Could not delete review"
         });
     }
 }

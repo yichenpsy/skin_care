@@ -9,7 +9,7 @@ async function getWeatherContext(lat, lon) {
 
   try {
     const response = await fetch(
-      `${OPENWEATHER_API}/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=de`
+      `${OPENWEATHER_API}/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=en`
     )
     if (!response.ok) return null
 
@@ -30,7 +30,7 @@ async function getWeatherContext(lat, lon) {
       weatherDesc,
       city,
       season,
-      summary: `${city ? city + ': ' : ''}${temp}°C, ${weatherDesc}, Luftfeuchtigkeit ${humidity}%`,
+      summary: `${city ? city + ': ' : ''}${temp}°C, ${weatherDesc}, humidity ${humidity}%`,
       // Kontext für KI-Prompts
       promptContext: buildPromptContext({ temp, humidity, weatherMain, season, skinTips, city }),
     }

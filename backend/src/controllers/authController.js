@@ -56,7 +56,7 @@ const QUIZ_FACT_VALUES = {
 function getJwtSecret(res) {
   if (!process.env.JWT_SECRET) {
     console.error("JWT_SECRET is not configured");
-    res.status(500).json({ message: "Server-Konfigurationsfehler" });
+    res.status(500).json({ message: "Server configuration error" });
     return null;
   }
   return process.env.JWT_SECRET;
@@ -100,24 +100,24 @@ function isValidEmail(email) {
 
 function getPasswordValidationMessage(password) {
   if (typeof password !== "string" || password.length < 8)
-    return "Das Passwort muss mindestens 8 Zeichen lang sein";
+    return "Your password must be at least 8 characters long";
   if (!/[A-Z]/.test(password))
-    return "Das Passwort muss mindestens einen Großbuchstaben enthalten";
+    return "Your password must contain at least one uppercase letter";
   if (!/[a-z]/.test(password))
-    return "Das Passwort muss mindestens einen Kleinbuchstaben enthalten";
+    return "Your password must contain at least one lowercase letter";
   if (!/[0-9]/.test(password))
-    return "Das Passwort muss mindestens eine Zahl enthalten";
+    return "Your password must contain at least one number";
   if (!SPECIAL_CHARACTER_PATTERN.test(password))
-    return "Das Passwort muss mindestens ein Sonderzeichen enthalten";
+    return "Your password must contain at least one special character";
   return null;
 }
 
 function getUserNameValidationMessage(name) {
   if (!name) return null;
   if (name.length < 2 || name.length > 30)
-    return "Der Benutzername muss zwischen 2 und 30 Zeichen lang sein";
+    return "Your username must be between 2 and 30 characters long";
   if (!USER_NAME_PATTERN.test(name))
-    return "Der Benutzername darf nur Buchstaben, Zahlen, Leerzeichen, Unterstriche und Bindestriche enthalten";
+    return "Your username can only contain letters, numbers, spaces, underscores, and hyphens";
   return null;
 }
 
@@ -244,7 +244,7 @@ async function register(req, res) {
     const nameMsg     = getUserNameValidationMessage(trimmedName);
 
     if (!normalizedEmail || !isValidEmail(normalizedEmail))
-      return res.status(400).json({ message: "Gib eine gültige E-Mail-Adresse ein" });
+      return res.status(400).json({ message: "Enter a valid email address" });
     if (passwordMsg)
       return res.status(400).json({ message: passwordMsg });
     if (nameMsg)
@@ -252,7 +252,7 @@ async function register(req, res) {
 
     const existingUser = await prisma.user.findUnique({ where: { email: normalizedEmail } });
     if (existingUser)
-      return res.status(409).json({ message: "Dieser Benutzer existiert bereits" });
+      return res.status(409).json({ message: "This user already exists" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -289,18 +289,18 @@ async function register(req, res) {
       console.error("Failed to send confirmation mail: ", mailError);
 
       return res.status(500).json({
-        message: "Konto konnte nicht erstellt werden, weil die bestätigungsmail nicht gesendet werden konnte",
+        message: "Could not create account because the verification email could not be sent",
       });
     }
 
     return res.status(201).json({
-      message: "Konto erstellt. Bitte gib den 6-stelligen Code aus deiner E-Mail ein.",
+      message: "Account created. Please enter the 6-digit code from your email.",
       email: normalizedEmail,
     });
   } catch (error) {
     console.error(error);
     return res.status(500).json({
-      message: "Serverfehler"
+      message: "Server error"
     });
   }
 }
@@ -317,23 +317,23 @@ async function verifyCode(req, res){
 
     if (!user)
       return res.status(404).json({
-    message: "Benutzer nicht gefunden"});
+    message: "User not found"});
 
     if (user.emailVerified) 
       return res.status(400).json({
-    message: "E-Mail bereits bestätigt"});
+    message: "Email already verified"});
 
     if (!user.verificationCode || !user.verificationCodeExpiry)
       return res.status(400).json({
-    message: "Kein Code vorhanden"});
+    message: "No verification code available"});
 
     if (new Date() > user.verificationCodeExpiry)
       return res.status(400).json({
-    message: "Code abgelaufen. Bitte erneut registrieren."});
+    message: "Code expired. Please register again."});
 
     if (user.verificationCode !== code) 
       return res.status(400).json({
-    message: "Falscher Code"});
+    message: "Incorrect code"});
 
     await prisma.user.update({
       where: {id: user.id},
@@ -345,12 +345,12 @@ async function verifyCode(req, res){
     });
 
     return res.json({
-      message: "E-Mail erfolgreich bestätigt. Du kannst dich jetzt anmelden."
+      message: "Email verified successfully. You can now sign in."
     });
   } catch (error) {
     console.error(error);
     return res.status(500).json({
-      message: "Serverfehler"
+      message: "Server error"
     });
   }
 }
@@ -362,7 +362,7 @@ async function login(req, res) {
     const normalizedEmail = normalizeEmail(email);
 
     if (!normalizedEmail || !isValidEmail(normalizedEmail) || !password)
-      return res.status(400).json({ message: "E-Mail und Passwort sind erforderlich" });
+      return res.status(400).json({ message: "Email and password are required" });
 
     const user = await prisma.user.findUnique({
       where:  { email: normalizedEmail },
@@ -384,19 +384,19 @@ async function login(req, res) {
     });
 
     if (!user)
-      return res.status(401).json({ message: "Ungültige E-Mail-Adresse oder ungültiges Passwort" });
+      return res.status(401).json({ message: "Invalid email address or password" });
 
     const passwordIsValid = await bcrypt.compare(password, user.password); // ← FIX: war user.passwordHash
 
     if (!passwordIsValid)
-      return res.status(401).json({ message: "Ungültige E-Mail-Adresse oder ungültiges Passwort" });
+      return res.status(401).json({ message: "Invalid email address or password" });
 
     /*if (!user.emailVerified)
-      return res.status(403).json({ message: "Bitte bestätige zuerst deine E-Mail-Adresse" });
+      return res.status(403).json({ message: "Please verify your email address first" });
     */
     if (REQUIRE_EMAIL_VERIFICATION && !user.emailVerified) {
       return res.status(403).json({
-        message: "Bitte bestätige zuerst deine E-Mail-Adresse",
+        message: "Please verify your email address first",
       });
     }
     const jwtSecret = getJwtSecret(res);
@@ -409,13 +409,13 @@ async function login(req, res) {
     );
 
     return res.json({
-      message: "Anmeldung erfolgreich",
+      message: "Signed in successfully",
       token,
       user: toAuthUser(user),
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Serverfehler" });
+    return res.status(500).json({ message: "Server error" });
   }
 }
 
@@ -433,11 +433,11 @@ async function getAddress(req, res) {
       },
     });
 
-    if (!user) return res.status(404).json({ message: "Benutzer nicht gefunden" });
+    if (!user) return res.status(404).json({ message: "User not found" });
     return res.json(user);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Serverfehler" });
+    return res.status(500).json({ message: "Server error" });
   }
 }
 
@@ -589,7 +589,7 @@ async function getProfileContext(req, res) {
     ]);
 
     if (!user) {
-      return res.status(404).json({ message: "Benutzer nicht gefunden" });
+      return res.status(404).json({ message: "User not found" });
     }
 
     const currentSkinType = getCurrentSkinTypeFromFacts(facts);
@@ -664,7 +664,7 @@ async function getProfileContext(req, res) {
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Serverfehler" });
+    return res.status(500).json({ message: "Server error" });
   }
 }
 
@@ -675,7 +675,7 @@ async function updateSkinProfile(req, res) {
     const normalizedSkinType = skinType === null || skinType === "" ? null : skinType;
 
     if (normalizedSkinType && !SKIN_TYPES.has(normalizedSkinType)) {
-      return res.status(400).json({ message: "Ungültiger Hauttyp" });
+      return res.status(400).json({ message: "Invalid skin type" });
     }
 
     const nextFacts = [];
@@ -763,13 +763,13 @@ async function updateSkinProfile(req, res) {
     ]);
 
     return res.json({
-      message: "Hautprofil gespeichert",
+      message: "Skin profile saved",
       user: toAuthUser(user),
       profile: mapSkinProfileResponse(user, savedFacts),
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Serverfehler" });
+    return res.status(500).json({ message: "Server error" });
   }
 }
 
@@ -779,20 +779,20 @@ async function deleteProfileImage(req, res) {
     const { id, source } = req.body || {};
 
     if (!id || !["skin_analysis", "chat"].includes(source)) {
-      return res.status(400).json({ message: "Ungültiges Bild" });
+      return res.status(400).json({ message: "Invalid image" });
     }
 
     if (source === "skin_analysis") {
       const analysisId = Number(String(id).replace(/^skin_analysis-/, ""));
       if (!Number.isInteger(analysisId)) {
-        return res.status(400).json({ message: "Ungültiges Bild" });
+        return res.status(400).json({ message: "Invalid image" });
       }
 
       const analysis = await prisma.skinAnalysis.findFirst({
         where: { id: analysisId, userId },
         select: { id: true },
       });
-      if (!analysis) return res.status(404).json({ message: "Bild nicht gefunden" });
+      if (!analysis) return res.status(404).json({ message: "Image not found" });
 
       await prisma.skinAnalysis.update({
         where: { id: analysisId },
@@ -807,7 +807,7 @@ async function deleteProfileImage(req, res) {
         },
         select: { id: true },
       });
-      if (!message) return res.status(404).json({ message: "Bild nicht gefunden" });
+      if (!message) return res.status(404).json({ message: "Image not found" });
 
       await prisma.chatMessage.update({
         where: { id: messageId },
@@ -816,10 +816,10 @@ async function deleteProfileImage(req, res) {
     }
 
     await refreshUserProfileEmbedding(userId);
-    return res.json({ message: "Bild gelöscht" });
+    return res.json({ message: "Image deleted" });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Serverfehler" });
+    return res.status(500).json({ message: "Server error" });
   }
 }
 
@@ -837,10 +837,10 @@ async function updateAddress(req, res) {
         savedPhone:   phone   ?? null,
       },
     });
-    return res.json({ message: "Adresse aktualisiert", user: toAuthUser(updatedUser) });
+    return res.json({ message: "Address updated", user: toAuthUser(updatedUser) });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Serverfehler" });
+    return res.status(500).json({ message: "Server error" });
   }
 }
 
@@ -848,8 +848,8 @@ async function updateAddress(req, res) {
 async function updateSkinType(req, res) {
   try {
     const { skinType, source, quizAnswers } = req.body;
-    if (!skinType) return res.status(400).json({ message: "skinType fehlt" });
-    if (!SKIN_TYPES.has(skinType)) return res.status(400).json({ message: "Ungültiger Hauttyp" });
+    if (!skinType) return res.status(400).json({ message: "Skin type is required" });
+    if (!SKIN_TYPES.has(skinType)) return res.status(400).json({ message: "Invalid skin type" });
     const factSource = SKIN_TYPE_FACT_SOURCES.has(source) ? source : "profile";
     const evidence = factSource === "quiz"
       ? "Vom Nutzer im Hauttyp-Quiz ermittelt"
@@ -914,10 +914,10 @@ async function updateSkinType(req, res) {
     });
 
     await refreshUserProfileEmbedding(req.user.userId);
-    return res.json({ message: "Hauttyp gespeichert", user: toAuthUser(updatedUser) });
+    return res.json({ message: "Skin type saved", user: toAuthUser(updatedUser) });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Serverfehler" });
+    return res.status(500).json({ message: "Server error" });
   }
 }
 
@@ -941,10 +941,10 @@ async function deleteSkinType(req, res) {
       return user;
     })
     await refreshUserProfileEmbedding(req.user.userId)
-    return res.json({ message: 'Hauttyp gelöscht', user: toAuthUser(updatedUser) })
+    return res.json({ message: "Skin type deleted", user: toAuthUser(updatedUser) })
   } catch (error) {
     console.error(error)
-    return res.status(500).json({ message: 'Serverfehler' })
+    return res.status(500).json({ message: "Server error" })
   }
 }
 async function checkWelcomeCode(req, res) {
@@ -967,19 +967,19 @@ async function updateProfile(req, res) {
     })
 
     return res.json({
-      message: "Profil aktualisiert",
+      message: "Profile updated",
       user: toAuthUser(updatedUser),
     })
   } catch (error) {
     console.error(error)
-    return res.status(500).json({ message: "Serverfehler" })
+    return res.status(500).json({ message: "Server error" })
   }
 }
 async function updatePassword(req, res) {
   try {
     const { currentPassword, newPassword } = req.body
     if (!currentPassword || !newPassword)
-      return res.status(400).json({ message: 'Beide Felder sind erforderlich' })
+      return res.status(400).json({ message: "Both fields are required" })
 
     const passwordMsg = getPasswordValidationMessage(newPassword)
     if (passwordMsg) return res.status(400).json({ message: passwordMsg })
@@ -989,33 +989,33 @@ async function updatePassword(req, res) {
       select: { password: true }
     })
     const valid = await bcrypt.compare(currentPassword, user.password)
-    if (!valid) return res.status(401).json({ message: 'Aktuelles Passwort ist falsch' })
+    if (!valid) return res.status(401).json({ message: "Current password is incorrect" })
 
     const hashed = await bcrypt.hash(newPassword, 10)
     await prisma.user.update({
       where: { id: req.user.userId },
       data:  { password: hashed }
     })
-    return res.json({ message: 'Passwort erfolgreich geändert' })
+    return res.json({ message: "Password changed successfully" })
   } catch (error) {
     console.error(error)
-    return res.status(500).json({ message: 'Serverfehler' })
+    return res.status(500).json({ message: "Server error" })
   }
 }
 async function updateGender(req, res) {
   try {
     const { gender } = req.body
     const allowed = ['male', 'female', 'diverse', null]
-    if (!allowed.includes(gender)) return res.status(400).json({ message: 'Ungültiges Geschlecht' })
+    if (!allowed.includes(gender)) return res.status(400).json({ message: "Invalid gender" })
     const updated = await prisma.user.update({
       where: { id: req.user.userId },
       data:  { gender: gender ?? null }
     })
     await refreshUserProfileEmbedding(req.user.userId)
-    return res.json({ message: 'Gespeichert', user: toAuthUser(updated) })
+    return res.json({ message: "Saved", user: toAuthUser(updated) })
   } catch (err) {
     console.error(err)
-    return res.status(500).json({ message: 'Serverfehler' })
+    return res.status(500).json({ message: "Server error" })
   }
 }
 module.exports = { register, login, getAddress, getProfileContext, updateSkinProfile, deleteProfileImage, updateAddress, updateSkinType, deleteSkinType, checkWelcomeCode, verifyCode, updateProfile, updatePassword, updateGender}

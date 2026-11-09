@@ -28,7 +28,7 @@ router.get('/', authMiddleware, async (req, res) => {
     })))
   } catch (err) {
     console.error('Chat-History-Fehler:', err)
-    return res.status(500).json({ error: 'Fehler beim Laden der Chats' })
+    return res.status(500).json({ error: 'Could not load chats' })
   }
 })
 
@@ -60,14 +60,14 @@ router.post('/', authMiddleware, async (req, res) => {
         await tx.chatMessage.deleteMany({ where: { conversationId: id } })
         await tx.conversation.update({
           where: { id },
-          data:  { title: title || 'Neue Beratung', messages: { create: msgData } },
+          data:  { title: title || "New consultation", messages: { create: msgData } },
         })
       } else {
         await tx.conversation.create({
           data: {
             id,
             userId:   req.user.userId,
-            title:    title || 'Neue Beratung',
+            title:    title || "New consultation",
             messages: { create: msgData },
           },
         })
@@ -76,10 +76,10 @@ router.post('/', authMiddleware, async (req, res) => {
 
     return res.json({ id })
   } catch (err) {
-    if (err.message === 'FORBIDDEN') return res.status(403).json({ error: 'Kein Zugriff' })
+    if (err.message === 'FORBIDDEN') return res.status(403).json({ error: "Access denied" })
     if (err.code === 'P2002') return res.json({ id })
     console.error('Chat-Save-Fehler:', err.message)
-    return res.status(500).json({ error: 'Fehler beim Speichern' })
+    return res.status(500).json({ error: "Error saving" })
   }
 })
 
@@ -89,13 +89,13 @@ router.delete('/:id', authMiddleware, async (req, res) => {
     const { id } = req.params
     const conversation = await prisma.conversation.findUnique({ where: { id } })
     if (!conversation || conversation.userId !== req.user.userId) {
-      return res.status(404).json({ error: 'Konversation nicht gefunden' })
+      return res.status(404).json({ error: "Conversation not found" })
     }
     await prisma.conversation.delete({ where: { id } })
     return res.json({ ok: true })
   } catch (err) {
     console.error('Delete-Fehler:', err)
-    return res.status(500).json({ error: 'Fehler beim Löschen' })
+    return res.status(500).json({ error: "Could not delete" })
   }
 })
 

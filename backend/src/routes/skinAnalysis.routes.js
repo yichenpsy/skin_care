@@ -15,12 +15,12 @@ router.post('/analyze', async (req, res) => {
     const { imageData, mediaType } = req.body
 
     if (!imageData) {
-      return res.status(400).json({ error: 'Kein Bild übermittelt' })
+      return res.status(400).json({ error: "No image provided" })
     }
 
     const prompt = `Du bist ein Hautpflege-Experte. Analysiere dieses Bild für eine Hautpflege-Beratung. Auch wenn das Gesicht nicht perfekt zentriert oder beleuchtet ist, führe die Analyse durch. Nur wenn überhaupt kein Mensch im Bild erkennbar ist, gib einen Fehler zurück.
 
-Antworte NUR mit einem validen JSON-Objekt ohne Markdown-Backticks:
+Write all user-facing text (overall, tips, product names, reasons, and errors) in English. Keep skinType and category enum values unchanged. Antworte NUR mit einem validen JSON-Objekt ohne Markdown-Backticks:
 {
   "skinType": "Normal|Oily|Dry|Combination|Sensitive",
   "dryness": 0-100,
@@ -38,7 +38,7 @@ Antworte NUR mit einem validen JSON-Objekt ohne Markdown-Backticks:
 }
 
 Wenn mehrere Gesichter im Bild sind, setze "multipleFaces": true und analysiere NUR das prominenteste/größte Gesicht im Vordergrund.
-Nur wenn überhaupt kein Mensch erkennbar ist, gib zurück: {"error": "Kein Gesicht erkennbar"}`
+Nur wenn überhaupt kein Mensch erkennbar ist, gib zurück: {"error": "No face detected"}`
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -62,7 +62,7 @@ Nur wenn überhaupt kein Mensch erkennbar ist, gib zurück: {"error": "Kein Gesi
     if (!response.ok) {
       const errData = await response.json().catch(() => ({}))
       console.error('OpenAI Fehler:', errData)
-      return res.status(500).json({ error: 'OpenAI API Fehler: ' + (errData.error?.message || response.status) })
+      return res.status(500).json({ error: "OpenAI API error: " + (errData.error?.message || response.status) })
     }
 
     const data   = await response.json()
@@ -72,8 +72,8 @@ Nur wenn überhaupt kein Mensch erkennbar ist, gib zurück: {"error": "Kein Gesi
 
     return res.json(parsed)
   } catch (err) {
-    console.error('Analyse-Fehler:', err)
-    return res.status(500).json({ error: 'Analyse fehlgeschlagen: ' + err.message })
+    console.error("Analysis error:", err)
+    return res.status(500).json({ error: "Analysis failed: " + err.message })
   }
 })
 
@@ -81,7 +81,7 @@ Nur wenn überhaupt kein Mensch erkennbar ist, gib zurück: {"error": "Kein Gesi
 router.post('/glow', async (req, res) => {
   try {
     const { imageData } = req.body
-    if (!imageData) return res.status(400).json({ error: 'Kein Bild übermittelt' })
+    if (!imageData) return res.status(400).json({ error: "No image provided" })
 
     // Person beschreiben lassen
     const descResponse = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -130,7 +130,7 @@ router.post('/glow', async (req, res) => {
     if (!glowResponse.ok) {
       const errData = await glowResponse.json().catch(() => ({}))
       console.error('[Glow] Fehler:', errData)
-      return res.status(500).json({ error: 'Bildgenerierung fehlgeschlagen: ' + (errData.error?.message || glowResponse.status) })
+      return res.status(500).json({ error: "Image generation failed: " + (errData.error?.message || glowResponse.status) })
     }
 
     const glowData = await glowResponse.json()
@@ -139,14 +139,14 @@ router.post('/glow', async (req, res) => {
     const b64 = glowData.data?.[0]?.b64_json
     if (!b64) {
       console.error('[Glow] Kein b64_json:', JSON.stringify(glowData).slice(0, 200))
-      return res.status(500).json({ error: 'Kein Bild erhalten' })
+      return res.status(500).json({ error: "No image received" })
     }
 
     return res.json({ imageData: `data:image/png;base64,${b64}` })
 
   } catch (err) {
     console.error('[Glow] Fehler:', err)
-    return res.status(500).json({ error: 'Fehler bei der Bildgenerierung: ' + err.message })
+    return res.status(500).json({ error: "Image generation error: " + err.message })
   }
 })
 
@@ -156,7 +156,7 @@ router.post('/save', authMiddleware, async (req, res) => {
     const { skinType, dryness, redness, blemishes, sensitivity, overall, tips, products, imageData } = req.body
 
     if (!skinType) {
-      return res.status(400).json({ error: 'skinType fehlt' })
+      return res.status(400).json({ error: "Skin type is required" })
     }
 
     const storedImageData =
@@ -187,7 +187,7 @@ router.post('/save', authMiddleware, async (req, res) => {
     return res.json({ analysis })
   } catch (err) {
     console.error('Save-Fehler:', err)
-    return res.status(500).json({ error: 'Fehler beim Speichern der Analyse' })
+    return res.status(500).json({ error: "Could not save analysis" })
   }
 })
 
@@ -209,7 +209,7 @@ router.get('/history', authMiddleware, async (req, res) => {
     )
   } catch (err) {
     console.error('History-Fehler:', err)
-    return res.status(500).json({ error: 'Fehler beim Laden der Analysen' })
+    return res.status(500).json({ error: "Could not load analyses" })
   }
 })
 
@@ -220,15 +220,15 @@ router.delete('/:id', authMiddleware, async (req, res) => {
 
     const analysis = await prisma.skinAnalysis.findUnique({ where: { id } })
     if (!analysis || analysis.userId !== req.user.userId) {
-      return res.status(404).json({ error: 'Analyse nicht gefunden' })
+      return res.status(404).json({ error: "Analysis not found" })
     }
 
     await prisma.skinAnalysis.delete({ where: { id } })
     await refreshUserProfileEmbedding(req.user.userId)
-    return res.json({ message: 'Analyse gelöscht' })
+    return res.json({ message: "Analysis deleted" })
   } catch (err) {
     console.error('Delete-Fehler:', err)
-    return res.status(500).json({ error: 'Fehler beim Löschen' })
+    return res.status(500).json({ error: "Could not delete" })
   }
 })
 

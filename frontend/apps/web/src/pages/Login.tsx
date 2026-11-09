@@ -17,18 +17,18 @@ const specialCharacterPattern = /[^A-Za-z0-9]/
 const userNamePattern         = /^[A-Za-z0-9 _-]+$/
 
 function getPasswordValidationMessage(password: string) {
-  if (password.length < 8)                       return 'Das Passwort muss mindestens 8 Zeichen lang sein.'
-  if (!/[A-Z]/.test(password))                   return 'Das Passwort muss mindestens einen Großbuchstaben enthalten.'
-  if (!/[a-z]/.test(password))                   return 'Das Passwort muss mindestens einen Kleinbuchstaben enthalten.'
-  if (!/[0-9]/.test(password))                   return 'Das Passwort muss mindestens eine Zahl enthalten.'
-  if (!specialCharacterPattern.test(password))   return 'Das Passwort muss mindestens ein Sonderzeichen enthalten.'
+  if (password.length < 8)                       return "Your password must be at least 8 characters long."
+  if (!/[A-Z]/.test(password))                   return "Your password must contain at least one uppercase letter."
+  if (!/[a-z]/.test(password))                   return "Your password must contain at least one lowercase letter."
+  if (!/[0-9]/.test(password))                   return "Your password must contain at least one number."
+  if (!specialCharacterPattern.test(password))   return "Your password must contain at least one special character."
   return ''
 }
 
 function getUserNameValidationMessage(userName: string) {
   if (!userName) return ''
-  if (userName.length < 2 || userName.length > 30) return 'Der Benutzername muss zwischen 2 und 30 Zeichen lang sein.'
-  if (!userNamePattern.test(userName))             return 'Der Benutzername darf nur Buchstaben, Zahlen, Leerzeichen, Unterstriche und Bindestriche enthalten.'
+  if (userName.length < 2 || userName.length > 30) return "Your username must be between 2 and 30 characters long."
+  if (!userNamePattern.test(userName))             return "Your username can only contain letters, numbers, spaces, underscores, and hyphens."
   return ''
 }
 
@@ -101,18 +101,18 @@ export default function Login() {
   const locationState   = location.state as LoginLocationState | null
 
   const passwordRequirements = [
-    { text: 'Mindestens 8 Zeichen',       fulfilled: password.length >= 8 },
-    { text: 'Mindestens ein Großbuchstabe', fulfilled: /[A-Z]/.test(password) },
-    { text: 'Mindestens ein Kleinbuchstabe', fulfilled: /[a-z]/.test(password) },
-    { text: 'Mindestens eine Zahl',       fulfilled: /[0-9]/.test(password) },
-    { text: 'Mindestens ein Sonderzeichen', fulfilled: specialCharacterPattern.test(password) },
+    { text: "At least 8 characters",       fulfilled: password.length >= 8 },
+    { text: "At least one uppercase letter", fulfilled: /[A-Z]/.test(password) },
+    { text: "At least one lowercase letter", fulfilled: /[a-z]/.test(password) },
+    { text: "At least one number",       fulfilled: /[0-9]/.test(password) },
+    { text: "At least one special character", fulfilled: specialCharacterPattern.test(password) },
   ]
 
   useEffect(() => {
     const params = new URLSearchParams(location.search)
     if (params.get('verified') === '1') {
       setMode('login')
-      setSuccess('E-Mail bestätigt. Du kannst dich jetzt anmelden.')
+      setSuccess("Email verified. You can now sign in.")
     }
   }, [location.search])
 
@@ -123,10 +123,10 @@ export default function Login() {
     const normalizedEmail = email.trim()
     const normalizedName  = name.trim()
 
-    if (!normalizedEmail)                            errors.email = 'Gib deine E-Mail-Adresse ein.'
-    else if (!emailPattern.test(normalizedEmail))    errors.email = 'Gib eine gültige E-Mail-Adresse ein.'
+    if (!normalizedEmail)                            errors.email = "Enter your email address."
+    else if (!emailPattern.test(normalizedEmail))    errors.email = "Enter a valid email address."
 
-    if (!password)                                   errors.password = 'Gib dein Passwort ein.'
+    if (!password)                                   errors.password = "Enter your password."
     else if (mode === 'register') {
       const msg = getPasswordValidationMessage(password)
       if (msg) errors.password = msg
@@ -136,8 +136,8 @@ export default function Login() {
       const nameMsg = getUserNameValidationMessage(normalizedName)
       if (nameMsg) errors.name = nameMsg
 
-      if (!confirmPassword)                          errors.confirmPassword = 'Bestätige dein Passwort.'
-      else if (confirmPassword !== password)         errors.confirmPassword = 'Die Passwörter stimmen nicht überein.'
+      if (!confirmPassword)                          errors.confirmPassword = "Confirm your password."
+      else if (confirmPassword !== password)         errors.confirmPassword = "Passwords do not match."
     }
 
     setFieldErrors(errors)
@@ -164,7 +164,7 @@ export default function Login() {
       const data: AuthResponse = await response.json()
 
       if (!response.ok) {
-        setError(data.message || 'Etwas ist schiefgelaufen. Bitte versuche es erneut.')
+        setError(data.message || "Something went wrong. Please try again.")
         return
       }
 
@@ -177,7 +177,7 @@ export default function Login() {
       }
 
       if (!data.token || !data.user) {
-        setError('In der Anmeldeantwort fehlen Benutzerdaten.')
+        setError("User details are missing from the sign-in response.")
         return
       }
 
@@ -187,7 +187,7 @@ export default function Login() {
         { replace: true }
       )
     } catch {
-      setError('Das Backend ist nicht erreichbar. Bitte prüfe, ob es auf Port 5050 läuft.')
+      setError("The server is unavailable. Please try again shortly.")
     } finally {
       setIsSubmitting(false)
     }
@@ -209,15 +209,15 @@ export default function Login() {
       const data = await response.json()
 
       if (!response.ok) {
-        setError(data.message || 'Falscher oder abgelaufener Code.')
+        setError(data.message || "Incorrect or expired code.")
         return
       }
 
-      setSuccess('E-Mail bestätigt. Du kannst dich jetzt anmelden.')
+      setSuccess("Email verified. You can now sign in.")
       setMode('login')
       setVerifyCode('')
     } catch {
-      setError('Netzwerkfehler')
+      setError("Network error")
     } finally {
       setIsSubmitting(false)
     }
@@ -240,12 +240,12 @@ export default function Login() {
           >
             <section className='flex flex-col gap-5 px-4 py-6 sm:px-8 sm:px-8 lg:px-10'>
               <div className='space-y-2'>
-                <h2 className='text-xl sm:text-2xl font-bold text-foreground'>E-Mail bestätigen</h2>
-                <p className='text-sm leading-6 text-muted-foreground'>Wir haben einen 6-stelligen Code an <strong className="break-all">{pendingEmail}</strong> gesendet. Bitte gib ihn unten ein.</p>
+                <h2 className='text-xl sm:text-2xl font-bold text-foreground'>Verify email</h2>
+                <p className='text-sm leading-6 text-muted-foreground'>We sent a 6-digit code to <strong className="break-all">{pendingEmail}</strong>  . Please enter it below.</p>
               </div>
 
               <label className='flex flex-col gap-2 text-sm font-medium text-foreground'>
-                Bestätigungscode
+                Verification code
                 <input
                 className='rounded-md border border-input bg-background px-3 py-2.5 text-xl font-normal outline-none transition focus:ring-2 focus:ring-[#D4A574] tracking-[0.2em] sm:tracking-[0.3em] text-center'
                 type='text'
@@ -276,7 +276,7 @@ export default function Login() {
                   ? <Loader2 className='h-4 w-4 animate-spin' />
                   : <CheckCircle2 className='h-4 w-4'/>
                 }
-                Code bestätigen
+                Verify code
               </button>
 
               <button
@@ -284,7 +284,7 @@ export default function Login() {
                 className='text-sm font-medium text-[#8A6337] hover:underline'
                 onClick={() => {setMode('login'); setVerifyCode(''); setError('')}}
               >
-                Zurück zur Anmeldung
+                Back to sign in
               </button>
             </section>
         </form>
@@ -294,10 +294,10 @@ export default function Login() {
 
   //Login/Register screen
   const isLoginMode = mode === 'login'
-  const title    = isLoginMode ? 'Willkommen zurück' : 'Konto erstellen'
+  const title    = isLoginMode ? "Welcome back" : "Create account"
   const subtitle = isLoginMode
-    ? 'Melde dich an, um weiter bei SelfGlow einzukaufen.'
-    : 'Speichere Favoriten, bezahle schneller und verwalte dein Hautpflegeprofil an einem Ort.'
+    ? "Sign in to continue shopping at SelfGlow."
+    : "Save favorites, check out faster, and manage your skincare profile in one place."
 
   return (
     <div className="px-4 py-6 sm:py-10 sm:px-6 lg:px-8">
@@ -308,7 +308,7 @@ export default function Login() {
       >
         <button type="button" onClick={handleClose}
           className="absolute right-4 top-4 z-10 rounded-full p-2 transition-colors hover:bg-accent"
-          aria-label="Schließen">
+          aria-label="Close">
           <X className="h-5 w-5 text-muted-foreground" />
         </button>
 
@@ -321,10 +321,10 @@ export default function Login() {
           {/* ── Registrierung: Name ── */}
           {mode === 'register' && (
             <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
-              <span>Benutzername <span className="font-normal text-muted-foreground">(optional)</span></span>
+              <span>Username <span className="font-normal text-muted-foreground">(optional)</span></span>
               <input
                 className="rounded-md border border-input bg-background px-3 py-2.5 text-base font-normal outline-none transition focus:ring-2 focus:ring-[#D4A574]"
-                type="text" autoComplete="name" placeholder="Dein Benutzername"
+                type="text" autoComplete="name" placeholder="Your username"
                 value={name} onChange={e => setName(e.target.value)} aria-invalid={Boolean(fieldErrors.name)} />
               {fieldErrors.name && <span className="text-sm font-normal text-red-600">{fieldErrors.name}</span>}
             </label>
@@ -334,43 +334,43 @@ export default function Login() {
           {mode === 'register' && (
             <div className="flex flex-col gap-2">
               <span className="text-sm font-medium text-foreground">
-                Ich bin <span className="font-normal text-muted-foreground">(optional)</span>
+                I am <span className="font-normal text-muted-foreground">(optional)</span>
               </span>
               <div style={{ display: 'flex', gap: 8 }}>
-                <GenderButton value="female"  label="Frau"   emoji="👩" selected={gender === 'female'}  onClick={() => setGender(g => g === 'female'  ? null : 'female')} />
-                <GenderButton value="male"    label="Mann"   emoji="👨" selected={gender === 'male'}    onClick={() => setGender(g => g === 'male'    ? null : 'male')} />
-                <GenderButton value="diverse" label="Divers" emoji="🧑" selected={gender === 'diverse'} onClick={() => setGender(g => g === 'diverse' ? null : 'diverse')} />
+                <GenderButton value="female"  label="Woman"   emoji="👩" selected={gender === 'female'}  onClick={() => setGender(g => g === 'female'  ? null : 'female')} />
+                <GenderButton value="male"    label="Man"   emoji="👨" selected={gender === 'male'}    onClick={() => setGender(g => g === 'male'    ? null : 'male')} />
+                <GenderButton value="diverse" label="Non-binary" emoji="🧑" selected={gender === 'diverse'} onClick={() => setGender(g => g === 'diverse' ? null : 'diverse')} />
               </div>
               <p style={{ fontSize: 11, color: '#9a7a5a', margin: 0 }}>
-                Wird genutzt um Produkte und Startseite zu personalisieren.
+                Used to personalize products and your home page.
               </p>
             </div>
           )}
 
           {/* ── E-Mail ── */}
           <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
-            E-Mail
+            Email
             <input
               className="rounded-md border border-input bg-background px-3 py-2.5 text-base font-normal outline-none transition focus:ring-2 focus:ring-[#D4A574]"
-              type="email" autoComplete="email" placeholder="dein.name@beispiel.de"
+              type="email" autoComplete="email" placeholder="your.name@example.com"
               value={email} onChange={e => setEmail(e.target.value)} aria-invalid={Boolean(fieldErrors.email)} />
             {fieldErrors.email && <span className="text-sm font-normal text-red-600">{fieldErrors.email}</span>}
           </label>
 
           {/* ── Passwort ── */}
           <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
-            Passwort
+            Password
             <div className="relative">
               <input
                 className="w-full rounded-md border border-input bg-background px-3 py-2.5 pr-11 text-base font-normal outline-none transition focus:ring-2 focus:ring-[#D4A574]"
                 type={showPassword ? 'text' : 'password'}
                 autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
-                placeholder="Passwort" value={password} onChange={e => setPassword(e.target.value)}
+                placeholder="Password" value={password} onChange={e => setPassword(e.target.value)}
                 aria-invalid={Boolean(fieldErrors.password)} />
               <button type="button"
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition hover:text-foreground"
                 onClick={() => setShowPassword(c => !c)}
-                aria-label={showPassword ? 'Passwort ausblenden' : 'Passwort anzeigen'}>
+                aria-label={showPassword ? "Hide password" : "Show password"}>
                 {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
               </button>
             </div>
@@ -385,17 +385,17 @@ export default function Login() {
           {/* ── Passwort bestätigen ── */}
           {mode === 'register' && (
             <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
-              Passwort bestätigen
+              Confirm password
               <div className="relative">
                 <input
                   className="w-full rounded-md border border-input bg-background px-3 py-2.5 pr-11 text-base font-normal outline-none transition focus:ring-2 focus:ring-[#D4A574]"
                   type={showConfirmPassword ? 'text' : 'password'} autoComplete="new-password"
-                  placeholder="Passwort bestätigen" value={confirmPassword}
+                  placeholder="Confirm password" value={confirmPassword}
                   onChange={e => setConfirmPassword(e.target.value)} aria-invalid={Boolean(fieldErrors.confirmPassword)} />
                 <button type="button"
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition hover:text-foreground"
                   onClick={() => setShowConfirmPassword(c => !c)}
-                  aria-label={showConfirmPassword ? 'ausblenden' : 'anzeigen'}>
+                  aria-label={showConfirmPassword ? "hide" : "show"}>
                   {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </button>
               </div>
@@ -408,7 +408,7 @@ export default function Login() {
             <label className="flex items-center gap-3 text-sm text-foreground">
               <input type="checkbox" className="h-4 w-4 rounded border-input accent-[#A9733F]"
                 checked={rememberMe} onChange={e => setRememberMe(e.target.checked)} />
-              Auf diesem Gerät angemeldet bleiben
+              Stay signed in on this device
             </label>
           )}
 
@@ -423,11 +423,11 @@ export default function Login() {
             className="inline-flex items-center justify-center gap-2 rounded-full bg-[#D4A574] px-4 py-3 font-medium text-white transition-colors hover:bg-[#C19660] disabled:cursor-not-allowed disabled:opacity-70"
             type="submit" disabled={isSubmitting}>
             {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : mode === 'login' ? <LogIn className="h-4 w-4" /> : <UserPlus className="h-4 w-4" />}
-            {mode === 'login' ? 'Anmelden' : 'Konto erstellen'}
+            {mode === 'login' ? "Sign in" : "Create account"}
           </button>
 
           <button type="button" className="text-sm font-medium text-[#8A6337] hover:underline text-center" onClick={switchMode}>
-            {mode === 'login' ? 'Neu bei SelfGlow? Konto erstellen' : 'Du hast bereits ein Konto? Anmelden'}
+            {mode === 'login' ? "New to SelfGlow? Create an account" : "Already have an account? Sign in"}
           </button>
         </section>
       </form>

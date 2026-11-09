@@ -1,3 +1,4 @@
+import { displayLabel } from '@/lib/display-labels'
 import { ProductImage } from '@/components/ProductImage'
 import { useEffect, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
@@ -58,13 +59,13 @@ const productBadges = [
   },
   {
     key: 'alcoholFree' as const,
-    label: 'Alkoholfrei',
+    label: "Alcohol-free",
     Icon: WineOff,
     className: 'bg-[#F8E9EE] text-[#A64D6A]',
   },
   {
     key: 'fragranceFree' as const,
-    label: 'Parfümfrei',
+    label: "Fragrance-free",
     Icon: DropletOff,
     className: 'bg-[#E5F0F6] text-[#2F6D8A]',
   },
@@ -79,11 +80,11 @@ type ProductAiResult = {
 }
 
 const skinTypeOptions = [
-  { value: 'Normal', label: 'Normale Haut' },
-  { value: 'Oily', label: 'Fettige Haut' },
-  { value: 'Dry', label: 'Trockene Haut' },
-  { value: 'Combination', label: 'Mischhaut' },
-  { value: 'Sensitive', label: 'Sensible Haut' },
+  { value: 'Normal', label: "Normal skin" },
+  { value: 'Oily', label: "Oily skin" },
+  { value: 'Dry', label: "Dry skin" },
+  { value: 'Combination', label: "Combination skin" },
+  { value: 'Sensitive', label: "Sensitive skin" },
 ]
 
 export default function ProductDetail() {
@@ -126,14 +127,14 @@ export default function ProductDetail() {
         const response = await fetch(apiUrl(`/api/products/${id}`))
 
         if (!response.ok) {
-          throw new Error('Produkt konnte nicht geladen werden')
+          throw new Error("Could not load the product")
         }
 
         const data: Product = await response.json()
         setProduct(data)
       } catch (err) {
         console.error(err)
-        setError('Fehler beim Laden des Produkts')
+        setError("Error loading product")
       } finally {
         setLoading(false)
       }
@@ -254,7 +255,7 @@ export default function ProductDetail() {
 
     if (action === 'fit' && !isLoggedIn) {
       setShowLoginHint(true)
-      setProductAiError('Bitte einloggen, damit wir dein Hautprofil nutzen können.')
+      setProductAiError("Please sign in so we can use your skin profile.")
       return
     }
 
@@ -287,18 +288,18 @@ export default function ProductDetail() {
       const data = await response.json().catch(() => ({}))
 
       if (!response.ok) {
-        throw new Error(data.message || 'KI-Auswertung konnte nicht geladen werden')
+        throw new Error(data.message || "Could not load AI assessment")
       }
 
       setProductAiResult({
-        title: action === 'explain' ? 'Produkt erklärt' : 'Passt zu deinem Hautprofil?',
-        answer: data.answer || 'Keine Auswertung verfügbar.',
+        title: action === 'explain' ? "Product explained" : "Does it match your skin profile?",
+        answer: data.answer || "No assessment available.",
         action,
       })
     } catch (err) {
       console.error(err)
       setProductAiError(
-        err instanceof Error ? err.message : 'KI-Auswertung konnte nicht geladen werden'
+        err instanceof Error ? err.message : "Could not load AI assessment"
       )
     } finally {
       setActiveAiAction(null)
@@ -324,7 +325,7 @@ export default function ProductDetail() {
       const data = await response.json().catch(() => ({}))
 
       if (!response.ok) {
-        throw new Error(data.message || 'Hauttyp konnte nicht gespeichert werden')
+        throw new Error(data.message || "Could not save skin type")
       }
 
       if (data.user) {
@@ -336,7 +337,7 @@ export default function ProductDetail() {
     } catch (err) {
       console.error(err)
       setProductAiError(
-        err instanceof Error ? err.message : 'Hauttyp konnte nicht gespeichert werden'
+        err instanceof Error ? err.message : "Could not save skin type"
       )
     } finally {
       setSavingSkinType(false)
@@ -361,7 +362,7 @@ async function clearSkinType() {
     const data = await response.json().catch(() => ({}))
 
     if (!response.ok) {
-      throw new Error(data.message || 'Hauttyp konnte nicht entfernt werden')
+      throw new Error(data.message || "Could not remove skin type")
     }
 
     if (data.user) {
@@ -373,14 +374,14 @@ async function clearSkinType() {
   } catch (err) {
     console.error(err)
     setProductAiError(
-      err instanceof Error ? err.message : 'Hauttyp konnte nicht entfernt werden'
+      err instanceof Error ? err.message : "Could not remove skin type"
     )
   } finally {
     setSavingSkinType(false)
   }
 }
   function renderFitRating(line: string, index: number) {
-    const ratingMatch = line.match(/^(?:Passform|Bewertung|Score):\s*([1-5])\s*\/\s*5(?:\s*Sterne)?/i)
+    const ratingMatch = line.match(/^(?:Suitability|Fit|Rating|Passform|Bewertung|Score):\s*([1-5])\s*\/\s*5(?:\s*(?:stars|Sterne))?/i)
 
     if (!ratingMatch) return null
 
@@ -388,7 +389,7 @@ async function clearSkinType() {
 
     return (
       <div key={index} className="rounded-xl bg-[#FFFBF6] p-4">
-        <p className="mb-2 text-sm font-semibold text-foreground">Passform</p>
+        <p className="mb-2 text-sm font-semibold text-foreground">Suitability</p>
         <div className="flex items-center gap-3">
           <div className="flex">
             {[...Array(5)].map((_, i) => (
@@ -404,7 +405,7 @@ async function clearSkinType() {
             ))}
           </div>
           <span className="text-sm font-medium text-[#8A5D2F]">
-            {score}/5 Sterne
+            {score}/5 stars
           </span>
         </div>
       </div>
@@ -492,7 +493,7 @@ async function clearSkinType() {
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-10">
-        Produkt wird geladen...
+        Loading product...
       </div>
     )
   }
@@ -501,14 +502,14 @@ async function clearSkinType() {
     return (
       <div className="container mx-auto px-4 py-10">
         <p className="text-red-500 mb-4">
-          {error || 'Produkt nicht gefunden.'}
+          {error || "Product not found."}
         </p>
 
         <Link
   to={from === 'order' && orderId ? `/profile/orders/${orderId}` : '/shop'}
   className="text-gray-500 hover:text-[#D4A574]"
 >
-  ← {from === 'order' && orderId ? 'Zurück zur Bestellung' : 'Zurück zu den Produkten'}
+  ← {from === 'order' && orderId ? "Back to order" : "Back to products"}
 </Link>
       </div>
     )
@@ -523,18 +524,18 @@ async function clearSkinType() {
   const detailSections = [
     {
       id: 'description',
-      title: 'Beschreibung',
-      content: product.description || 'Keine Beschreibung vorhanden.',
+      title: "Description",
+      content: product.description || "No description available.",
     },
     {
       id: 'usage',
-      title: 'Anwendung',
-      content: product.application || 'Keine Anwendungshinweise vorhanden.',
+      title: "How to use",
+      content: product.application || "No usage instructions available.",
     },
     {
       id: 'ingredients',
-      title: 'Inhaltsstoffe',
-      content: product.ingredients || 'Keine Inhaltsstoffe vorhanden.',
+      title: "Ingredients",
+      content: product.ingredients || "No ingredients available.",
     },
   ]
   const selectedAiAction = showSkinTypeForm
@@ -556,7 +557,7 @@ async function clearSkinType() {
             <CheckCircle className="h-5 w-5 shrink-0" />
 
             <span className="text-xs sm:text-sm font-medium">
-              Produkt wurde zum Warenkorb hinzugefügt
+              Product added to cart
             </span>
           </div>
         </div>
@@ -569,8 +570,8 @@ async function clearSkinType() {
 >
   <ArrowLeft className="h-4 w-4" />
   {from === 'order' && orderId
-    ? 'Zurück zur Bestellung'
-    : 'Zurück zu den Produkten'}
+    ? "Back to order"
+    : "Back to products"}
 </Link>
 
         {fromChatbot && (
@@ -579,7 +580,7 @@ async function clearSkinType() {
             className="inline-flex items-center gap-2 rounded-full border border-[#E8D5C0] px-4 py-2 text-sm text-[#A97745] transition-colors hover:bg-[#FDF7F0]"
           >
             <ArrowLeft className="h-4 w-4" />
-            Zurück zur KI-Beratung
+            Back to AI advisor
           </Link>
         )}
       </div>
@@ -595,7 +596,7 @@ async function clearSkinType() {
 
         <div>
           <p className="text-sm text-muted-foreground mb-2">
-            {product.category}
+            {displayLabel(product.category)}
           </p>
 
           <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
@@ -623,14 +624,14 @@ async function clearSkinType() {
 
             <span className="text-sm text-muted-foreground">
               {displayRating.toFixed(1)} ({reviewCount}{' '}
-              {reviewCount === 1 ? 'Bewertung' : 'Bewertungen'})
+              {reviewCount === 1 ? "Rating" : "Reviews"})
             </span>
           </div>
 
           {product.size && (
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#E8D5C0] bg-[#FFFBF6] px-4 py-1.5 text-sm font-medium text-[#8A5D2F]">
               <Ruler className="h-4 w-4 text-[#D4A574]" />
-              <span>Größe: {product.size}</span>
+              <span>Size: {product.size}</span>
             </div>
           )}
 
@@ -661,7 +662,7 @@ async function clearSkinType() {
             <div className="relative flex w-full gap-3 sm:w-auto sm:min-w-[320px]">
               {isInCart && cartItem ? (
                 <div className="flex-1 flex items-center justify-center gap-4 bg-[#D4A574] text-white rounded-full py-2">
-                  <span className="text-sm">Menge</span>
+                  <span className="text-sm">Quantity</span>
 
                   <button
                     onClick={() => {
@@ -672,7 +673,7 @@ async function clearSkinType() {
                       }
                     }}
                     className="px-2 disabled:opacity-40 disabled:cursor-not-allowed"
-                    aria-label="Menge verringern"
+                    aria-label="Decrease quantity"
                   >
                     -
                   </button>
@@ -682,7 +683,7 @@ async function clearSkinType() {
                   <button
                     onClick={() => updateQuantity(product.id, cartItem.quantity + 1)}
                     className="px-2"
-                    aria-label="Menge erhöhen"
+                    aria-label="Increase quantity"
                   >
                     +
                   </button>
@@ -693,7 +694,7 @@ async function clearSkinType() {
                   className="flex-1 rounded-full px-8 text-foreground transition-colors bg-[#F5E6D3] hover:bg-[#E8D5C0]"
                 >
                   <ShoppingCart className="h-4 w-4 mr-2" />
-                  In den Warenkorb
+                  Add to cart
                 </Button>
               )}
 
@@ -708,8 +709,8 @@ async function clearSkinType() {
                 )}
                 aria-label={
                   inWishlist
-                    ? 'Aus Merkliste entfernen'
-                    : 'Zur Merkliste hinzufügen'
+                    ? "Remove from wishlist"
+                    : "Add to wishlist"
                 }
               >
                 <Heart
@@ -725,14 +726,14 @@ async function clearSkinType() {
               {showLoginHint && (
                 <div className="absolute top-14 right-0 z-20 w-64 max-w-[calc(100vw-2rem)] rounded-xl bg-white p-3 text-xs shadow-lg border border-border">
                   <p className="mb-2 text-foreground">
-                    Bitte einloggen, um Produkte zu speichern.
+                    Please sign in to save products.
                   </p>
 
                   <Link
                     to="/login"
                     className="font-medium text-[#D4A574] hover:underline"
                   >
-                    Zur Anmeldung
+                    Go to sign in
                   </Link>
                 </div>
               )}
@@ -743,17 +744,17 @@ async function clearSkinType() {
             <div className="mb-4 flex items-start justify-between gap-4">
               <div>
                 <h2 className="text-lg font-semibold text-foreground">
-                  Transparente Produktberatung
+                  Transparent product advice
                 </h2>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  KI hilft dir anhand der Inhaltsstoffe und deines Hauttyps, das passendste Produkt zu finden.
+                  AI uses ingredients and your skin type to help you find the best product.
                 </p>
               </div>
             </div>
 {isLoggedIn && user?.skinType && (
   <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#E8D5C0] bg-white px-4 py-1.5 text-sm text-[#8A5D2F]">
     <span>
-      Hauttyp:{' '}
+      Skin type:{' '}
       {skinTypeOptions.find((o) => o.value === user.skinType)?.label || user.skinType}
     </span>
 
@@ -762,8 +763,8 @@ async function clearSkinType() {
       onClick={clearSkinType}
       disabled={savingSkinType}
       className="rounded-full p-0.5 text-[#D4A574] transition hover:bg-[#F5E6D3] disabled:opacity-50"
-      aria-label="Hauttyp entfernen"
-      title="Hauttyp entfernen"
+      aria-label="Remove skin type"
+      title="Remove skin type"
     >
       <X className="h-3.5 w-3.5" />
     </button>
@@ -787,7 +788,7 @@ async function clearSkinType() {
                 ) : (
                   <Sparkles className="mr-2 h-4 w-4" />
                 )}
-                Produkt erklären
+                Explain product
               </Button>
 
               <Button
@@ -807,7 +808,7 @@ async function clearSkinType() {
                 ) : (
                   <ShieldCheck className="mr-2 h-4 w-4" />
                 )}
-                Passt mir?
+                Does it suit me?
               </Button>
             </div>
 
@@ -826,7 +827,7 @@ async function clearSkinType() {
                       type="button"
                       onClick={() => toggleAiResultSection('fit')}
                       className="absolute right-3 top-3 rounded-full p-2 text-[#D4A574] transition hover:bg-[#F5E6D3]"
-                      aria-label="Hautprofil-Formular einklappen"
+                      aria-label="Collapse skin profile form"
                       aria-expanded={openAiResultSections.includes('fit')}
                     >
                       <ChevronDown className="h-5 w-5 rotate-180 transition-transform" />
@@ -834,10 +835,10 @@ async function clearSkinType() {
 
                     <div className="mb-4">
                       <h3 className="font-semibold text-foreground">
-                        Dein Hauttyp fehlt noch
+                        Your skin type is missing
                       </h3>
                       <p className="mt-1 text-sm text-muted-foreground">
-                        Wähle deinen Hauttyp aus, damit die KI dieses Produkt passend einschätzen kann.
+                        Select your skin type so AI can assess this product for you.
                       </p>
                     </div>
 
@@ -868,7 +869,7 @@ async function clearSkinType() {
                       {savingSkinType && (
                         <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
                       )}
-                      Speichern und prüfen
+                      Save and check
                     </Button>
                   </div>
                 )}
@@ -883,7 +884,7 @@ async function clearSkinType() {
                       type="button"
                       onClick={() => toggleAiResultSection(productAiResult.action)}
                       className="absolute right-3 top-3 rounded-full p-2 text-[#D4A574] transition hover:bg-[#F5E6D3]"
-                      aria-label="KI-Auswertung einklappen"
+                      aria-label="Collapse AI assessment"
                       aria-expanded={openAiResultSections.includes(productAiResult.action)}
                     >
                       <ChevronDown className="h-5 w-5 rotate-180 transition-transform" />
@@ -937,19 +938,19 @@ async function clearSkinType() {
 
       <div className="mt-12 border-t pt-10 px-1">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-6">
-          <h2 className="text-2xl font-bold">Kundenbewertungen</h2>
+          <h2 className="text-2xl font-bold">Customer reviews</h2>
 
           <Button
             onClick={() => setIsReviewFormOpen(true)}
             className="bg-[#D4A574] text-white hover:bg-[#C69563] px-6 py-3 text-base font-semibold w-full sm:w-auto"
           >
-            Bewertung schreiben
+            Write a review
           </Button>
         </div>
 
         {reviews.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground">
-            <p>Noch keine Bewertungen.</p>
+            <p>No reviews yet.</p>
           </div>
         ) : (
           <div className="space-y-6">
@@ -967,7 +968,7 @@ async function clearSkinType() {
                       </span>
 
                       <p className="text-xs text-muted-foreground">
-                        {new Date(review.createdAt).toLocaleDateString('de-DE')}
+                        {new Date(review.createdAt).toLocaleDateString('en-GB')}
                       </p>
                     </div>
                   </div>
@@ -977,8 +978,8 @@ async function clearSkinType() {
                       onClick={() => handleDeleteReview(review.id)}
                       disabled={deletingReviewId === review.id}
                       className="text-muted-foreground hover:text-red-500 hover:bg-red-50 transition-all p-2 rounded-lg flex-shrink-0"
-                      aria-label="Bewertung löschen"
-                      title="Bewertung löschen"
+                      aria-label="Delete review"
+                      title="Delete review"
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>
@@ -1018,11 +1019,11 @@ async function clearSkinType() {
           <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
             <div className="bg-white w-full max-w-[560px] rounded-[36px] shadow-[0_25px_60px_rgba(0,0,0,0.18)] border border-[#EFE6DC] px-10 py-9 text-center">
               <h3 className="text-2xl font-bold mb-3">
-                Bewertung löschen?
+                Delete review?
               </h3>
 
               <p className="text-muted-foreground mb-8">
-                Möchtest du diese Bewertung wirklich löschen?
+                Are you sure you want to delete this review?
               </p>
 
               <div className="flex gap-3">
@@ -1031,7 +1032,7 @@ async function clearSkinType() {
                   onClick={() => setDeleteConfirmId(null)}
                   className="flex-1 rounded-full hover:bg-[#F5E6D3] hover:border-[#D4A574]"
                 >
-                  Abbrechen
+                  Cancel
                 </Button>
 
                 <Button
@@ -1039,7 +1040,7 @@ async function clearSkinType() {
                   className="flex-1 rounded-full bg-[#D4A574] text-white hover:bg-[#C69563]"
                   disabled={deletingReviewId !== null}
                 >
-                  Löschen
+                  Delete
                 </Button>
               </div>
             </div>

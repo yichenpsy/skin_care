@@ -10,14 +10,14 @@ import { apiUrl } from '@/lib/api'
 
 // ─── Validators ────────────────────────────────────────────────────────────────
 const validators = {
-  firstName: { regex: /^[a-zA-ZäöüÄÖÜßàáâãèéêìíîòóôùúû\s'\-]{2,50}$/, msg: 'Min. 2 Buchstaben, keine Zahlen' },
-  lastName:  { regex: /^[a-zA-ZäöüÄÖÜßàáâãèéêìíîòóôùúû\s'\-]{2,50}$/, msg: 'Min. 2 Buchstaben, keine Zahlen' },
-  email:     { regex: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,                  msg: 'Ungültige E-Mail' },
-  phone:     { regex: /^\+[1-9][0-9]{1,3}\s?[0-9\s\-]{6,15}$/,         msg: 'Bitte mit Vorwahl (z.B. +49 151 12345678)' },
-  address:   { regex: /^[a-zA-ZäöüÄÖÜß\s\.\-]+ \d+[a-zA-Z]?$/,        msg: 'Format: Straße + Hausnummer (z.B. Musterstraße 12)' },
-  postal:    { regex: /^[0-9]{4,5}$/,                                    msg: '4–5-stellige Postleitzahl' },
-  city:      { regex: /^[a-zA-ZäöüÄÖÜßàáâ\s\-\.]{2,85}$/,              msg: 'Nur Buchstaben erlaubt' },
-  country:   { regex: /^[a-zA-ZäöüÄÖÜßàáâ\s\-\.]{2,85}$/,              msg: 'Nur Buchstaben erlaubt' },
+  firstName: { regex: /^[a-zA-ZäöüÄÖÜßàáâãèéêìíîòóôùúû\s'\-]{2,50}$/, msg: "At least 2 letters, no numbers" },
+  lastName:  { regex: /^[a-zA-ZäöüÄÖÜßàáâãèéêìíîòóôùúû\s'\-]{2,50}$/, msg: "At least 2 letters, no numbers" },
+  email:     { regex: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,                  msg: "Invalid email address" },
+  phone:     { regex: /^\+[1-9][0-9]{1,3}\s?[0-9\s\-]{6,15}$/,         msg: "Please include your country code (e.g. +49 151 12345678)" },
+  address:   { regex: /^[a-zA-ZäöüÄÖÜß\s\.\-]+ \d+[a-zA-Z]?$/,        msg: "Format: street + house number (e.g. Example Street 12)" },
+  postal:    { regex: /^[0-9]{4,5}$/,                                    msg: "4–5 digit postal code" },
+  city:      { regex: /^[a-zA-ZäöüÄÖÜßàáâ\s\-\.]{2,85}$/,              msg: "Letters only" },
+  country:   { regex: /^[a-zA-ZäöüÄÖÜßàáâ\s\-\.]{2,85}$/,              msg: "Letters only" },
 }
 
 const BASE_FORM = {
@@ -138,7 +138,7 @@ const token = user?.token
 
   // ─── Validation ──────────────────────────────────────────────────────
   const validateField = (name: string, value: string): string => {
-    if (!value) return 'Pflichtfeld'
+    if (!value) return "Required field"
     const v = validators[name as keyof typeof validators]
     if (!v) return ''
     if (!v.regex.test(value)) return v.msg
@@ -205,7 +205,7 @@ const token = user?.token
   if (code === 'WELCOME10') {
     const t = user?.token || localStorage.getItem('token')
     if (!t) {
-      setDiscountError('Bitte einloggen um WELCOME10 zu verwenden.')
+      setDiscountError("Please sign in to use WELCOME10.")
       return
     }
     setCheckingCode(true)
@@ -214,21 +214,21 @@ const token = user?.token
       })
       const data = await res.json()
       if (data.used) {
-        setDiscountError('WELCOME10 wurde bereits verwendet.')
+        setDiscountError("WELCOME10 has already been used.")
       } else {
         setDiscountValue(totalPrice * 0.10)
         setDiscountLabel('WELCOME10')
         setDiscountApplied(true)
       }
     } catch {
-      setDiscountError('Code konnte nicht geprüft werden.')
+      setDiscountError("Could not validate the code.")
     } finally {
       setCheckingCode(false)
     }
     return
   }
 
-  setDiscountError('Ungültiger Rabattcode')
+  setDiscountError("Invalid discount code")
   setDiscountValue(0)
 }
 
@@ -285,7 +285,7 @@ const token = user?.token
       }
 
       if (!res.ok) {
-        setErrorMsg(data.message || 'Fehler beim Bestellen')
+        setErrorMsg(data.message || "Could not place order")
         return
       }
 
@@ -333,7 +333,7 @@ const token = user?.token
         },
       })
     } catch {
-      setErrorMsg('Netzwerkfehler – bitte versuche es erneut.')
+      setErrorMsg("Network error — please try again.")
     }
   }
 
@@ -353,7 +353,7 @@ const token = user?.token
     if (!validateAll()) return
 
     if (items.length === 0) {
-      setErrorMsg('Dein Warenkorb ist leer.')
+      setErrorMsg("Your cart is empty.")
       return
     }
 
@@ -365,14 +365,14 @@ const token = user?.token
     return (
       <div className="min-h-[70vh] flex items-center justify-center px-4">
         <div className="bg-white border rounded-xl p-6 sm:p-8 text-center max-w-md w-full shadow">
-          <h2 className="text-xl font-semibold mb-3">Kasse</h2>
-          <p className="text-sm text-gray-600 mb-6">Möchten Sie als Gast bestellen oder ein Konto verwenden?</p>
+          <h2 className="text-xl font-semibold mb-3">Checkout</h2>
+          <p className="text-sm text-gray-600 mb-6">Would you like to check out as a guest or use an account?</p>
           <div className="flex flex-col gap-3">
             <button onClick={() => setGuestMode(true)} className="bg-[#D4A574] text-white py-2 rounded-full hover:bg-[#c4945f] transition-colors">
-              Als Gast bestellen
+              Check out as a guest
             </button>
             <button onClick={() => navigate('/login')} className="border py-2 rounded-full hover:bg-gray-50 transition-colors">
-              Anmelden / Konto
+              Sign in / Account
             </button>
           </div>
         </div>
@@ -380,7 +380,7 @@ const token = user?.token
     )
   }
 const formatPrice = (value: number) =>
-  new Intl.NumberFormat('de-DE', {
+  new Intl.NumberFormat('en-GB', {
     style: 'currency',
     currency: 'EUR',
   }).format(value)
@@ -394,7 +394,7 @@ const formatPrice = (value: number) =>
         <Link to="/cart" className="hover:opacity-70 transition-opacity">
           <ArrowLeft className="h-5 w-5 text-gray-600" />
         </Link>
-        <h1 className="text-2xl font-bold">Kasse</h1>
+        <h1 className="text-2xl font-bold">Checkout</h1>
       </div>
 
       {errorMsg && (
@@ -410,7 +410,7 @@ const formatPrice = (value: number) =>
 
           {/* Kundendaten */}
           <section>
-            <h2 className="font-semibold text-gray-800 mb-4 pb-2 border-b">Kundendaten</h2>
+            <h2 className="font-semibold text-gray-800 mb-4 pb-2 border-b">Customer details</h2>
             {user ? (
               <div className="bg-gray-50 p-3 rounded-lg border">
                 <p className="font-medium">{user.name}</p>
@@ -420,26 +420,26 @@ const formatPrice = (value: number) =>
               <>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
                   <div>
-                    <label className="text-xs text-gray-500 mb-1 block">Vorname *</label>
+                    <label className="text-xs text-gray-500 mb-1 block">First name *</label>
                     <input {...inputProps('firstName')} placeholder="Max"
                       onChange={e => { if (/^[a-zA-ZäöüÄÖÜßàáâãèéêìíîòóôùúû\s'\-]*$/.test(e.target.value)) handleChange('firstName', e.target.value) }} />
                     <ErrorMsg field="firstName" />
                   </div>
                   <div>
-                    <label className="text-xs text-gray-500 mb-1 block">Nachname *</label>
-                    <input {...inputProps('lastName')} placeholder="Mustermann"
+                    <label className="text-xs text-gray-500 mb-1 block">Last name *</label>
+                    <input {...inputProps('lastName')} placeholder="Example"
                       onChange={e => { if (/^[a-zA-ZäöüÄÖÜßàáâãèéêìíîòóôùúû\s'\-]*$/.test(e.target.value)) handleChange('lastName', e.target.value) }} />
                     <ErrorMsg field="lastName" />
                   </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="text-xs text-gray-500 mb-1 block">E-Mail *</label>
-                    <input {...inputProps('email')} type="email" placeholder="max@beispiel.de" />
+                    <label className="text-xs text-gray-500 mb-1 block">Email *</label>
+                    <input {...inputProps('email')} type="email" placeholder="max@example.com" />
                     <ErrorMsg field="email" />
                   </div>
                   <div>
-                    <label className="text-xs text-gray-500 mb-1 block">Telefon *</label>
+                    <label className="text-xs text-gray-500 mb-1 block">Phone *</label>
                     <input {...inputProps('phone')} placeholder="+49 151 12345678"
                       onChange={e => { if (/^[+0-9\s\-\(\)]*$/.test(e.target.value)) handleChange('phone', e.target.value) }} />
                     <ErrorMsg field="phone" />
@@ -451,42 +451,42 @@ const formatPrice = (value: number) =>
 
           {/* Shipping */}
           <section>
-            <h2 className="font-semibold text-gray-800 mb-4 pb-2 border-b">Lieferadresse</h2>
+            <h2 className="font-semibold text-gray-800 mb-4 pb-2 border-b">Shipping address</h2>
 
             {loadingAddress && (
               <div className="flex items-center gap-2 text-xs text-gray-400 mb-3">
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                Adresse wird geladen…
+                Loading address…
               </div>
             )}
             {addressLoaded && !loadingAddress && (
               <div className="bg-blue-50 border border-blue-100 rounded-lg px-3 py-2 text-xs text-blue-600 flex items-center gap-2 mb-3">
                 <CheckCircle className="h-3.5 w-3.5 shrink-0" />
-                Deine gespeicherte Adresse wurde automatisch eingetragen.
+                Your saved address has been filled in automatically.
               </div>
             )}
 
             <div className="mb-3">
-              <label className="text-xs text-gray-500 mb-1 block">Straße & Hausnummer *</label>
-              <input {...inputProps('address')} placeholder="Musterstraße 42" />
+              <label className="text-xs text-gray-500 mb-1 block">Street & house number *</label>
+              <input {...inputProps('address')} placeholder="Example Street 42" />
               <ErrorMsg field="address" />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
               <div>
-                <label className="text-xs text-gray-500 mb-1 block">PLZ *</label>
+                <label className="text-xs text-gray-500 mb-1 block">Postal code *</label>
                 <input {...inputProps('postal')} placeholder="10115" maxLength={5}
                   onChange={e => { if (/^[0-9]*$/.test(e.target.value)) handleChange('postal', e.target.value) }} />
                 <ErrorMsg field="postal" />
               </div>
               <div>
-                <label className="text-xs text-gray-500 mb-1 block">Stadt *</label>
+                <label className="text-xs text-gray-500 mb-1 block">City *</label>
                 <input {...inputProps('city')} placeholder="Berlin"
                   onChange={e => { if (/^[a-zA-ZäöüÄÖÜßàáâ\s\-\.]*$/.test(e.target.value)) handleChange('city', e.target.value) }} />
                 <ErrorMsg field="city" />
               </div>
               <div className="col-span-1 sm:col-span-2 md:col-span-1">
-                <label className="text-xs text-gray-500 mb-1 block">Land *</label>
-                <input {...inputProps('country')} placeholder="Deutschland"
+                <label className="text-xs text-gray-500 mb-1 block">Country *</label>
+                <input {...inputProps('country')} placeholder="Germany"
                   onChange={e => { if (/^[a-zA-ZäöüÄÖÜßàáâ\s\-\.]*$/.test(e.target.value)) handleChange('country', e.target.value) }} />
                 <ErrorMsg field="country" />
               </div>
@@ -496,7 +496,7 @@ const formatPrice = (value: number) =>
          {/* ── Zahlungsmethode ── */}
 <section>
   <h2 className="font-semibold text-gray-800 mb-4 pb-2 border-b">
-    Zahlungsmethode
+    Payment method
   </h2>
 <div className="flex flex-col sm:flex-row gap-3">
 
@@ -575,7 +575,7 @@ const formatPrice = (value: number) =>
 
         {/* ── RECHTS – Bestellübersicht ── */}
         <div className="bg-[#F5E6D3] p-5 sm:p-6 rounded-xl h-fit static lg:sticky lg:top-6">
-          <h2 className="font-semibold mb-5 text-gray-800">Bestellübersicht</h2>
+          <h2 className="font-semibold mb-5 text-gray-800">Order summary</h2>
 
           <div className="space-y-4 max-h-60 overflow-y-auto pr-1">
             {items.map(item => (
@@ -599,19 +599,19 @@ const formatPrice = (value: number) =>
           {/* Discount */}
           <div className="mb-5">
             <label className="text-xs text-gray-600 mb-2 flex items-center gap-1">
-              <Tag className="h-3 w-3" /> Rabattcode
+              <Tag className="h-3 w-3" />  Discount code
             </label>
             <div className="flex gap-2">
               <input value={discount}
                 onChange={e => { setDiscount(e.target.value.toUpperCase()); setDiscountError(''); setDiscountApplied(false) }}
                 className="flex-1 p-2 border border-[#e0c9a8] rounded-lg bg-white text-sm outline-none focus:border-[#D4A574]"
-                placeholder="Code eingeben" />
+                placeholder="Enter code" />
               <button onClick={applyDiscount} className="bg-[#D4A574] text-white text-xs px-4 rounded-lg hover:bg-[#c4945f] transition-colors">
-                Anwenden
+                Apply
               </button>
             </div>
             {discountError   && <p className="text-red-500 text-xs mt-1">{discountError}</p>}
-            {discountApplied && <p className="text-green-600 text-xs mt-1 flex items-center gap-1"><CheckCircle className="h-3 w-3" /> Rabatt angewendet!</p>}
+            {discountApplied && <p className="text-green-600 text-xs mt-1 flex items-center gap-1"><CheckCircle className="h-3 w-3" />  Discount applied!</p>}
           </div>
 
          {/* Totals */}
@@ -621,21 +621,21 @@ const formatPrice = (value: number) =>
 
   {/* Shipping */}
   <div className="flex justify-between text-gray-600">
-    <span>Versand</span>
-    <span>kostenlos</span>
+    <span>Shipping</span>
+    <span>free</span>
   </div>
 
   {/* Discount */}
   {discountValue > 0 && (
     <div className="flex justify-between text-green-700 font-medium">
-      <span>Rabatt</span>
+      <span>Discount</span>
       <span>−{formatPrice(discountValue)}</span>
     </div>
   )}
 
   {/* Final total */}
   <div className="flex justify-between font-bold text-base border-t border-[#e0c9a8] pt-3 mt-2">
-    <span>Gesamt</span>
+    <span>Total</span>
     <span>{formatPrice(finalTotal)}</span>
   </div>
 
@@ -651,10 +651,10 @@ const formatPrice = (value: number) =>
       : 'bg-[#D4A574] hover:bg-[#c4945f] active:scale-[0.98]'
   }`}
 >
-  Jetzt bestellen
+  Place order
 </button>
 
-          <p className="text-xs text-center text-gray-400 mt-3">Sichere, verschlüsselte Übertragung</p>
+          <p className="text-xs text-center text-gray-400 mt-3">Secure, encrypted connection</p>
         </div>
       </div>
       {showPaymentPopup && (
@@ -662,7 +662,7 @@ const formatPrice = (value: number) =>
         <div className="w-full max-w-md rounded-2xl bg-white p-5 sm:p-6 shadow-xl">
           <div className="mb-5 flex items-center justify-between">
             <h2 className="text-xl font-bold text-gray-900">
-              {payment === 'klarna' ? 'Klarna Zahlung' : 'PayPal Zahlung'}
+              {payment === 'klarna' ? "Klarna payment" : "PayPal payment"}
             </h2>
 
             <button
@@ -670,7 +670,7 @@ const formatPrice = (value: number) =>
               onClick={() => setShowPaymentPopup(false)}
               disabled={isPaying}
               className="text-2xl leading-none text-gray-400 hover:text-gray-600 disabled:opacity-50"
-              aria-label="Popup schließen"
+              aria-label="Close popup"
             >
               ×
             </button>
@@ -684,24 +684,23 @@ const formatPrice = (value: number) =>
             }`}
           >
             <p className="text-sm font-medium text-gray-900">
-              Demo-Zahlung mit {payment === 'klarna' ? 'Klarna' : 'PayPal'}
+              Demo payment with {payment === 'klarna' ? 'Klarna' : 'PayPal'}
             </p>
             <p className="mt-1 text-sm text-gray-600">
-              Dies ist eine simulierte Zahlung für das SelfGlow-Projekt.
-              Es wird keine echte Zahlung durchgeführt.
+              This is a simulated payment for the SelfGlow project. No real payment will be made.
             </p>
           </div>
 
           <div className="mb-5 space-y-2 text-sm text-gray-700">
             <div className="flex justify-between">
-              <span>Zahlungsmethode</span>
+              <span>Payment method</span>
               <span className="font-medium">
                 {payment === 'klarna' ? 'Klarna' : 'PayPal'}
               </span>
             </div>
 
             <div className="flex justify-between">
-              <span>Gesamtbetrag</span>
+              <span>Total amount</span>
               <span className="font-medium">{formatPrice(finalTotal)}</span>
             </div>
           </div>
@@ -713,7 +712,7 @@ const formatPrice = (value: number) =>
               disabled={isPaying}
               className="flex-1 rounded-full border border-gray-300 py-2.5 text-sm font-medium hover:bg-gray-50 disabled:opacity-60"
             >
-              Abbrechen
+              Cancel
             </button>
 
             <button
@@ -735,7 +734,7 @@ const formatPrice = (value: number) =>
                   : 'bg-blue-600 hover:bg-blue-700'
               }`}
             >
-              {isPaying ? 'Wird verarbeitet...' : 'Jetzt zahlen'}
+              {isPaying ? "Processing..." : "Pay now"}
             </button>
           </div>
         </div>

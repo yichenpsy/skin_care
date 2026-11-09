@@ -1,3 +1,4 @@
+import { displayLabel } from '@/lib/display-labels'
 import { ProductImage } from '@/components/ProductImage'
 import { Link, useNavigate } from 'react-router-dom'
 import { Bot, Sparkles, SlidersHorizontal, ArrowRight } from 'lucide-react'
@@ -111,44 +112,44 @@ type RecommendedProduct = {
 }
 
 const skinLabels: Record<string, string> = {
-  Normal:      'Normale Haut',
-  Oily:        'Fettige Haut',
-  Dry:         'Trockene Haut',
-  Sensitive:   'Sensible Haut',
-  Combination: 'Mischhaut',
+  Normal:      "Normal skin",
+  Oily:        "Oily skin",
+  Dry:         "Dry skin",
+  Sensitive:   "Sensitive skin",
+  Combination: "Combination skin",
 }
 
 const skinTypes = [
-  { name: 'Normale Haut',  value: 'Normal',      img: skin1 },
-  { name: 'Fettige Haut',  value: 'Oily',        img: skin2 },
-  { name: 'Mischhaut',     value: 'Combination', img: skin3 },
-  { name: 'Sensible Haut', value: 'Sensitive',   img: skin4 },
-  { name: 'Trockene Haut', value: 'Dry',         img: skin1 },
+  { name: "Normal skin",  value: 'Normal',      img: skin1 },
+  { name: "Oily skin",  value: 'Oily',        img: skin2 },
+  { name: "Combination skin",     value: 'Combination', img: skin3 },
+  { name: "Sensitive skin", value: 'Sensitive',   img: skin4 },
+  { name: "Dry skin", value: 'Dry',         img: skin1 },
 ]
 
 const skinTypesDiverse = [
-  { name: 'Normale Haut',  value: 'Normal',      img: dev2 },
-  { name: 'Fettige Haut',  value: 'Oily',        img: dev3 },
-  { name: 'Mischhaut',     value: 'Combination', img: dev4 },
-  { name: 'Sensible Haut', value: 'Sensitive',   img: dev5 },
-  { name: 'Trockene Haut', value: 'Dry',         img: dev6 },
+  { name: "Normal skin",  value: 'Normal',      img: dev2 },
+  { name: "Oily skin",  value: 'Oily',        img: dev3 },
+  { name: "Combination skin",     value: 'Combination', img: dev4 },
+  { name: "Sensitive skin", value: 'Sensitive',   img: dev5 },
+  { name: "Dry skin", value: 'Dry',         img: dev6 },
 ]
 
 const skinTypesMale = [
-  { name: 'Sensible Haut', value: 'Sensitive',   img: man2 },
-  { name: 'Trockene Haut', value: 'Dry',         img: man3 },
-  { name: 'Mischhaut',     value: 'Combination', img: man4 },
-  { name: 'Normale Haut',  value: 'Normal',      img: man5 },
-  { name: 'Fettige Haut',  value: 'Oily',        img: man6 },
+  { name: "Sensitive skin", value: 'Sensitive',   img: man2 },
+  { name: "Dry skin", value: 'Dry',         img: man3 },
+  { name: "Combination skin",     value: 'Combination', img: man4 },
+  { name: "Normal skin",  value: 'Normal',      img: man5 },
+  { name: "Oily skin",  value: 'Oily',        img: man6 },
 ]
 
 // Kategorien je nach Geschlecht sortiert
 const allCategories = [
-  { name: 'Feuchtigkeitspflege', value: 'Feuchtigkeitspflege', img: feuchtigkeitBild },
-  { name: 'Serum',               value: 'Serum',               img: serumBild },
-  { name: 'Toner',               value: 'Toner',               img: tonerBild },
-  { name: 'Sonnenschutz',        value: 'Sonnenschutz',        img: sonnenschutzBild },
-  { name: 'Reinigung',           value: 'Gesichtsreinigung',   img: cleanserBild },
+  { name: "Moisturizer", value: 'Feuchtigkeitspflege', img: feuchtigkeitBild },
+  { name: "Serum",               value: 'Serum',               img: serumBild },
+  { name: "Toner",               value: 'Toner',               img: tonerBild },
+  { name: "Sunscreen",        value: 'Sonnenschutz',        img: sonnenschutzBild },
+  { name: "Cleansing",           value: 'Gesichtsreinigung',   img: cleanserBild },
 ]
 
 function getCategoriesForGender(gender: string | null | undefined) {
@@ -167,32 +168,32 @@ function getCategoriesForGender(gender: string | null | undefined) {
 }
 
 const features = [
-  { icon: Bot,               title: 'KI-Beratung',     desc: 'Personalisierte Empfehlungen basierend auf deinem Hauttyp.' },
-  { icon: Sparkles,          title: 'Premium Qualität', desc: 'Nur geprüfte Produkte mit hochwertigen Inhaltsstoffen.' },
-  { icon: SlidersHorizontal, title: 'Einfache Filter',  desc: 'Finde dein Produkt – nach Hauttyp, Anliegen oder Kategorie.' },
+  { icon: Bot,               title: "AI advisor",     desc: "Personalized recommendations based on your skin type." },
+  { icon: Sparkles,          title: "Premium quality", desc: "Only carefully selected products with quality ingredients." },
+  { icon: SlidersHorizontal, title: "Simple filters",  desc: "Find your product by skin type, concern, or category." },
 ]
 
 function getGreeting(gender: string | null | undefined) {
   const h = new Date().getHours()
-  const time = h < 12 ? 'Morgen' : h < 17 ? 'Tag' : 'Abend'
-  if (gender === 'male')    return `Guten ${time}`
-  if (gender === 'female')  return `Guten ${time}`
-  if (gender === 'diverse') return `Guten ${time}`
-  return `Guten ${time}`
+  const time = h < 12 ? "morning" : h < 17 ? "afternoon" : "evening"
+  if (gender === 'male')    return `Good ${time}`
+  if (gender === 'female')  return `Good ${time}`
+  if (gender === 'diverse') return `Good ${time}`
+  return `Good ${time}`
 }
 
 function getHeroTagline(gender: string | null | undefined) {
-  if (gender === 'male')    return 'Einfache Hautpflege die wirklich funktioniert.'
-  if (gender === 'female')  return 'Deine perfekte Skincare-Routine — für strahlende Haut.'
-  if (gender === 'diverse') return 'Hautpflege ohne Kompromisse — für jeden.'
-  return 'Entdecke kuratierte Hautpflege — abgestimmt auf deinen Hauttyp und deine Bedürfnisse.'
+  if (gender === 'male')    return "Simple skincare that really works."
+  if (gender === 'female')  return "Your perfect skincare routine — for radiant skin."
+  if (gender === 'diverse') return "Skincare without compromise — for everyone."
+  return "Discover curated skincare tailored to your skin type and needs."
 }
 
 function getHeroTitle(gender: string | null | undefined) {
-  if (gender === 'male')    return <>Pflege,<br />die <span style={{ color: '#D4A574' }}>wirkt</span>.</>
-  if (gender === 'female')  return <>Pflege,<br />die <span style={{ color: '#D4A574' }}>leuchtet</span>.</>
-  if (gender === 'diverse') return <>Pflege,<br />die <span style={{ color: '#D4A574' }}>passt</span>.</>
-  return <>Pflege,<br />die <span style={{ color: '#D4A574' }}>wirklich</span><br />zu dir passt.</>
+  if (gender === 'male')    return <>Care<br />that <span style={{ color: '#D4A574' }}>works</span>.</>
+  if (gender === 'female')  return <>Care<br />that <span style={{ color: '#D4A574' }}>glows</span>.</>
+  if (gender === 'diverse') return <>Care<br />that <span style={{ color: '#D4A574' }}>fits</span>.</>
+  return <>Care<br />that <span style={{ color: '#D4A574' }}>truly</span><br />suits you.</>
 }
 
 function getPersonalizedGreeting(firstName: string, gender: string | null | undefined) {
@@ -203,10 +204,10 @@ function getPersonalizedGreeting(firstName: string, gender: string | null | unde
 }
 
 function getCategoriesLabel(gender: string | null | undefined) {
-  if (gender === 'male')    return 'Einfach & effektiv für Männer'
-  if (gender === 'female')  return 'Beliebt bei Frauen'
-  if (gender === 'diverse') return 'Unsere Top-Kategorien'
-  return 'Nach Kategorie einkaufen'
+  if (gender === 'male')    return "Simple & effective for men"
+  if (gender === 'female')  return "Popular with women"
+  if (gender === 'diverse') return "Our top categories"
+  return "Shop by category"
 }
 
 const optionStyle = {
@@ -315,7 +316,7 @@ export default function Home() {
   const showRecommendations = Boolean(token) && recommendedProducts.length > 0
   const recommendationTarget = skinType
     ? skinLabels[skinType] || skinType
-    : 'Dich'
+    : "You"
   const recommendedPageSize = 5
   const recommendationPageCount = Math.ceil(recommendedProducts.length / recommendedPageSize)
   const visibleRecommendedProducts = recommendedProducts.slice(
@@ -344,10 +345,10 @@ export default function Home() {
             <div className="home-welcome-banner" style={{ position: 'absolute', bottom: 20, left: 0, right: 0, zIndex: 2, padding: '0 48px', display: 'flex', alignItems: 'center', gap: 12 }}>
               
               <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', margin: 0, fontWeight: 300 }}>
-                {firstName ? 'Dein Willkommenscode:' : 'Registriere dich und spare 10% —'}
+                {firstName ? "Your welcome code:" : "Sign up and save 10% —"}
               </p>
               <span style={{ fontFamily: 'monospace', fontSize: 13, fontWeight: 700, color: '#D4A574', letterSpacing: '0.1em' }}>WELCOME10</span>
-              <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>· einmalig</span>
+              <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>· one-time use</span>
             </div>
           )}
 
@@ -362,7 +363,7 @@ export default function Home() {
 
               {skinType ? (
                 <>
-                  <p style={{ fontSize: 16, color: 'rgba(255,255,255,0.65)', margin: '0 0 6px', fontWeight: 300 }}>Dein Hauttyp:</p>
+                  <p style={{ fontSize: 16, color: 'rgba(255,255,255,0.65)', margin: '0 0 6px', fontWeight: 300 }}>Your skin type:</p>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10, margin: '0 0 24px' }}>
                     <p style={{ fontSize: 18, color: '#D4A574', fontWeight: 700, margin: 0, letterSpacing: '-0.01em' }}>
                       {skinLabels[skinType] || skinType}
@@ -386,7 +387,7 @@ export default function Home() {
                       style={{ width: 20, height: 20, borderRadius: '50%', background: 'rgba(255,255,255,0.15)', border: 'none', color: 'rgba(255,255,255,0.7)', fontSize: 14, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, lineHeight: 1 }}
                       onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,80,80,0.35)')}
                       onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.15)')}
-                      title="Hauttyp zurücksetzen"
+                      title="Reset skin type"
                     >×</button>
                   </div>
 
@@ -394,24 +395,24 @@ export default function Home() {
                     <button onClick={() => navigate(`/shop?skinType=${skinType}`)} className="greet-option" style={optionStyle}>
                       <span style={{ fontSize: 22, flexShrink: 0 }}></span>
                       <div>
-                        <p style={{ fontWeight: 700, fontSize: 14, margin: 0, color: '#fff' }}>Produkte für {skinLabels[skinType]}</p>
-                        <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', margin: 0, fontWeight: 300 }}>Passend zu deinem Hauttyp</p>
+                        <p style={{ fontWeight: 700, fontSize: 14, margin: 0, color: '#fff' }}>Products for {skinLabels[skinType]}</p>
+                        <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', margin: 0, fontWeight: 300 }}>Matched to your skin type</p>
                       </div>
                       <ArrowRight size={16} style={{ marginLeft: 'auto', color: '#D4A574', flexShrink: 0 }} />
                     </button>
                     <button onClick={() => navigate('/quiz')} className="greet-option" style={optionStyle}>
                       <span style={{ fontSize: 22, flexShrink: 0 }}></span>
                       <div>
-                        <p style={{ fontWeight: 700, fontSize: 14, margin: 0, color: '#fff' }}>Quiz nochmal machen</p>
-                        <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', margin: 0, fontWeight: 300 }}>Hauttyp neu ermitteln</p>
+                        <p style={{ fontWeight: 700, fontSize: 14, margin: 0, color: '#fff' }}>Retake quiz</p>
+                        <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', margin: 0, fontWeight: 300 }}>Find your skin type again</p>
                       </div>
                       <ArrowRight size={16} style={{ marginLeft: 'auto', color: '#D4A574', flexShrink: 0 }} />
                     </button>
                     <button onClick={() => navigate('/chatbot')} className="greet-option" style={optionStyle}>
                       <span style={{ fontSize: 22, flexShrink: 0 }}></span>
                       <div>
-                        <p style={{ fontWeight: 700, fontSize: 14, margin: 0, color: '#fff' }}>SelfGlow KI fragen</p>
-                        <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', margin: 0, fontWeight: 300 }}>Persönliche KI-Beratung</p>
+                        <p style={{ fontWeight: 700, fontSize: 14, margin: 0, color: '#fff' }}>Ask SelfGlow AI</p>
+                        <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', margin: 0, fontWeight: 300 }}>Personal AI advice</p>
                       </div>
                       <ArrowRight size={16} style={{ marginLeft: 'auto', color: '#D4A574', flexShrink: 0 }} />
                     </button>
@@ -420,30 +421,30 @@ export default function Home() {
               ) : (
                 <>
                   <p style={{ fontSize: 18, color: 'rgba(255,255,255,0.65)', margin: '0 0 28px', fontWeight: 300, lineHeight: 1.6 }}>
-                    {getHeroTagline(gender)}<br />Möchtest du…
+                    {getHeroTagline(gender)}<br />Would you like to…
                   </p>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                     <button onClick={() => navigate('/quiz')} className="greet-option" style={optionStyle}>
                       <span style={{ fontSize: 22, flexShrink: 0 }}></span>
                       <div>
-                        <p style={{ fontWeight: 700, fontSize: 14, margin: 0, color: '#fff' }}>Schnelles Quiz</p>
-                        <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', margin: 0, fontWeight: 300 }}>30 Sekunden — Hauttyp ermitteln</p>
+                        <p style={{ fontWeight: 700, fontSize: 14, margin: 0, color: '#fff' }}>Quick quiz</p>
+                        <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', margin: 0, fontWeight: 300 }}>30 seconds — find your skin type</p>
                       </div>
                       <ArrowRight size={16} style={{ marginLeft: 'auto', color: '#D4A574', flexShrink: 0 }} />
                     </button>
                     <button onClick={() => navigate('/shop')} className="greet-option" style={optionStyle}>
                       <span style={{ fontSize: 22, flexShrink: 0 }}></span>
                       <div>
-                        <p style={{ fontWeight: 700, fontSize: 14, margin: 0, color: '#fff' }}>Produkte direkt entdecken</p>
-                        <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', margin: 0, fontWeight: 300 }}>Stöbere in unserer Auswahl</p>
+                        <p style={{ fontWeight: 700, fontSize: 14, margin: 0, color: '#fff' }}>Explore products directly</p>
+                        <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', margin: 0, fontWeight: 300 }}>Browse our selection</p>
                       </div>
                       <ArrowRight size={16} style={{ marginLeft: 'auto', color: '#D4A574', flexShrink: 0 }} />
                     </button>
                     <button onClick={() => navigate('/chatbot')} className="greet-option" style={optionStyle}>
                       <span style={{ fontSize: 22, flexShrink: 0 }}></span>
                       <div>
-                        <p style={{ fontWeight: 700, fontSize: 14, margin: 0, color: '#fff' }}>SelfGlow KI fragen</p>
-                        <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', margin: 0, fontWeight: 300 }}>Persönliche KI-Beratung</p>
+                        <p style={{ fontWeight: 700, fontSize: 14, margin: 0, color: '#fff' }}>Ask SelfGlow AI</p>
+                        <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', margin: 0, fontWeight: 300 }}>Personal AI advice</p>
                       </div>
                       <ArrowRight size={16} style={{ marginLeft: 'auto', color: '#D4A574', flexShrink: 0 }} />
                     </button>
@@ -460,15 +461,15 @@ export default function Home() {
                 {getHeroTitle('diverse')}
               </h1>
               <p style={{ fontSize: 16, color: 'rgba(255,255,255,0.72)', lineHeight: 1.75, margin: '0 0 20px', fontWeight: 300, maxWidth: 420 }}>
-                Registriere dich und erhalte eine <span style={{ color: '#D4A574', fontWeight: 500 }}>vollständig personalisierte Erfahrung</span> — basierend auf deinem Geschlecht, Hauttyp und deinen Bedürfnissen.
+                Sign up for a <span style={{ color: '#D4A574', fontWeight: 500 }}>fully personalized experience</span>  — based on your gender, skin type, and needs.
               </p>
              
               <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
                 <Link to="/login" className="pill-btn" style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: '#D4A574', color: '#fff', padding: '15px 32px', borderRadius: 100, fontSize: 13, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none' }}>
-                  Jetzt einloggen <ArrowRight size={15} />
+                  Sign in now <ArrowRight size={15} />
                 </Link>
                 <Link to="/shop" style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: 'rgba(255,255,255,0.1)', color: '#fff', padding: '15px 32px', borderRadius: 100, fontSize: 13, fontWeight: 600, textDecoration: 'none', border: '1.5px solid rgba(255,255,255,0.25)', backdropFilter: 'blur(8px)' }}>
-                  Produkte entdecken
+                  Explore products
                 </Link>
               </div>
             </div>
@@ -482,11 +483,11 @@ export default function Home() {
           <div style={{ marginBottom: showRecommendations ? 20 : 40 }}>
             {!showRecommendations && (
               <p style={{ fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#C4925A', marginBottom: 6, fontWeight: 500 }}>
-                Hauttyp entdecken
+                Discover your skin type
               </p>
             )}
             <h2 style={{ fontFamily: "'Outfit', sans-serif", fontSize: showRecommendations ? 'clamp(18px, 2vw, 24px)' : 'clamp(22px, 2.8vw, 34px)', fontWeight: 700, margin: 0, letterSpacing: '-0.02em' }}>
-              {showRecommendations ? `Für ${recommendationTarget}` : 'Welcher Hauttyp bist du?'}
+              {showRecommendations ? `For ${recommendationTarget}` : "What is your skin type?"}
             </h2>
           </div>
           {showRecommendations ? (
@@ -508,7 +509,7 @@ export default function Home() {
                     </div>
                     <div style={{ padding: '9px 10px 11px', display: 'flex', flexDirection: 'column', gap: 4, flex: 1 }}>
                       <p style={{ fontSize: 9, letterSpacing: '0.13em', textTransform: 'uppercase', color: '#C4925A', margin: 0, fontWeight: 700, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                        {product.category}
+                        {displayLabel(product.category)}
                       </p>
                       <h3 style={{ fontSize: 13, lineHeight: 1.25, fontWeight: 700, margin: 0, color: '#1c1209', minHeight: 30, overflow: 'hidden' }}>
                         {product.name}
@@ -542,7 +543,7 @@ export default function Home() {
                       )}
                       <div style={{ marginTop: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
                         <span style={{ fontSize: 12, fontWeight: 800, color: '#1c1209' }}>
-                          {product.price.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}
+                          {product.price.toLocaleString('en-GB', { style: 'currency', currency: 'EUR' })}
                         </span>
                         <ArrowRight size={13} color="#D4A574" />
                       </div>
@@ -554,7 +555,7 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={() => setRecommendationPage((page) => Math.max(0, page - 1))}
-                    aria-label="Vorherige Empfehlungen anzeigen"
+                    aria-label="Show previous recommendations"
                     style={{ position: 'absolute', top: '50%', left: -18, transform: 'translateY(-50%)', width: 36, height: 36, borderRadius: '50%', border: '1px solid #F0DCC8', background: '#fff', boxShadow: '0 8px 24px rgba(28,18,9,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', zIndex: 2 }}
                   >
                     <ArrowRight size={18} color="#D4A574" style={{ transform: 'rotate(180deg)' }} />
@@ -564,7 +565,7 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={() => setRecommendationPage((page) => (page + 1) % recommendationPageCount)}
-                    aria-label="Weitere Empfehlungen anzeigen"
+                    aria-label="Show more recommendations"
                     style={{ position: 'absolute', top: '50%', right: -18, transform: 'translateY(-50%)', width: 36, height: 36, borderRadius: '50%', border: '1px solid #F0DCC8', background: '#fff', boxShadow: '0 8px 24px rgba(28,18,9,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', zIndex: 2 }}
                   >
                     <ArrowRight size={18} color="#D4A574" />
@@ -590,7 +591,7 @@ export default function Home() {
       <section style={{ background: '#FDFAF6', padding: '80px 28px' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 48 }}>
-            <p style={{ fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#C4925A', marginBottom: 8, fontWeight: 500 }}>Stöbere & entdecke</p>
+            <p style={{ fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#C4925A', marginBottom: 8, fontWeight: 500 }}>Browse & discover</p>
             <h2 style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'clamp(24px,3vw,38px)', fontWeight: 700, margin: 0, letterSpacing: '-0.02em' }}>
               {getCategoriesLabel(gender)}
             </h2>
@@ -602,7 +603,7 @@ export default function Home() {
               <div className="cat-overlay" style={{ position: 'absolute', inset: 0, background: 'rgba(212,165,116,0.18)' }} />
               <div style={{ position: 'absolute', bottom: 24, left: 24, right: 24 }}>
                 <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 4 }}>
-                  {gender === 'male' ? 'Essentiell' : 'Bestseller'}
+                  {gender === 'male' ? "Essential" : 'Bestseller'}
                 </p>
                 <p style={{ fontFamily: "'Outfit', sans-serif", color: '#fff', fontSize: 22, fontWeight: 700, margin: 0 }}>{categories[0].name}</p>
               </div>
@@ -625,8 +626,8 @@ export default function Home() {
       <section style={{ background: '#fff', padding: '80px 28px' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 52 }}>
-            <p style={{ fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#C4925A', marginBottom: 8, fontWeight: 500 }}>Unser Versprechen</p>
-            <h2 style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'clamp(24px,3vw,38px)', fontWeight: 700, margin: 0, letterSpacing: '-0.02em' }}>Warum <span style={{ color: '#D4A574' }}>SelfGlow</span>?</h2>
+            <p style={{ fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#C4925A', marginBottom: 8, fontWeight: 500 }}>Our promise</p>
+            <h2 style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'clamp(24px,3vw,38px)', fontWeight: 700, margin: 0, letterSpacing: '-0.02em' }}>Why <span style={{ color: '#D4A574' }}>SelfGlow</span>?</h2>
           </div>
           <div className="home-feat-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
             {features.map((f) => (
@@ -651,15 +652,15 @@ export default function Home() {
     <div style={{ position: 'absolute', inset: 0, background: 'rgba(28,18,9,0.22)' }} />
   </div>
   <div className="home-community-text" style={{ background: '#1c1209', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '60px clamp(28px,6vw,80px)', gap: 20 }}>
-    <p style={{ fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#D4A574', fontWeight: 500, margin: 0 }}>Für strahlende Haut</p>
+    <p style={{ fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#D4A574', fontWeight: 500, margin: 0 }}>For radiant skin</p>
     <h3 style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'clamp(22px,2.8vw,36px)', fontWeight: 700, color: '#fff', margin: 0, lineHeight: 1.2, letterSpacing: '-0.02em' }}>
-      Hautpflege, die<br />zu dir passt.
+      Skincare that<br />suits you.
     </h3>
     <p style={{ fontSize: 15, color: '#b8967a', margin: 0, lineHeight: 1.65, fontWeight: 300, maxWidth: 340 }}>
-      Von der ersten Analyse bis zur perfekten Routine — wir begleiten dich mit ehrlicher Beratung und Produkten, die wirklich zu deiner Haut passen.
+      From your first analysis to your perfect routine, we support you with honest advice and products that suit your skin.
     </p>
     <p style={{ fontSize: 15, color: '#b8967a', margin: 0, lineHeight: 1.65, fontWeight: 300, maxWidth: 340 }}>
-      Keine leeren Versprechen, keine Massenware — nur das, was deine Haut wirklich braucht.
+      No empty promises or mass-produced solutions — just what your skin really needs.
     </p>
   </div>
 </section>

@@ -2,9 +2,9 @@ const prisma = require("../config/prisma");
 const crypto = require("node:crypto");
 const { requestOpenAI } = require("./chat/chat-openai.service");
 
-const PRODUCT_EXPLANATION_PROMPT_VERSION = "product-explanation-v1";
+const PRODUCT_EXPLANATION_PROMPT_VERSION = "product-explanation-en-v2";
 const PRODUCT_AI_FALLBACK =
-  "- Die KI-Erklärung ist gerade nicht verfügbar.\n- Du kannst die Inhaltsstoffliste trotzdem prüfen und bei sensibler Haut neue Produkte erst an einer kleinen Stelle testen.";
+  "- The AI explanation is currently unavailable.\n- You can still check the ingredients and patch-test new products if you have sensitive skin.";
 
 function compactText(value, maxLength = 1600) {
   if (!value) return "";
@@ -107,7 +107,7 @@ function buildExplainMessages(product) {
     {
       role: "system",
       content:
-        "Du bist ein transparenter Hautpflege-Berater für einen Online-Shop. Antworte auf Deutsch, sachlich und kaufberatend. Erkläre keine medizinische Diagnose. Nutze nur die gelieferten Produktdaten und markiere Unsicherheit klar.",
+        "Du bist ein transparenter Hautpflege-Berater für einen Online-Shop. Antworte auf Englisch, sachlich und kaufberatend. Erkläre keine medizinische Diagnose. Nutze nur die gelieferten Produktdaten und markiere Unsicherheit klar.",
     },
     {
       role: "user",
@@ -118,7 +118,7 @@ ${JSON.stringify(context, null, 2)}
 
 Format:
 - Beginne mit einem kurzen Fazit in einem Satz.
-- Danach 3 kurze Abschnitte mit fettgedruckten Labels: **Wofür es gedacht ist**, **Wichtige Inhaltsstoffe**, **Worauf du achten solltest**.
+- Danach 3 kurze Abschnitte mit fettgedruckten Labels: **What it is for**, **Key ingredients**, **What to watch for**.
 - Maximal 2 Bulletpoints pro Abschnitt.
 - Wenn Inhaltsstoffe fehlen oder unklar sind, sag das ausdrücklich.
 - Keine übertriebenen Wirkversprechen.`,
@@ -145,7 +145,7 @@ function buildFitMessages(product, user, latestAnalysis) {
     {
       role: "system",
       content:
-        "Du bist ein transparenter Hautpflege-Berater. Antworte auf Deutsch. Ziel ist eine vorsichtige Einschätzung der Produkt-Passform mit 1 bis 5 Sternen. Verwende keine direkte Kaufaufforderung und schreibe nicht Kaufen, Nicht kaufen oder Eher nicht kaufen als Ergebnis. Keine medizinische Diagnose, keine Heilversprechen. Begründe jede Einschätzung mit Produktdaten und Nutzerprofil.",
+        "Du bist ein transparenter Hautpflege-Berater. Antworte auf Englisch. Ziel ist eine vorsichtige Einschätzung der Produkt-Passform mit 1 bis 5 Sternen. Verwende keine direkte Kaufaufforderung und schreibe nicht Kaufen, Nicht kaufen oder Eher nicht kaufen als Ergebnis. Keine medizinische Diagnose, keine Heilversprechen. Begründe jede Einschätzung mit Produktdaten und Nutzerprofil.",
     },
     {
       role: "user",
@@ -166,8 +166,8 @@ ${JSON.stringify(
 )}
 
 Format:
-- Erste Zeile exakt in diesem Stil: **Passform:** 4/5 Sterne
-- Danach 3 kurze Abschnitte mit fettgedruckten Labels: **Warum es passen kann**, **Mögliche Risiken**, **Was noch fehlt**.
+- Erste Zeile exakt in diesem Stil: **Suitability:** 4/5 stars
+- Danach 3 kurze Abschnitte mit fettgedruckten Labels: **Why it may suit you**, **Possible risks**, **Missing information**.
 - Maximal 2 Bulletpoints pro Abschnitt.
 - Wenn das Nutzerprofil wenig Daten enthält, sag das klar und bleibe vorsichtig.
 - Beziehe dich explizit auf Quiz-Hauttyp oder Analysewerte, wenn vorhanden.`,
@@ -186,7 +186,7 @@ async function explainProduct(productId, options = {}) {
     return {
       productId,
       answer:
-        "- Für dieses Produkt sind noch keine Inhaltsstoffe hinterlegt.\n- Eine transparente Erklärung ist erst sinnvoll, wenn die INCI-Liste verfügbar ist.",
+        "- No ingredients have been provided for this product.\n- A reliable explanation needs an INCI ingredient list.",
     };
   }
 
@@ -218,7 +218,7 @@ async function explainProduct(productId, options = {}) {
       answer,
       contentHash,
       model: process.env.OPENAI_MODEL || "gpt-5-mini",
-      language: "de",
+      language: "en",
     });
   }
 
@@ -279,7 +279,7 @@ async function assessProductFit(productId, userId) {
     return {
       productId,
       answer:
-        "**Passform:** 2/5 Sterne\n\n- Für dieses Produkt sind noch keine Inhaltsstoffe hinterlegt.\n- Eine persönliche Einschätzung wäre ohne INCI-Liste zu unsicher.",
+        "**Suitability:** 2/5 stars\n\n- No ingredients have been provided for this product.\n- A personal assessment would be too uncertain without an INCI ingredient list.",
     };
   }
 
