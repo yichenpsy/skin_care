@@ -1,4 +1,5 @@
 const {
+  AI_RESPONSE_LANGUAGE_INSTRUCTIONS,
   AI_RESPONSE_FORMAT_INSTRUCTIONS,
   MAX_FOLLOW_UP_HISTORY,
   MAX_PROMPT_DESCRIPTION_LENGTH,
@@ -46,7 +47,7 @@ Ingredients: ${truncatePromptText(product.ingredients, MAX_PROMPT_INGREDIENTS_LE
 
   return `
 You are SelfGlow's skincare shopping assistant.
-Answer in English unless the customer explicitly asks for another language.
+${AI_RESPONSE_LANGUAGE_INSTRUCTIONS}
 Use only the product context below.
 Do not diagnose medical conditions or promise treatment results.
 If the context is weak, say so and ask one concise follow-up question.
@@ -81,7 +82,7 @@ Ingredients: ${truncatePromptText(product.ingredients, MAX_PROMPT_INGREDIENTS_LE
 
   return `
 You are SelfGlow's concise, careful skincare shopping assistant.
-Answer in English unless the customer explicitly asks for another language.
+${AI_RESPONSE_LANGUAGE_INSTRUCTIONS}
 The product search did not find matching products in the current shop catalog.
 You may answer general skincare follow-up questions, explain skincare terms, or ask one useful clarifying question.
 If the recent conversation contains previously recommended products, you may answer follow-up questions about those products using the product context below.
@@ -125,7 +126,7 @@ Ingredients: ${truncatePromptText(product.ingredients, MAX_PROMPT_INGREDIENTS_LE
 
   return `
 You are SelfGlow's concise, careful skincare shopping assistant.
-Answer in English unless the customer explicitly asks for another language.
+${AI_RESPONSE_LANGUAGE_INSTRUCTIONS}
 The customer is asking a follow-up about products that were already recommended.
 Use only the previous product context below and the recent conversation.
 Do not search for or invent new SelfGlow products.
@@ -154,7 +155,7 @@ function buildSkincareChatPrompt(message, history = [], intent = "skincare_gener
 
   return `
 You are SelfGlow's concise, careful skincare assistant.
-Answer in English unless the customer explicitly asks for another language.
+${AI_RESPONSE_LANGUAGE_INSTRUCTIONS}
 You may answer greetings, general skincare questions, routine questions, skin type questions, ingredient questions, and safe cosmetic-use questions.
 Do not recommend specific SelfGlow products unless product context is provided by the backend.
 If the customer wants a product recommendation, ask for the missing skin type, concern, budget, or preferences instead of inventing products.
@@ -217,7 +218,7 @@ Ingredients: ${truncatePromptText(product.ingredients, MAX_PROMPT_INGREDIENTS_LE
 
   return `
 You are SelfGlow's skincare ingredient explainer.
-Answer in English unless the customer explicitly asks for another language.
+${AI_RESPONSE_LANGUAGE_INSTRUCTIONS}
 Explain why ${isSingleProduct ? "this product may fit" : "these products may fit"} the user's request, focusing on ingredients, skin type, and concerns.
 Be concise and practical. Use only the product context below.
 Do not diagnose medical conditions or promise treatment results.

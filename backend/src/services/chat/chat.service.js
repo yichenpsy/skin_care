@@ -1,5 +1,6 @@
 const prisma = require("../../config/prisma");
 const {
+  AI_RESPONSE_LANGUAGE_INSTRUCTIONS,
   MAX_CONTEXT_PRODUCTS,
   MAX_FOLLOW_UP_PRODUCTS,
   PRODUCT_RECOMMENDATION_ANSWER,
@@ -45,7 +46,7 @@ async function createOpenAIAnswer(
       {
         role: "system",
         content:
-          "You are a concise, careful skincare shopping assistant for an ecommerce site.",
+          `You are a concise, careful skincare shopping assistant for an ecommerce site. ${AI_RESPONSE_LANGUAGE_INSTRUCTIONS}`,
       },
       {
         role: "user",
@@ -109,7 +110,7 @@ async function createChatResponse(
         {
           role: "system",
           content:
-            "You are a concise, careful skincare shopping assistant for an ecommerce site.",
+            `You are a concise, careful skincare shopping assistant for an ecommerce site. ${AI_RESPONSE_LANGUAGE_INSTRUCTIONS}`,
         },
         {
           role: "user",
@@ -133,7 +134,7 @@ async function createChatResponse(
         {
           role: "system",
           content:
-            "You are a concise, careful skincare assistant for an ecommerce site.",
+            `You are a concise, careful skincare assistant for an ecommerce site. ${AI_RESPONSE_LANGUAGE_INSTRUCTIONS}`,
         },
         {
           role: "user",
@@ -198,7 +199,7 @@ async function createChatResponseStream(
         {
           role: "system",
           content:
-            "You are a concise, careful skincare shopping assistant for an ecommerce site.",
+            `You are a concise, careful skincare shopping assistant for an ecommerce site. ${AI_RESPONSE_LANGUAGE_INSTRUCTIONS}`,
         },
         {
           role: "user",
@@ -224,7 +225,7 @@ async function createChatResponseStream(
         {
           role: "system",
           content:
-            "You are a concise, careful skincare assistant for an ecommerce site.",
+            `You are a concise, careful skincare assistant for an ecommerce site. ${AI_RESPONSE_LANGUAGE_INSTRUCTIONS}`,
         },
         {
           role: "user",
@@ -273,7 +274,7 @@ async function createChatResponseStream(
       {
         role: "system",
         content:
-          "You are a concise, careful skincare shopping assistant for an ecommerce site.",
+          `You are a concise, careful skincare shopping assistant for an ecommerce site. ${AI_RESPONSE_LANGUAGE_INSTRUCTIONS}`,
       },
       {
         role: "user",
@@ -296,7 +297,7 @@ async function createProductExplanation(productIds, message) {
   if (!process.env.OPENAI_API_KEY) {
     return {
       answer:
-        "Für eine detaillierte AI-Erklärung der Inhaltsstoffe muss ein OpenAI API-Key konfiguriert sein.",
+        "Detailed AI ingredient explanations are currently unavailable. Please try again later.",
       products: [],
       usedFallback: true,
     };
@@ -326,14 +327,14 @@ async function createProductExplanation(productIds, message) {
       {
         role: "system",
         content:
-          "You explain skincare product ingredients clearly and cautiously for ecommerce customers.",
+          `You explain skincare product ingredients clearly and cautiously for ecommerce customers. ${AI_RESPONSE_LANGUAGE_INSTRUCTIONS}`,
       },
       {
         role: "user",
         content: buildProductExplanationPrompt(chatProducts, message),
       },
     ],
-    "Ich konnte gerade keine detaillierte AI-Erklärung erstellen. Bitte versuche es gleich nochmal."
+    "I could not generate a detailed AI explanation right now. Please try again shortly."
   );
 
   return {

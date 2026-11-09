@@ -885,7 +885,7 @@ async function retrieveProducts(message, providedSearchIntent = null) {
 // the endpoint still returns a useful response instead of breaking the chat UI.
 function buildFallbackAnswer(products) {
   if (products.length === 0) {
-    return "Ich habe in unserem aktuellen Sortiment leider keine gut passenden Produkte gefunden. Versuche es mit einer konkreteren Frage, zum Beispiel Hauttyp, Hautproblem oder gewünschter Eigenschaft wie vegan, alkoholfrei oder parfumfrei.";
+    return "I could not find suitable products in our current catalog. Try a more specific question, such as your skin type, skin concern, or preferences like vegan, alcohol-free, or fragrance-free.";
   }
 
   return PRODUCT_RECOMMENDATION_ANSWER;

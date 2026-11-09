@@ -1,4 +1,5 @@
 const {
+  AI_RESPONSE_LANGUAGE_INSTRUCTIONS,
   MAX_FINAL_PRODUCTS,
   MAX_FOLLOW_UP_HISTORY,
   MEDICAL_DISCLAIMER,
@@ -48,7 +49,7 @@ Rules:
 - Each bullet must be 1-4 words, not a full sentence.
 - Exclude candidates that conflict with the customer's explicit request or rejection.
 - If no candidate is a good fit, return an empty productIds array and explain briefly what is missing.
-- Write answer in the same language as the current customer message.
+- ${AI_RESPONSE_LANGUAGE_INSTRUCTIONS}
 - Keep the answer concise and practical.
 - Do not repeat selected product names in the answer; product names are already shown on the cards.
 - Summarize the selected set as a group, focusing on routine role, skin concern, or shared benefits.
@@ -105,6 +106,7 @@ function normalizeRecommendationAnswer(answer, hasSelectedProducts) {
   }
 
   const withoutDisclaimer = text
+    .replace(/note:\s*this is not a medical diagnosis\.?/gi, "")
     .replace(/hinweis:\s*dies ist keine medizinische diagnose\.?/gi, "")
     .replace(/das ist keine medizinische diagnose,?\s*(sondern eine produktempfehlung auf basis deiner anfrage)?\.?/gi, "")
     .trim();
@@ -245,7 +247,7 @@ async function selectFinalProducts(message, history = [], candidateProducts = []
       {
         role: "system",
         content:
-          "You select ecommerce skincare products from provided candidates and write concise final answers.",
+          `You select ecommerce skincare products from provided candidates and write concise final answers. ${AI_RESPONSE_LANGUAGE_INSTRUCTIONS}`,
       },
       {
         role: "user",

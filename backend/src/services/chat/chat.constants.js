@@ -11,6 +11,8 @@ const MAX_FOLLOW_UP_PRODUCTS = 3;
 const MAX_PROMPT_DESCRIPTION_LENGTH = 600;
 const MAX_PROMPT_INGREDIENTS_LENGTH = 800;
 const MIN_RELEVANCE_SCORE = 2;
+const AI_RESPONSE_LANGUAGE_INSTRUCTIONS =
+  "Respond in English by default, including recommendation bullets and section headings. Use another language only when the customer explicitly requests it. Do not infer the response language from the customer's wording, previous messages, or product data.";
 const MEDICAL_DISCLAIMER = "note: this is not a medical diagnosis.";
 const PRODUCT_RECOMMENDATION_ANSWER =
   `I found the following matching products in our catalog. ${MEDICAL_DISCLAIMER}`;
@@ -406,6 +408,7 @@ const ingredientAliases = {
 // differences from breaking simple keyword matching.
 
 module.exports = {
+  AI_RESPONSE_LANGUAGE_INSTRUCTIONS,
   OPENAI_API_URL,
   DEFAULT_MODEL,
   DEFAULT_OPENAI_TIMEOUT_MS,
