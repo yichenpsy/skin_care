@@ -3,6 +3,7 @@ import productImages from '@/lib/product-images.json'
 
 const images: Record<string, string> = productImages
 const placeholder = '/images/products/placeholder.svg'
+const publicUrl = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`
 
 type ProductImageProps = Omit<ImgHTMLAttributes<HTMLImageElement>, 'src' | 'onError'> & {
   src?: string | null
@@ -17,10 +18,11 @@ export function ProductImage({ src, ...props }: ProductImageProps) {
   return (
     <img
       {...props}
-      src={localSource}
+      src={publicUrl(localSource)}
       onError={(event) => {
-        if (event.currentTarget.getAttribute('src') !== placeholder) {
-          event.currentTarget.src = placeholder
+        const fallback = publicUrl(placeholder)
+        if (event.currentTarget.getAttribute('src') !== fallback) {
+          event.currentTarget.src = fallback
         }
       }}
     />

@@ -336,6 +336,8 @@ CSV and vector-export files are source/import data, not the running database. Po
 
 ## Build and deployment
 
+For the full application on GitHub Pages (frontend), Render (API), and Neon (PostgreSQL), follow the [deployment guide](DEPLOYMENT.md). The repository includes a manually triggered Pages workflow, a Render Blueprint, and environment examples. Publishing the frontend alone does not host the backend or database.
+
 - **Frontend:** from `frontend/`, set `VITE_API_URL` for the target backend and run `npm run build`. Publish `frontend/apps/web/dist`. The host must serve `index.html` for client-side routes; `frontend/apps/web/vercel.json` contains the Vercel rewrite.
 - **Backend:** install dependencies including Prisma CLI for the migration/generation step, configure environment variables, run `npx prisma migrate deploy` and `npx prisma generate` from `backend/`, then start with `npm start`. The server binds to `0.0.0.0` and uses `PORT`.
 - **Database:** use PostgreSQL with the pgvector extension available. The migrations create the extension. The included Compose credentials are local development values; configure separate credentials and persistent storage for a hosted environment.
